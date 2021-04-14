@@ -52,10 +52,9 @@
 </template>
 
 <script lang="ts">
-import { type } from 'os';
 import Vue from 'vue'
 import AprilComment from '..';
-import marked2 from '../utils/markedLib'
+import marked2 from '../utils/MarkedLib'
 const moment = require('moment');
 require('moment/locale/zh-cn');
 
@@ -70,7 +69,7 @@ export default Vue.extend({
     },
     methods: {
         // 判断评论是否需要缩进
-        indent: function(subNick) {
+        indent: function(subNick: any) {
             let hasParent = !!this.$parent.$options._parentVnode;
 
             if (hasParent) {
@@ -101,7 +100,7 @@ export default Vue.extend({
 
             return true
         },
-        parseMarkdown: function (text) {
+        parseMarkdown: function (text: string) {
             // 解析表情
             for(let k in this.owner.editor.smiliesComponet.smilies)
             {
