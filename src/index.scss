@@ -1,0 +1,49 @@
+:root {
+	--awesome-comment-font-normal: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+	--awesome-comment-font-monospace: Consolas, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+%awesome-comment-text {
+	color: #555;
+	font-family: var(--awesome-comment-font-normal);
+	font-size: 12px;
+	font-weight: 500;
+	text-decoration: none;
+	// display: inline-block;
+}
+
+%awesome-comment-button {
+	@extend %awesome-comment-text;
+	
+	font-size: 14px;
+
+	transition-duration: .4s;
+	text-align: center;
+	border: 1px solid #ededed;
+	border-radius: .3em;
+	display: inline-block;
+	background: transparent;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	white-space: nowrap;
+	padding: 0.3em 0.95em;
+	line-height: 1.42857143;
+	user-select: none;
+	outline: none;
+	box-sizing: border-box;
+
+	&:hover {
+		background-color: yellowgreen;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+%awesome-comment-markdown {
+	img {
+		max-width: 300px;
+	}
+}
