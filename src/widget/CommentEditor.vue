@@ -81,7 +81,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import smiliesComponet from './SmilieBox.vue'
-import marked2 from '../utils/markedLib'
+import marked2 from '../utils/MarkedLib'
 import inserfunc from '../utils/jq-insert.js'
 import CommentingModel from '../model/commentingModel'
 import AprilComment from '..'
