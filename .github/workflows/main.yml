@@ -60,6 +60,7 @@ jobs:
           if [ ! -d "./.git" ]
           then
             echo "----------Init Git Repository----------"
+            echo "Repository: $repository"
             git init
             git config user.email 1805795356@qq.com
             git config user.name innc11
