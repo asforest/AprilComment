@@ -41,11 +41,9 @@ const $ = require('jquery')
 
 export default Vue.extend({
     name: 'paginator',
-    data: () => {
-        return {
-            owner: null,
-        }
-    },
+    data: () => ({
+        owner: null,
+    }),
     methods: {
         onClickPagination: function (e) {
             let source = $(e.target)

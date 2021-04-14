@@ -1,32 +1,45 @@
 import Vue from 'vue'
-import AwesomeCommentWidget from './AwesomeComment.vue'
+import AprilCommentWidget from './widget/AprilComment.vue'
 import CommentingModel from './model/CommentingModel'
 import CommentModel from './model/CommentModel'
 import MissingNecessaryFieldError from './exception/MissingNecessaryFieldError'
 import IsServerSideError from './exception/IsServerSideError'
-import ServerSideException from './exception/ServerSideException'
-import AwesomeCommentOptions from './model/AwesomeCommentOptions'
+import AprilCommentOptions from './model/AprilCommentOptions'
 import { useDefault } from './utils/Utils'
-import defaultOptions from './DefaultOptions'
 import UnknownException from './exception/UnknownException'
-import DOMPurify = require('dompurify')
-import cheerio = require('cheerio')
+import DOMPurify from 'dompurify'
+import cheerio from 'cheerio'
+import LanguageOptions from './model/LanguageOptions'
 const $ = require('jquery')
-const cookies = require('brownies')
-const uaparser = require('ua-parser-js');
 const moment = require('moment');
 require('moment/locale/zh-cn');
 
 moment.locale('zh-cn')
 
-export default class AwesomeComment
+var defaultOptions = {
+    key: location.pathname,
+    pageLabel: (document as any).querySelector('title').innerText,
+    smilieAsUrl: true,
+    focusOnComment: true,
+    language: {
+        editorPlaceholder: '说点儿什么吧',
+        nickPlaceholder: '昵称',
+        mailPlaceholder: '邮箱',
+        websitePlaceholder: '网站',
+    } as LanguageOptions,
+    paginatorLength: 3,
+    mailRequired: true,
+    websiteRequired: true,
+} as AprilCommentOptions
+
+export default class AprilComment
 {
-    opt: AwesomeCommentOptions
+    opt: AprilCommentOptions
 
     index: any|Vue // Vue组件实例
     editor: any|Vue // Vue组件实例
     
-    constructor(config: AwesomeCommentOptions)
+    constructor(config: AprilCommentOptions)
     {
         if (!config)
             throw new MissingNecessaryFieldError('setting-parameter-object')
@@ -38,12 +51,12 @@ export default class AwesomeComment
         this.opt.elementId = config.elementId
     }
 
-    async create(config?: AwesomeCommentOptions)
+    async create(config?: AprilCommentOptions)
     {
         if(typeof(config) == 'object')
             this.opt = useDefault(config, this.opt)
 
-        this.index = new AwesomeCommentWidget({
+        this.index = new AprilCommentWidget({
             el: '#'+this.opt.elementId,
             propsData: {
                 owner: this
@@ -55,23 +68,21 @@ export default class AwesomeComment
 
         for (let component of this.lookupVueComponents('paginator'))
             component.owner = this
-
-        this.loadCookies()
         
         await this.refresh()
-
         await this.smilies()
 
-        this.jumpToComment()
+        this.focusOnComment()
     }
 
-    jumpToComment()
+    focusOnComment()
     {
         let hash = location.hash
-        if(hash.startsWith('#ac-comment-object-id-'))
+        let commentDom = $(hash)
+        if(commentDom.length > 0)
         {
             $('html, body').animate({
-                scrollTop: $(hash).offset().top
+                scrollTop: commentDom.offset().top
             }, 1000)
         }
     }
@@ -114,54 +125,18 @@ export default class AwesomeComment
         }
     }
 
-    loadCookies()
-    {
-        if (cookies.cookies.va_nick)
-            this.editor.formData.nick = cookies.cookies.va_nick
-        else if (cookies.cookies.ac_nick)
-            this.editor.formData.nick = cookies.cookies.ac_nick
-
-        if (cookies.cookies.va_mail)
-            this.editor.formData.mail = cookies.cookies.va_mail
-        else if (cookies.cookies.ac_mail)
-            this.editor.formData.mail = cookies.cookies.ac_mail
-
-        if (cookies.cookies.va_website)
-            this.editor.formData.website = cookies.cookies.va_website
-        else if (cookies.cookies.ac_website)
-            this.editor.formData.website = cookies.cookies.ac_website
-    }
-
-    storageCookies()
-    {
-        cookies.cookies.ac_nick = this.editor.formData.nick
-        cookies.cookies.ac_mail = this.editor.formData.mail
-        cookies.cookies.ac_website = this.editor.formData.website
-    }
-
     async fetch2(input: RequestInfo, init?: RequestInit): Promise<any>
     {
-        if(typeof(init)=='undefined')
-            init = {}
-            
-        let defaultOptions = {
+        init = init || {}
+
+        init = useDefault(init, {
             mode: 'cors',
             cache: 'no-cache',
             credentials: 'include',
-        } as any
-
-        // 加载默认参数
-        let _init = init as any
-        for (const obj in defaultOptions)
-            if(!_init[obj])
-                _init[obj] = defaultOptions[obj]
-        
-        if(init.headers)
-            (init.headers as any)['Content-Type'] = 'application/json'
-            else
-            init.headers = {
+            headers: {
                 'Content-Type': 'application/json'
             }
+        } as RequestInit)
 
         let response = await fetch(input, init)
 
@@ -291,7 +266,6 @@ export default class AwesomeComment
 
             this.editor.formData.content = ''
             this.editor.$emit('cancel-reply')
-            this.storageCookies()
             await this.refresh() // 刷新评论
         } catch(e) {
             if(e.name == 'ServerSideException')
@@ -317,7 +291,7 @@ export default class AwesomeComment
             return
 
         try {
-            let res = await this.fetch2(this.opt.smiliesUrl, { method: 'GET' })
+            let res = await this.fetch2(this.opt.smiliesUrl as string, { method: 'GET' })
             let baseurl = res.url
 
             for (const key in res) 
@@ -367,4 +341,4 @@ export default class AwesomeComment
 }
 
 // 暴露到全局变量
-window.AwesomeComment = AwesomeComment
+window.AprilComment = AprilComment

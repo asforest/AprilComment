@@ -25,7 +25,7 @@
         </div>
         
         <div style="position: relative">
-            <textarea id="awesome-comment-input" 
+            <textarea id="april-comment-input" 
                 class="ac-input" 
                 v-bind:placeholder="editorPlaceholder" 
                 v-bind:default-placeholder="editorPlaceholder" 
@@ -44,7 +44,7 @@
                 <div type="button" class="ac-button" v-on:click="onComment">
                     <!-- 加载动画 -->
                     <div class="ac-submiting-indicator" v-show="showSubmitingAnimation"></div>
-                    提交
+                    评论 !
                 </div>
             </div>
         </div>
@@ -84,7 +84,8 @@ import smiliesComponet from './SmilieBox.vue'
 import marked2 from '../utils/markedLib'
 import inserfunc from '../utils/jq-insert.js'
 import CommentingModel from '../model/commentingModel'
-import AwesomeComment from '..'
+import AprilComment from '..'
+const brownies = require('brownies')
 
 export default Vue.extend({
     name: 'comment-editor',
@@ -92,6 +93,14 @@ export default Vue.extend({
         inserfunc()
 
         this.smiliesComponet = this.$children[0]
+
+        // load cookies
+        if (brownies.cookies.ac_nick)
+            this.formData.nick = brownies.cookies.ac_nick
+        if (brownies.cookies.ac_mail)
+            this.formData.mail = brownies.cookies.ac_mail
+        if (brownies.cookies.ac_website)
+            this.formData.website = brownies.cookies.ac_website
     },
     data: () => ({
         smiliesComponet: null,
@@ -111,7 +120,7 @@ export default Vue.extend({
         smiliesVisible: false, // 显示标签面板
     }),
     methods: {
-        parseMarkdown: function (text) {
+        parseMarkdown: function (text: string) {
             // 解析表情
             for(let k in this.smiliesComponet.smilies)
             {
@@ -126,35 +135,16 @@ export default Vue.extend({
             return marked2(text)
         },
         onComment: function () {
-            if (!this.formData.content)  {
-                this.showAlert('写点儿什么吧')
+            if(!this.checkForm())
                 return
-            }
 
-            if (!this.formData.nick) {
-                this.showAlert('如何称呼您呢?')
-                return
-            }
+            // save cookies
+            brownies.cookies.ac_nick = this.formData.nick
+            brownies.cookies.ac_mail = this.formData.mail
+            brownies.cookies.ac_website = this.formData.website
 
-            if (this.formData.mail && this.mailRequired) {
-                let reg = new RegExp('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$', 'g')
-                if (!this.formData.mail.match(reg)) {
-                    this.showAlert('邮箱请使用xx@xx.xx格式')
-                    return
-                }
-            }
-
-            if (this.formData.website && this.websiteRequired) {
-                let reg = new RegExp('^https?://', 'g')
-                if (!this.formData.website.match(reg))
-                {
-                    this.showAlert('网站格式请使用http(s)://开头')
-                    return
-                }
-            }
-
-            if(this.showSubmitingAnimation)
-            {
+            // 防止重复提交评论
+            if(this.showSubmitingAnimation) {
                 this.showAlert('评论正在提交，请等待')
                 return
             }
@@ -171,6 +161,36 @@ export default Vue.extend({
             this.showSubmitingAnimation = true
 
             this.owner.refresh()
+        },
+        checkForm: function() {
+            if (!this.formData.content)  {
+                this.showAlert('写点儿什么吧')
+                return false
+            }
+
+            if (!this.formData.nick) {
+                this.showAlert('如何称呼您呢?')
+                return false
+            }
+
+            if (this.formData.mail && this.mailRequired) {
+                let reg = new RegExp('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$', 'g')
+                if (!this.formData.mail.match(reg)) {
+                    this.showAlert('邮箱请使用xx@xx.xx格式')
+                    return false
+                }
+            }
+
+            if (this.formData.website && this.websiteRequired) {
+                let reg = new RegExp('^https?://', 'g')
+                if (!this.formData.website.match(reg))
+                {
+                    this.showAlert('网站格式请使用http(s)://开头')
+                    return false
+                }
+            }
+
+            return true
         },
         hideAlert: function () {
             this.alertMessage.text = ''
@@ -200,7 +220,7 @@ export default Vue.extend({
     },
     props: {
         owner: {
-            type: AwesomeComment,
+            type: AprilComment,
             required: true
         },
         isReplying: {
@@ -251,7 +271,7 @@ export default Vue.extend({
         padding: 10px;
 
         .ac-input {
-            @extend %awesome-comment-text;
+            @extend %april-comment-text;
 
             border: none;
             resize: none;
@@ -264,13 +284,13 @@ export default Vue.extend({
         }
 
         .ac-button {
-            @extend %awesome-comment-button;
+            @extend %april-comment-button;
             padding: 4px 8px; 
             display: inline-flex;
         }
 
         .ac-cancel-reply {
-            @extend %awesome-comment-button;
+            @extend %april-comment-button;
 
             width: 100%;
             background-color: #73ff2b2b;
@@ -307,8 +327,9 @@ export default Vue.extend({
 
         .ac-tool-panel {
             padding: 0px 8px;
-            border: 1px solid #00000059;
+            border: 1px solid #efefef;
             box-sizing: border-box;
+            border-radius: 3px;
 
             &:first-child {
                 margin-top: 10px;
@@ -327,12 +348,12 @@ export default Vue.extend({
             @extend .ac-tool-panel;
 
             .ac-markdown {
-                @extend %awesome-comment-markdown;
+                @extend %april-comment-markdown;
             }
         }
 
         .ac-alert-info {
-            @extend %awesome-comment-text;
+            @extend %april-comment-text;
 
             position: absolute;
             width: 100%;
@@ -391,19 +412,20 @@ export default Vue.extend({
     }
 
     // 输入框
-    #awesome-comment-input {
+    #april-comment-input {
         width: 100%;
         min-height: 10em;
         font-size: 0.875em;
         margin-top: 0.5rem;
         background: transparent;
         resize: vertical;
-        transition: all .25s ease;
+        transition: all 0.7s ease;
         border: 1px solid #50505017;
         word-break: break-all;
+        border-radius: 8px;
 
         &:focus {
-            border: 1px solid #2b805065;
+            border: 1px solid #86bb9d;
         }
     }
 

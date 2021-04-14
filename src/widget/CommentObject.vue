@@ -1,5 +1,5 @@
 <template>
-    <div class="ac-comment-object"  v-bind:id="'ac-comment-object-id-'+comment.id"
+    <div class="ac-comment-object"  v-bind:id="comment.id"
     >
         <div class="ac-comment-frame">
             <img class="ac-comment-avatar" 
@@ -51,125 +51,10 @@
     </div>
 </template>
 
-<style lang="scss">
-    @import "../index.scss";
-
-    .ac-comment-object {
-        display: flex;
-        flex-direction: column;
-
-        .ac-comment-frame {
-            display: flex;
-            flex-direction: row;
-
-            .ac-comment-avatar {
-                width: 45px;
-                height: 45px;
-                flex-shrink: 0;
-                border-radius: 50%;
-                margin-right: 12px;
-                border: 1px solid #f5f5f5;
-                padding: 2px;
-
-                &.ac-comment-avatar-smaller {
-                    width: 35px;
-                    height: 35px;
-                }
-            }
-
-            .ac-comment-board {
-                flex-grow: 1;
-                width: 100%;
-                max-width: calc(100% - 62px);
-
-                .ac-comment-info {
-                    .ac-nick {
-                        @extend %awesome-comment-text;
-
-                        transition: all 0.2s;
-                        cursor: unset;
-                        color: #1abc9c;
-                        font-size: 1em !important;
-
-                        &.ac-nick-with-link {
-                            cursor: pointer;
-
-                            &:hover {
-                                color: #d7191a;
-                            }
-                        }
-                    }
-                    
-                    .ac-badge-author {
-                        color: #03acca;
-                        background-color: #c3f3fb;
-                        border-radius: 8px;
-                        padding: 0.35em;
-                        text-align: center;
-                        vertical-align: baseline;
-                        white-space: nowrap;
-                        font-size: 66%;
-                        font-weight: 600;
-                        line-height: 1;
-                        display: inline-block;
-                        box-sizing: border-box;
-                    }
-
-                    .ac-browser, .ac-os, .ac-time {
-                        @extend %awesome-comment-text;
-                        font-size: 0.75rem !important;
-                        color: #b3b3b3;
-                    }
-
-                    .ac-reply-button {
-                        @extend %awesome-comment-text;
-                        font-size: 14px;
-                        color: #aa8f70;
-                        margin-left: 1rem;
-                        cursor: pointer;
-
-                        &:hover {
-                            color: #ffb35c;
-                        }
-                    }
-                }
-
-                .ac-comment-content {
-                    @extend %awesome-comment-text;
-                    @extend %awesome-comment-markdown;
-                    font-size: 16px;
-                    word-break: break-word;
-                    overflow-x: auto;
-                }
-            }
-        }
-
-        .ac-replies {
-            .ac-replies-indent {
-                padding-left: 66px
-            }
-        }
-
-        
-    }
-
-    // 评论分割线
-    .ac-all-comments > div:not(.anim-comment-list-leave-active)~.ac-comment-object:not(:first-child) > .ac-comment-frame > .ac-comment-board {
-        border-top: 1px solid #e5e9ef;
-        padding-top: 14px;
-    }
-
-    // 分割线下面的评论头像要有一些margin-top
-    .ac-all-comments > div:not(.anim-comment-list-leave-active)~.ac-comment-object:not(:first-child) > .ac-comment-frame > .ac-comment-avatar {
-        margin-top: 14px;
-    }
-
-</style>
-
 <script lang="ts">
 import { type } from 'os';
 import Vue from 'vue'
-import AwesomeComment from '..';
+import AprilComment from '..';
 import marked2 from '../utils/markedLib'
 const moment = require('moment');
 require('moment/locale/zh-cn');
@@ -249,7 +134,7 @@ export default Vue.extend({
     },
     props: {
         owner: {
-            type: AwesomeComment,
+            type: AprilComment,
             required: true
         },
         comment: {
@@ -263,3 +148,118 @@ export default Vue.extend({
     }
 })
 </script>
+
+<style lang="scss">
+    @import "../index.scss";
+
+    .ac-comment-object {
+        display: flex;
+        flex-direction: column;
+
+        .ac-comment-frame {
+            display: flex;
+            flex-direction: row;
+
+            .ac-comment-avatar {
+                width: 45px;
+                height: 45px;
+                flex-shrink: 0;
+                border-radius: 50%;
+                margin-right: 12px;
+                border: 1px solid #f5f5f5;
+                padding: 2px;
+
+                &.ac-comment-avatar-smaller {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+
+            .ac-comment-board {
+                flex-grow: 1;
+                width: 100%;
+                max-width: calc(100% - 62px);
+
+                .ac-comment-info {
+                    .ac-nick {
+                        @extend %april-comment-text;
+
+                        transition: all 0.2s;
+                        cursor: unset;
+                        color: #1abc9c;
+                        font-size: 1em !important;
+
+                        &.ac-nick-with-link {
+                            cursor: pointer;
+
+                            &:hover {
+                                color: #d7191a;
+                            }
+                        }
+                    }
+                    
+                    .ac-badge-author {
+                        color: #03acca;
+                        background-color: #c3f3fb;
+                        border-radius: 8px;
+                        padding: 0.35em;
+                        text-align: center;
+                        vertical-align: baseline;
+                        white-space: nowrap;
+                        font-size: 66%;
+                        font-weight: 600;
+                        line-height: 1;
+                        display: inline-block;
+                        box-sizing: border-box;
+                    }
+
+                    .ac-browser, .ac-os, .ac-time {
+                        @extend %april-comment-text;
+                        font-size: 0.75rem !important;
+                        color: #b3b3b3;
+                    }
+
+                    .ac-reply-button {
+                        @extend %april-comment-text;
+                        font-size: 14px;
+                        color: #aa8f70;
+                        margin-left: 1rem;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #ffb35c;
+                        }
+                    }
+                }
+
+                .ac-comment-content {
+                    @extend %april-comment-text;
+                    @extend %april-comment-markdown;
+                    font-size: 16px;
+                    word-break: break-word;
+                    overflow-x: auto;
+                }
+            }
+        }
+
+        .ac-replies {
+            .ac-replies-indent {
+                padding-left: 66px
+            }
+        }
+
+        
+    }
+
+    // 评论分割线
+    .ac-all-comments > div:not(.anim-comment-list-leave-active)~.ac-comment-object:not(:first-child) > .ac-comment-frame > .ac-comment-board {
+        border-top: 1px solid #e5e9ef;
+        padding-top: 14px;
+    }
+
+    // 分割线下面的评论头像要有一些margin-top
+    .ac-all-comments > div:not(.anim-comment-list-leave-active)~.ac-comment-object:not(:first-child) > .ac-comment-frame > .ac-comment-avatar {
+        margin-top: 14px;
+    }
+
+</style>

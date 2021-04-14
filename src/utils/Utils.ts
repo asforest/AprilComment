@@ -1,8 +1,8 @@
-export function useDefault(object: any, defaultObject: any)
+export function useDefault(object: any, defaultObject: any): any
 {
 	let temp = Object.assign({}, object)
 
-	if(object == null)
+	if(typeof object == 'undefined' || object == null)
 		return defaultObject
 
 	if(defaultObject == null)

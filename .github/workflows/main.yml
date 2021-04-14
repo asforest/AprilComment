@@ -42,7 +42,7 @@ jobs:
 
       - name: Depoly Builds
         env:
-          repository: https://${{ secrets.TOKEN }}@github.com/innc11/awesome-comment-files
+          repository: https://${{ secrets.TOKEN }}@github.com/innc11/AprilCommentFiles
           branch: main
           tag_name: ${{ steps.checkout-tagname.outputs.tag_name }}
         shell: bash
@@ -61,7 +61,7 @@ jobs:
           then
             echo "----------Init Git Repository----------"
             git init
-            git config user.email aprilforests@qq.com
+            git config user.email 1805795356@qq.com
             git config user.name innc11
             git status
             git remote add github $repository

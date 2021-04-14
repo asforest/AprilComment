@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="awesome-comment-widget">
+        <div class="april-comment-widget">
             <!-- 编辑框默认的位置，当回复某个评论时会被临时移动到对应的地方 -->
             <div class="ac-editor-wrapper">
                 <comment-editor
@@ -64,24 +64,24 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import CommentModel from './model/CommentModel'
-import commentObject from './widget/CommentObject.vue'
-import commentEditor from './widget/CommentEditor.vue'
-import paginator from     './widget/Paginator2.vue'
-import AwesomeComment from '.'
+import CommentModel from '../model/CommentModel'
+import commentObject from './CommentObject.vue'
+import commentEditor from './CommentEditor.vue'
+import paginator from './Paginator.vue'
+import AprilComment from '..'
 const $ = require('jquery')
 
 export default Vue.extend({
-    name: 'awesome-comment',
+    name: 'april-comment',
     inheritAttrs: false,
     props: {
         owner: {
-            type: AwesomeComment,
+            type: AprilComment,
             required: true
         }
     },
     data: () => ({
-        // owner: null as AwesomeComment, // AwesomeComment
+        // owner: null as AprilComment, // AprilComment
         allComments: [] as Array<CommentModel>, // 所有的评论
         commentCount: 0, // 所有的评论数量
         isReplying: false, // 是否正在回复评论（是否显示'取消回复'按钮）
@@ -110,7 +110,7 @@ export default Vue.extend({
             $('.ac-cancel-reply').css('display', '')
 
             let object = $('#ac-comment-object-id-'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text()
-            let input = $('#awesome-comment-input')
+            let input = $('#april-comment-input')
             input.attr('placeholder', '@ '+object+',')
             input.focus()
 
@@ -127,7 +127,7 @@ export default Vue.extend({
             $('.ac-cancel-reply').css('display', 'none')
             edit.appendTo(defaultWrapper)
 
-            let input = $('#awesome-comment-input')
+            let input = $('#april-comment-input')
             input.attr('placeholder', input.attr('default-placeholder'))
 
             this.replyId = -1
@@ -198,7 +198,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-    .awesome-comment-widget {
+    .april-comment-widget {
         transition: all 0.3s, opacity 0.1s;
 
         .ac-comment-count {

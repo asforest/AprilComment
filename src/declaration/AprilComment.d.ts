@@ -1,3 +1,3 @@
 declare interface Window {
-    AwesomeComment: any
+    AprilComment: any
 }

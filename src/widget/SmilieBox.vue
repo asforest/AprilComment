@@ -45,7 +45,7 @@ export default Vue.extend({
                 return obj[o]
         },
         onSmlieClick: function(e) {
-            $('#awesome-comment-input').insert($(e.target).attr('data-tag'))
+            $('#april-comment-input').insert($(e.target).attr('data-tag'))
         },
         defaultSmilieSet: function() {
             for (let o in this.smilies) {

@@ -2,10 +2,13 @@
     "compilerOptions": {
         "sourceMap": true,
         "noImplicitAny": true,
-        "noImplicitThis": true,
+        "noImplicitThis": false,
         "alwaysStrict": true,
         "strictFunctionTypes": true,
+        "strictNullChecks": true,
         "strictPropertyInitialization": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "Node",
         "target": "ES5"
     }
 }
