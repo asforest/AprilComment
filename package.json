@@ -1,8 +1,9 @@
 {
   "name": "april-comment",
   "version": "1.4.1",
-  "author": "innc11",
+  "description": "A implementation of Waline Client",
   "license": "MIT",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "parcel src/index.ts",
     "build": "parcel build src/index.ts --no-source-maps"
