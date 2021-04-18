@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "parcel src/index.ts",
-    "build": "parcel build src/index.ts --no-source-maps"
+    "build": "parcel build src/index.ts"
   },
   "dependencies": {
     "brownies": "^3.0.0",
