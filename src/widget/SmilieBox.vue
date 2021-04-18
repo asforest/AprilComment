@@ -105,6 +105,7 @@ export default Vue.extend({
                 
                 &.ac-selected {
                     opacity: 1 !important;
+                    box-shadow: 1px 1px 3px #e0e0e0;
                     // border-bottom: 3px solid black;
                     // transform: translateY(-4px);
                 }
