@@ -18,7 +18,7 @@ var defaultOptions: AprilCommentOptions = {
     el: undefined as any,
     api: undefined as any,
     pathname: location.pathname,
-    authorMails: [],
+    authorMails: undefined,
     authorLabel: '作者',
     smilieEnabled: true,
     smilies: undefined,
@@ -79,7 +79,8 @@ export default class AprilComment
         
         await this.refresh()
 
-        this.smilieManager?.loadFromObject(this.opt.smilies as object)
+        if(typeof this.opt.smilies == 'object')
+            this.smilieManager?.loadFromObject(this.opt.smilies as object)
         this.editorWidget.smiliesComponet.$forceUpdate()
 		this.editorWidget.smiliesComponet.defaultSmilieSet()
 		this.mainWidget.update()
