@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "A implementation of Waline Client",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "parcel src/index.ts",
     "build": "parcel build src/index.ts --no-source-maps"
