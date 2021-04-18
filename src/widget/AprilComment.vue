@@ -16,7 +16,7 @@
             </div>
 
             <!-- 评论数量显示 -->
-            <div class="ac-comment-count"><span v-html="getCommentCount()"></span></div>
+            <div class="ac-comment-count" v-show="commentExist()"><span v-html="getCommentCount()"></span></div>
 
             <!-- 头部页码条(只在非第一页时显示) -->
             <paginator 
@@ -24,7 +24,7 @@
                 key="paginator-head"
                 v-bind:owner="owner"
                 v-bind:flip="true"
-                v-show="owner.opt.dualPaginator && pagination_current!=0"
+                v-show="commentExist() && owner.opt.dualPaginator && pagination_current!=0"
                 v-bind:total="pagination_total"
                 v-bind:current="pagination_current"
                 v-bind:barLength="owner.opt.paginatorLength"
@@ -38,7 +38,12 @@
             </div>
 
             <!-- 评论列表 -->
-            <transition-group name="anim-comment-list" tag="div" class="ac-all-comments">
+            <transition-group 
+                name="anim-comment-list" 
+                tag="div" 
+                class="ac-all-comments"
+                v-show="commentExist()"
+            >
                 <comment 
                     v-for="comment in allComments"
                     v-bind:key="comment.id"
@@ -58,6 +63,7 @@
             <paginator 
                 class="ac-paginator-foot"
                 key="paginator-foot"
+                v-show="commentExist()"
                 v-bind:owner="owner"
                 v-bind:total="pagination_total"
                 v-bind:current="pagination_current"
@@ -65,6 +71,12 @@
                 v-on:pagination-changed="onPaginationChanged"
                 v-on:pagination-repeatedly-click="onFootPaginationRepeatedlyClick"
             ></paginator>
+
+            <div class="ac-copyright">
+                <a href="https://github.com/innc11/AprilComment" target="_blank">AprilComment</a>
+                 v{{appVersion}}, Backend Powered by 
+                <a href="https://github.com/lizheming/Waline" target="_blank">Waline</a>
+            </div>
         </div>
     </div>
 </template>
@@ -88,6 +100,7 @@ export default Vue.extend({
         }
     },
     data: () => ({
+        appVersion: AprilComment.version(),
         allComments: [] as Array<CommentModel>,   // 所有的评论
         commentCount: 0,                          // 所有的评论数量
         isReplying: false,                        // 是否正在回复评论（是否显示'取消回复'按钮）
@@ -164,6 +177,9 @@ export default Vue.extend({
                     for (const gchild of child.$children)
                         gchild.update()
         },
+        commentExist: function() {
+            return this.commentCount > 0
+        }
     },
     watch: {
         pagination_total: function (newV, oldV) {
@@ -242,6 +258,28 @@ export default Vue.extend({
             {
                 from { transform: rotate(0deg); }
                 to { transform: rotate(1turn); }
+            }
+        }
+
+        .ac-copyright {
+            text-align: right;
+            box-sizing: border-box;
+            line-height: 20px;
+            color: #999;
+            font-size: 12px;
+            padding: 8px 10px;
+
+            a {
+                font-weight: bold;
+                position: relative;
+                cursor: pointer;
+                color: #1abc9c;
+                text-decoration: none;
+                display: inline-block;
+
+                &:hover {
+                    color: #f07c3a;
+                }
             }
         }
 
