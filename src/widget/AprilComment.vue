@@ -89,6 +89,7 @@ import paginator from './Paginator.vue'
 import AprilComment from '..'
 import CommentModel from '../interface/CommentModel'
 import DOMPurify from 'dompurify'
+import { sanitizeThroughly } from '../utils/Utils'
 const $ = require('jquery')
 
 export default Vue.extend({
@@ -132,10 +133,8 @@ export default Vue.extend({
             editor.appendTo(corespondingWrapper)
             $('.ac-cancel-reply').css('display', '')
 
-            let sanitize = (text: string) => DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
-
             // 设置Placeholder
-            let object = sanitize($('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text())
+            let object = sanitizeThroughly($('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text())
             let input = $('#april-comment-input')
             input.attr('placeholder', '@ '+object+',')
             input.focus()

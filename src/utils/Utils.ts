@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify"
 import MissingNecessaryFieldError from "../exception/MissingNecessaryFieldError"
 import AprilCommentOptions from "../interface/AprilCommentOptions"
 
@@ -56,4 +57,9 @@ export function checkOptions(necessaries: string[], checkFor: AprilCommentOption
 		if(!(necessary in checkFor) || typeof (checkFor as any)[necessary]=='undefined')
 			throw new MissingNecessaryFieldError(necessary)
 	}
+}
+
+export function sanitizeThroughly(text: string) 
+{
+	return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
 }

@@ -4,7 +4,7 @@ import UnknownException from "../exception/UnknownException";
 import CommentingModel from "../interface/CommentingModel";
 import CommentModel from "../interface/CommentModel";
 import RecentComment from "../interface/RecentComment";
-import { useDefault } from "../utils/Utils";
+import { sanitizeThroughly, useDefault } from "../utils/Utils";
 import ServiceProvider from "./ServiceProvider";
 
 export default class Waline extends ServiceProvider
@@ -58,12 +58,12 @@ export default class Waline extends ServiceProvider
                     let replies = 'children' in comment? parseData(comment.children.slice(0).sort(sortByTime)):[]
 
                     allcomments.push({
-                        id:           comment.objectId,
-                        parentId:     comment.pid || '',
-                        rootId:       comment.rid || '',
-                        avatar:       avatarUrl,
-                        nick:         comment.nick,
-                        website:      comment.link,
+                        id:           sanitizeThroughly(comment.objectId),
+                        parentId:     sanitizeThroughly(comment.pid || ''),
+                        rootId:       sanitizeThroughly(comment.rid || ''),
+                        avatar:       sanitizeThroughly(avatarUrl),
+                        nick:         sanitizeThroughly(comment.nick),
+                        website:      sanitizeThroughly(comment.link),
                         isauthor:     isAuthorMail,
                         authorlabel:  opt.authorLabel,
                         browser:      comment.browser,
