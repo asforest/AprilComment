@@ -88,6 +88,7 @@ import commentEditor from './CommentEditor.vue'
 import paginator from './Paginator.vue'
 import AprilComment from '..'
 import CommentModel from '../interface/CommentModel'
+import DOMPurify from 'dompurify'
 const $ = require('jquery')
 
 export default Vue.extend({
@@ -127,14 +128,22 @@ export default Vue.extend({
             let nick = $(e.target).attr('nick')
             
             let editor = $('.ac-comment-editor')
-            let corespondingWrapper = $('#ac-comment-object-id-'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-reply-wrapper')
+            let corespondingWrapper = $('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-reply-wrapper')
             editor.appendTo(corespondingWrapper)
             $('.ac-cancel-reply').css('display', '')
 
-            let object = $('#ac-comment-object-id-'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text()
+            let sanitize = (text: string) => DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
+
+            // 设置Placeholder
+            let object = sanitize($('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text())
             let input = $('#april-comment-input')
             input.attr('placeholder', '@ '+object+',')
             input.focus()
+
+            // 取消回复按钮
+            let cancelReply = $('.ac-cancel-reply')
+            let defaultText = cancelReply.attr('default-text')
+            cancelReply.text(defaultText+' ('+object+')')
 
             this.replyId = cid
             this.replyRootId = rid
@@ -149,8 +158,13 @@ export default Vue.extend({
             $('.ac-cancel-reply').css('display', 'none')
             edit.appendTo(defaultWrapper)
 
+            // 还原输入框的占位符
             let input = $('#april-comment-input')
             input.attr('placeholder', input.attr('default-placeholder'))
+
+            // 还原取消回复按钮
+            let cancelReply = $('.ac-cancel-reply')
+            cancelReply.text(cancelReply.attr('default-text'))
 
             this.replyId = -1
             this.replyRootId = -1

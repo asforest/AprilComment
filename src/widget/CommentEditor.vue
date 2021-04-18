@@ -1,6 +1,6 @@
 <template>
     <div class="ac-comment-editor">
-        <div class="ac-cancel-reply" title="取消回复" 
+        <div class="ac-cancel-reply" title="取消回复" default-text="取消回复"
             v-show="isReplying" 
             v-on:click="$emit('cancel-reply')"
         >
