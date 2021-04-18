@@ -19,16 +19,25 @@ export function useDefault(object: any, defaultObject: any): any
 
 	for (const obj in defaultObject)
 	{
-		let type = typeof(temp[obj])
-		let type2 = typeof(defaultObject[obj])
+		let var1 = temp[obj]
+		let var2 = defaultObject[obj]
+		let type1 = typeof var1
+		let type2 = typeof var2
+		let arr1 = Array.isArray(var1)
+		let arr2 = Array.isArray(var2)
 
-		if(type == 'undefined')
+		if(type1 == 'undefined')
 			temp[obj] = defaultObject[obj]
 
-		if(type != type2 && type2 != 'undefined')
+		else if(type1 != type2 && type2 != 'undefined') 
 			temp[obj] = defaultObject[obj]
 
-		if(type == 'object')
+		else if(arr1 != arr2) {
+			if(type2 != 'undefined')
+				temp[obj] = defaultObject[obj]
+		}
+
+		else if(type1 == 'object')
 			temp[obj] = useDefault(temp[obj], defaultObject[obj])
 	}
 
