@@ -1,7 +1,6 @@
-
 export default interface CommentingModel
 {
-    key?: string,
+    pathname?: string,
     nick: string,
     mail: string,
     website: string,

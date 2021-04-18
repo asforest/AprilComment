@@ -37,13 +37,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AprilComment from '..'
 const $ = require('jquery')
 
 export default Vue.extend({
     name: 'paginator',
-    data: () => ({
-        owner: null,
-    }),
     methods: {
         onClickPagination: function (e) {
             let source = $(e.target)
@@ -92,6 +90,10 @@ export default Vue.extend({
         }
     },
     props: {
+        owner: {
+            type: AprilComment,
+            required: true
+        },
         total: {
             type: Number,
             required: true

@@ -4,7 +4,6 @@ export default interface CommentModel
     id: string
     parentId?: string
     rootId?: string
-
     avatar: string
     nick: string
     website: string

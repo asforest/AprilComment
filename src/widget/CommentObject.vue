@@ -7,6 +7,7 @@
                 v-bind:class="smallerAvatar? 'ac-comment-avatar-smaller':''"
                 v-bind:style="comment.website? 'cursor: pointer;':''"
                 v-bind:onclick="comment.website? 'window.open(\''+comment.website+'\', \'_blank\')':''"
+                v-bind:title="comment.nick"
             >
 
             <div class="ac-comment-board">
@@ -14,21 +15,23 @@
                     <a class="ac-nick" rel="nofollow" 
                         v-bind:target="comment.website? '_blank':''"
                         v-bind:href="comment.website? comment.website:'javascript:void(0)'" 
+                        v-bind:title="comment.website"
                         v-bind:class="comment.website? 'ac-nick-with-link':''"
                     >{{comment.nick}}</a>
 
                     <span class="ac-badge-author" style="margin: 0;" v-if="comment.isauthor">{{comment.authorlabel}}</span>
 
-                    <span class="ac-browser">{{comment.browser}}</span>
+                    <span class="ac-browser" v-bind:title="comment.os">{{comment.browser}}</span>
                     <span class="ac-os" v-if="false">{{comment.os}}</span>
                     <br/>
-                    <span class="ac-time">{{parseDatetime(comment.time)}}</span>
+                    <span class="ac-time" v-bind:title="parseDatetime(comment.time, true)">{{parseDatetime(comment.time, false)}}</span>
                     <span class="ac-reply-button"
                         v-on:click="$emit('reply', $event)"
                         v-bind:comment-id="comment.id"
                         v-bind:comment-root-id="comment.rootId"
                         v-bind:nick="comment.nick"
                     >回复</span>
+
                 </div>
 
                 <div class="ac-comment-content" v-html="parseMarkdown(comment.content)"></div>
@@ -40,7 +43,7 @@
         <div class="ac-replies">
             <comment-object
                 v-for="cmt in comment.replies"
-                v-bind:key="cmt.time"
+                v-bind:key="cmt.id"
                 v-bind:owner="owner"
                 v-bind:comment="cmt" 
                 v-bind:smaller-avatar="true"
@@ -62,14 +65,9 @@ moment.locale('zh-cn')
 
 export default Vue.extend({
     name: 'comment-object',
-    data: () => {
-        return {
-            _indent: true
-        }
-    },
     methods: {
         // 判断评论是否需要缩进
-        indent: function(subNick: any) {
+        indent: function(childNick: any) {
             let hasParent = !!this.$parent.$options._parentVnode;
 
             if (hasParent) {
@@ -86,37 +84,28 @@ export default Vue.extend({
             let selfNick = this.comment.nick
 
             if (hasParent) {
-                if (parentNick == subNick) // 判断父评论和孙评论是否为同一个人
+                if (parentNick == childNick) // 判断父评论和孙评论是否为同一个人
                     return false
             }
 
-            if (hasParent && selfNick == subNick) // 自己回复自己(父评论和子评论是否为同一人)，但顶层评论无论如何都需要缩进
+            if (hasParent && selfNick == childNick) // 自己回复自己(父评论和子评论是否为同一人)，但顶层评论无论如何都需要缩进
                 return false
             
             if (hasParent) {
-                if (parentNick == selfNick && selfNick != subNick) // 判断父评论和子评论是同一个人，但是孙评论又是另外一个人（这是考虑到了连续评论的情况）
+                if (parentNick == selfNick && selfNick != childNick) // 判断父评论和子评论是同一个人，但是孙评论又是另外一个人（这是考虑到了连续评论的情况）
                     return false
             }
 
             return true
         },
         parseMarkdown: function (text: string) {
-            // 解析表情
-            for(let k in this.owner.editor.smiliesComponet.smilies)
-            {
-                let sms = this.owner.editor.smiliesComponet.smilies[k]
-                for(let sm in sms)
-                {
-                    let url = sms[sm]
-                    let el = '<img class="ac-smilie" src="'+url+'" alt="'+sm+'" />';
-                    text = text.replace(':'+sm+':', el)
-                }
-            }
-
-            return marked2(text)
+            return marked2(this.owner.smilieManager.renderAsHtml(text))
         },
-        parseDatetime: function(timestamp: number) {
-            return moment(timestamp * 1000).calendar(null, {
+        parseDatetime: function(timestamp: number, formal: boolean) {
+            let mom = moment(timestamp * 1000)
+            if(formal)
+                return mom.format('YYYY-MM-DD HH:mm')
+            return mom.calendar(null, {
                 sameDay: '[今天] HH:mm',
                 nextDay: '[明天] HH:mm',
                 nextWeek: 'dddd',
@@ -192,7 +181,7 @@ export default Vue.extend({
                             cursor: pointer;
 
                             &:hover {
-                                color: #d7191a;
+                                color: #ee9d25;
                             }
                         }
                     }
@@ -223,10 +212,13 @@ export default Vue.extend({
                         font-size: 14px;
                         color: #aa8f70;
                         margin-left: 1rem;
+                        border-radius: 4px;
+                        padding: 0px 2px;
                         cursor: pointer;
 
                         &:hover {
-                            color: #ffb35c;
+                            color: #38985a;
+                            background-color: #fff684;
                         }
                     }
                 }

@@ -4,14 +4,12 @@
             <!-- 编辑框默认的位置，当回复某个评论时会被临时移动到对应的地方 -->
             <div class="ac-editor-wrapper">
                 <comment-editor
+                    ref="editor"
                     v-bind:owner="owner"
                     v-bind:is-replying="isReplying"
                     v-bind:mail-required="owner.opt.mailRequired"
                     v-bind:website-required="owner.opt.websiteRequired"
-                    v-bind:editor-placeholder="owner.opt.language.editorPlaceholder"
-                    v-bind:nick-placeholder="owner.opt.language.nickPlaceholder"
-                    v-bind:mail-placeholder="owner.opt.language.mailPlaceholder"
-                    v-bind:website-placeholder="owner.opt.language.websitePlaceholder"
+                    v-bind:placeholders="owner.opt.placeholders"
                     v-on:cancel-reply="onCancelReply"
                     v-bind="$attrs"
                 ></comment-editor>
@@ -24,14 +22,20 @@
             <paginator 
                 class="ac-paginator-head"
                 key="paginator-head"
+                v-bind:owner="owner"
                 v-bind:flip="true"
-                v-show="pagination_current!=0"
+                v-show="owner.opt.dualPaginator && pagination_current!=0"
                 v-bind:total="pagination_total"
                 v-bind:current="pagination_current"
                 v-bind:barLength="owner.opt.paginatorLength"
                 v-on:pagination-changed="onPaginationChanged"
                 v-on:pagination-repeatedly-click="onHeadPaginationRepeatedlyClick"
             ></paginator>
+
+            <!-- 头部页码条的加载动画 -->
+            <div class="ac-loading-indicator" v-show="owner.opt.dualPaginator && pagination_current!=0 && showLoadingAnimation">
+                正在加载
+            </div>
 
             <!-- 评论列表 -->
             <transition-group name="anim-comment-list" tag="div" class="ac-all-comments">
@@ -45,13 +49,16 @@
                 ></comment>
             </transition-group>
 
-            <!-- 加载动画 -->
-            <div class="ac-loading-indicator" v-show="showLoadingAnimation">正在加载</div>
+            <!-- 底部页码条的加载动画 -->
+            <div class="ac-loading-indicator" v-show="showLoadingAnimation">
+                正在加载
+            </div>
             
             <!-- 底部页码条 -->
             <paginator 
                 class="ac-paginator-foot"
                 key="paginator-foot"
+                v-bind:owner="owner"
                 v-bind:total="pagination_total"
                 v-bind:current="pagination_current"
                 v-bind:barLength="owner.opt.paginatorLength"
@@ -81,22 +88,24 @@ export default Vue.extend({
         }
     },
     data: () => ({
-        // owner: null as AprilComment, // AprilComment
-        allComments: [] as Array<CommentModel>, // 所有的评论
-        commentCount: 0, // 所有的评论数量
-        isReplying: false, // 是否正在回复评论（是否显示'取消回复'按钮）
-        isLoading: false, // 是否显示加载动画
-        showLoadingAnimation: false, // 是否真正地显示加载动画
-        animationTimer: null, // 加载动画延迟显示计时器
-        delayTime: 100, // 加载动画延迟显示的时间
-        replyId: -1, // 正在被回复的评论id（和isReplying功能类似）
-        replyRootId: -1, // 正在被回复的评论的根评论id
-        replyNick: '',  // 正在被回复的评论的昵称
-        pagination_total: 0, // 总页数
-        pagination_current: 0, // 当前页数
+        allComments: [] as Array<CommentModel>,   // 所有的评论
+        commentCount: 0,                          // 所有的评论数量
+        isReplying: false,                        // 是否正在回复评论（是否显示'取消回复'按钮）
+        isLoading: false,                         // 是否显示加载动画
+        showLoadingAnimation: false,              // 是否真正地显示加载动画
+        animationTimer: null,                     // 加载动画延迟显示计时器
+        delayTime: 100,                           // 加载动画延迟显示的时间
+        replyId: -1,                              // 正在被回复的评论id（和isReplying功能类似）
+        replyRootId: -1,                          // 正在被回复的评论的根评论id
+        replyNick: '',                            // 正在被回复的评论的昵称
+        pagination_total: 0,                      // 总页数
+        pagination_current: 0,                    // 当前页数
     }),
     methods: {
-        onClickReply: function(e) {
+        getEditorWidget: function() {
+            return this.$refs.editor
+        },
+        onClickReply: function(e: any) {
             this.isReplying = true
 
             // 将编辑框移动到被回复的评论下方
@@ -135,7 +144,7 @@ export default Vue.extend({
             this.replyNick = ''
         },
         onPaginationChanged: function(num: number) {
-            // 切换页时要将编辑框移回去，不然就消失了
+            // 切换页时要将编辑框移回去，不然就被Vue吃掉了就没有了
             this.onCancelReply()
             this.pagination_current = num
         },

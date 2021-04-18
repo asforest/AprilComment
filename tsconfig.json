@@ -9,6 +9,7 @@
         "strictPropertyInitialization": true,
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "Node",
-        "target": "ES5"
+        "target": "ES5",
+        "downlevelIteration": true
     }
 }

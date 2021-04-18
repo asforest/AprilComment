@@ -25,8 +25,6 @@ let dompOptions = {
     ]
 }
 
-// dompOptions = undefined
-
-export default function (text: string) {
+export default function marked2 (text: string) {
     return DOMPurify.sanitize(marked(text), dompOptions)
 }

@@ -9,16 +9,16 @@
 
         <div class="ac-commenter-info">
             <input name="nick" type="text" class="ac-input"
-                v-bind:placeholder="nickPlaceholder" 
+                v-bind:placeholder="placeholders.nick" 
                 v-model="formData.nick"
             >
             <input name="mail" type="email" class="ac-input" 
-                v-bind:placeholder="mailPlaceholder" 
+                v-bind:placeholder="placeholders.mail" 
                 v-if="mailRequired" 
                 v-model="formData.mail"
             >
             <input name="website" type="text" class="ac-input" 
-                v-bind:placeholder="websitePlaceholder" 
+                v-bind:placeholder="placeholders.website" 
                 v-if="websiteRequired" 
                 v-model="formData.website"
             >
@@ -27,8 +27,10 @@
         <div style="position: relative">
             <textarea id="april-comment-input" 
                 class="ac-input" 
-                v-bind:placeholder="editorPlaceholder" 
-                v-bind:default-placeholder="editorPlaceholder" 
+                v-bind:placeholder="placeholders.editor" 
+                v-bind:default-placeholder="placeholders.editor" 
+                v-bind:disabled="showSubmitingAnimation"
+                v-bind:style="showSubmitingAnimation?'background-color: #f5f5f5;':''"
                 v-model="formData.content"
             ></textarea>
 
@@ -37,7 +39,7 @@
                     <svg style="margin-right: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17688" width="22" height="22"><path d="M502.390154 935.384615a29.538462 29.538462 0 1 1 0 59.076923H141.430154C79.911385 994.461538 29.538462 946.254769 29.538462 886.153846V137.846154C29.538462 77.745231 79.950769 29.538462 141.390769 29.538462h741.218462c61.44 0 111.852308 48.206769 111.852307 108.307692v300.268308a29.538462 29.538462 0 1 1-59.076923 0V137.846154c0-26.899692-23.355077-49.230769-52.775384-49.230769H141.390769c-29.420308 0-52.775385 22.331077-52.775384 49.230769v748.307692c0 26.899692 23.355077 49.230769 52.775384 49.230769h360.999385z" p-id="17689"></path><path d="M196.923077 216.615385m29.538461 0l374.153847 0q29.538462 0 29.538461 29.538461l0 0q0 29.538462-29.538461 29.538462l-374.153847 0q-29.538462 0-29.538461-29.538462l0 0q0-29.538462 29.538461-29.538461Z" p-id="17690"></path><path d="M649.846154 846.769231a216.615385 216.615385 0 1 0 0-433.230769 216.615385 216.615385 0 0 0 0 433.230769z m0 59.076923a275.692308 275.692308 0 1 1 0-551.384616 275.692308 275.692308 0 0 1 0 551.384616z" p-id="17691"></path><path d="M807.398383 829.479768m20.886847-20.886846l0 0q20.886846-20.886846 41.773692 0l125.321079 125.321079q20.886846 20.886846 0 41.773693l0 0q-20.886846 20.886846-41.773693 0l-125.321078-125.321079q-20.886846-20.886846 0-41.773693Z" p-id="17692"></path></svg>
                     预览
                 </div>
-                <div class="ac-button" title="表情" v-if="true" v-on:click="smiliesVisible = !smiliesVisible">
+                <div class="ac-button" title="表情" v-show="owner.opt.smilieEnabled" v-on:click="smiliesVisible = !smiliesVisible">
                     <svg style="margin-right: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16172" width="22" height="22"><path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512zM512 56.888889a455.111111 455.111111 0 1 0 455.111111 455.111111 455.111111 455.111111 0 0 0-455.111111-455.111111zM312.888889 512A85.333333 85.333333 0 1 1 398.222222 426.666667 85.333333 85.333333 0 0 1 312.888889 512z" p-id="16173"></path><path d="M512 768A142.222222 142.222222 0 0 1 369.777778 625.777778a28.444444 28.444444 0 0 1 56.888889 0 85.333333 85.333333 0 0 0 170.666666 0 28.444444 28.444444 0 0 1 56.888889 0A142.222222 142.222222 0 0 1 512 768z" p-id="16174"></path><path d="M782.222222 391.964444l-113.777778 59.733334a29.013333 29.013333 0 0 1-38.684444-10.808889 28.444444 28.444444 0 0 1 10.24-38.684445l113.777778-56.888888a28.444444 28.444444 0 0 1 38.684444 10.24 28.444444 28.444444 0 0 1-10.24 36.408888z" p-id="16175"></path><path d="M640.568889 451.697778l113.777778 56.888889a27.875556 27.875556 0 0 0 38.684444-10.24 27.875556 27.875556 0 0 0-10.24-38.684445l-113.777778-56.888889a28.444444 28.444444 0 0 0-38.684444 10.808889 28.444444 28.444444 0 0 0 10.24 38.115556z" p-id="16176"></path></svg>
                     表情
                 </div>
@@ -50,7 +52,6 @@
         </div>
         
         <div class="ac-panels">
-
             <div class="ac-preview-panel" v-if="previewVisible">
                 <div>预览</div>
                 <div class="ac-markdown" v-html="formData.content? parseMarkdown(formData.content):''"></div>
@@ -59,11 +60,12 @@
             <div class="ac-smilies-panel" v-show="smiliesVisible">
                 <div>表情</div>
                 <div class="">
-                    <smilies-comment></smilies-comment>
+                    <smilies-comment
+                        ref="smiliesComponet"
+                        v-bind:owner="owner"
+                    ></smilies-comment>
                 </div>
             </div>
-        
-            
         </div>
 
         <div class="ac-alert-info" v-show="alertMessage.text!=''">
@@ -92,7 +94,7 @@ export default Vue.extend({
     mounted: function() {
         inserfunc()
 
-        this.smiliesComponet = this.$children[0]
+        this.smiliesComponet = this.$refs.smiliesComponet
 
         // load cookies
         if (brownies.cookies.ac_nick)
@@ -121,18 +123,7 @@ export default Vue.extend({
     }),
     methods: {
         parseMarkdown: function (text: string) {
-            // 解析表情
-            for(let k in this.smiliesComponet.smilies)
-            {
-                let sms = this.smiliesComponet.smilies[k]
-                for(let sm in sms)
-                {
-                    let url = sms[sm]
-                    let el = '<img class="ac-smilie" src="'+url+'" alt="'+sm+'" />';
-                    text = text.replace(':'+sm+':', el)
-                }
-            }
-            return marked2(text)
+            return marked2(this.owner.smilieManager.renderAsHtml(text))
         },
         onComment: function () {
             if(!this.checkForm())
@@ -235,21 +226,9 @@ export default Vue.extend({
             type: Boolean,
             required: true
         },
-        editorPlaceholder: {
-            type: String,
-            required: true
-        },
-        nickPlaceholder: {
-            type: String,
-            required: true
-        },
-        mailPlaceholder: {
-            type: String,
-            required: true
-        },
-        websitePlaceholder: {
-            type: String,
-            required: true
+        placeholders: {
+            type: Object, // PlaceholderOptions
+            required: true,
         }
     },
     components: {

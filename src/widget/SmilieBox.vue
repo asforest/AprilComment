@@ -2,30 +2,31 @@
     <div class="ac-smilie-set-widget">
         <div class="ac-smilie-sets-tab ac-smilies-scrollbar">
             <div class="ac-smilie-set-icon" 
-                v-for="(v, k) in smilies" 
-                v-bind:key="k"
-                v-bind:smilie-set="k" 
-                v-bind:class="k==selectedSmilieSet?'ac-selected':''" 
-                v-bind:title="k"
-                v-on:click="selectedSmilieSet=k"
+                v-for="(setcontent, setname) in smilies" 
+                v-bind:key="setname"
+                v-bind:smilie-set="setname" 
+                v-bind:class="setname==selectedSmilieSet?'ac-selected':''" 
+                v-bind:title="setname"
+                v-on:click="selectedSmilieSet=setname"
             >
-                <div class="ac-preview" v-bind:style="'background-image: url('+getFirst(v)+')'"></div>
+                <div class="ac-preview" v-bind:style="'background-image: url('+getFirst(setcontent)+')'"></div>
+                {{setname}}
             </div>
         </div>
 
         <div class="ac-smilie-box ac-smilies-scrollbar">
             <div class="ac-smilie-set"
-                v-for="(v, k) in smilies" 
-                v-bind:key="k"
-                v-bind:smilie-set="k" 
-                v-bind:style="k==selectedSmilieSet?'':'display: none'"
+                v-for="(setcontent, setname) in smilies" 
+                v-bind:key="setname"
+                v-bind:smilie-set="setname" 
+                v-bind:style="setname==selectedSmilieSet?'':'display: none'"
             >
                 <img class="ac-smilie" 
-                    v-for="(v2, k2) in smilies[k]" 
-                    v-bind:key="v2"
-                    v-bind:src="v2" 
-                    v-bind:alt="k2" 
-                    v-bind:data-tag="' :'+k2+': '" 
+                    v-for="(smurl, smcode) in smilies[setname]" 
+                    v-bind:key="smurl"
+                    v-bind:src="smurl" 
+                    v-bind:alt="smcode" 
+                    v-bind:data-tag="' :'+smcode+': '" 
                     v-on:click.stop="onSmlieClick"
                 >
             </div>
@@ -35,6 +36,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import AprilComment from '..'
 const $ = require('jquery')
 
 export default Vue.extend({
@@ -44,22 +46,30 @@ export default Vue.extend({
             for (let o in obj)
                 return obj[o]
         },
-        onSmlieClick: function(e) {
+        onSmlieClick: function(e: any) {
             $('#april-comment-input').insert($(e.target).attr('data-tag'))
         },
         defaultSmilieSet: function() {
             for (let o in this.smilies) {
                 this.selectedSmilieSet = o
-                return
+                break
             }
         }
     },
-    data: () => {
-        return {
-            smilies: {},
-            selectedSmilieSet: '',
+    data: () => ({
+        selectedSmilieSet: '',
+    }),
+    computed: {
+        smilies: function() {
+            return this.owner.smilieManager.smilies
         }
     },
+    props: {
+        owner: {
+            type: AprilComment,
+            required: true
+        },
+    }
 })
 </script>
 
@@ -71,20 +81,23 @@ export default Vue.extend({
             display: inline-flex;
             /* 	overflow-x: auto; */
             flex-direction: row;
-            border-bottom: 2px solid #61616154;
+            // border-bottom: 2px solid #61616154;
+            user-select: none;
             
             .ac-smilie-set-icon {
                 display: inline-flex;
-                padding: 5px;
+                padding: 2px 4px;
                 cursor: pointer;
-                margin: 5px;
+                margin: 4px;
                 opacity: 0.4;
+                border: 2px solid #808080;
+                border-radius: 6px;
                 
                 transition: all 0.1s;
 
                 .ac-preview {
-                    width: 32px;
-                    height: 32px;
+                    width: 24px;
+                    height: 24px;
                     background-repeat: no-repeat;
                     background-size: contain;
                     /* margin-right: 5px; */
@@ -93,7 +106,7 @@ export default Vue.extend({
                 &.ac-selected {
                     opacity: 1 !important;
                     // border-bottom: 3px solid black;
-                    transform: translateY(-4px);
+                    // transform: translateY(-4px);
                 }
             }
 
