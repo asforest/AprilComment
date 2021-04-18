@@ -1,6 +1,6 @@
 export interface PlaceholderOptions
 {
-	editor: string
+	comment_tips: string
 	nick: string
 	mail: string
 	website: string

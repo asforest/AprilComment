@@ -27,8 +27,8 @@
         <div style="position: relative">
             <textarea id="april-comment-input" 
                 class="ac-input" 
-                v-bind:placeholder="placeholders.editor" 
-                v-bind:default-placeholder="placeholders.editor" 
+                v-bind:placeholder="placeholders.comment_tips" 
+                v-bind:default-placeholder="placeholders.comment_tips" 
                 v-bind:disabled="showSubmitingAnimation"
                 v-bind:style="showSubmitingAnimation?'background-color: #f5f5f5;':''"
                 v-model="formData.content"
@@ -46,7 +46,7 @@
                 <div type="button" class="ac-button" v-on:click="onComment">
                     <!-- 加载动画 -->
                     <div class="ac-submiting-indicator" v-show="showSubmitingAnimation"></div>
-                    评论 !
+                    评论
                 </div>
             </div>
         </div>
@@ -85,8 +85,8 @@ import Vue from 'vue'
 import smiliesComponet from './SmilieBox.vue'
 import marked2 from '../utils/MarkedLib'
 import inserfunc from '../utils/jq-insert.js'
-import CommentingModel from '../model/commentingModel'
 import AprilComment from '..'
+import CommentingModel from '../interface/CommentingModel'
 const brownies = require('brownies')
 
 export default Vue.extend({
@@ -401,7 +401,8 @@ export default Vue.extend({
         transition: all 0.7s ease;
         border: 1px solid #50505017;
         word-break: break-all;
-        border-radius: 8px;
+        border-radius: 4px;
+        border-bottom-right-radius: 8px;
 
         &:focus {
             border: 1px solid #86bb9d;

@@ -71,11 +71,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import CommentModel from '../model/CommentModel'
 import commentObject from './CommentObject.vue'
 import commentEditor from './CommentEditor.vue'
 import paginator from './Paginator.vue'
 import AprilComment from '..'
+import CommentModel from '../interface/CommentModel'
 const $ = require('jquery')
 
 export default Vue.extend({

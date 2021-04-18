@@ -30,7 +30,7 @@ var defaultOptions: AprilCommentOptions = {
     mailRequired: true,
     websiteRequired: true,
     placeholders: {
-        editor: '说点儿什么吧',
+        comment_tips: '说点儿什么吧',
         nick: '昵称',
         mail: '邮箱',
         website: '网站',
