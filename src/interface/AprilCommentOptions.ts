@@ -17,6 +17,9 @@ export default interface AprilCommentOptions
     /** 页面标识符，用来区分不同的评论页面以加载对应页面的评论数据，默认从location.pathname获取 */
     pathname?: string
 
+    /** 是否手动控制生命周期（通过调用create(), destroy()） */
+    manualMode?: boolean
+
     /** 作者的邮箱的MD5，支持多个邮箱，如果是作者本人的评论，会有一个作者小标签，默认为空 */
     authorMails?: string[]
 

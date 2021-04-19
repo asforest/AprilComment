@@ -18,6 +18,7 @@ var defaultOptions: AprilCommentOptions = {
     el: undefined as any,
     api: undefined as any,
     pathname: location.pathname,
+    manualMode: false,
     authorMails: undefined,
     authorLabel: '作者',
     smilieEnabled: true,
@@ -58,6 +59,9 @@ export default class AprilComment
 
         this.smilieManager = new SmilieManager()
         this.serviceProvider = new Waline(this)
+
+        if(!this.opt.manualMode && document.querySelector('#'+this.opt.el) != null)
+            this.create()
     }
 
     setOptions(optionsOverrode?: AprilCommentOptions)
