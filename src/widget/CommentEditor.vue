@@ -251,7 +251,7 @@ export default Vue.extend({
         margin-bottom: 10px;
         overflow: hidden;
         position: relative;
-        padding: 10px;
+        padding: 0px 10px;
 
         .ac-input {
             @extend %april-comment-text;

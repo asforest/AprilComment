@@ -58,7 +58,6 @@
 import Vue from 'vue'
 import AprilComment from '..';
 import marked2 from '../utils/MarkedLib'
-import { sanitizeThroughly } from '../utils/Utils';
 const moment = require('moment');
 require('moment/locale/zh-cn');
 

@@ -91,7 +91,6 @@ import profile from './Profile.vue'
 import paginator from './Paginator.vue'
 import AprilComment from '..'
 import CommentModel from '../interface/CommentModel'
-import DOMPurify from 'dompurify'
 import { sanitizeThroughly } from '../utils/Utils'
 const $ = require('jquery')
 
