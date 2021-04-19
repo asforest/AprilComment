@@ -95,13 +95,13 @@ export default class Waline extends ServiceProvider
             editorWidget.alertMessage.button2 = '尝试重试加载评论列表'
             editorWidget.alertMessage.cb_button2 = () => setTimeout(() => this.refresh(), 300)
             
-            mainWidget.isLoading = false
+            
 
             throw e
+        } finally {
+            // 隐藏加载动画
+            mainWidget.isLoading = false
         }
-
-        // 隐藏加载动画
-        mainWidget.isLoading = false
 	}
 
 	async submit(comment: CommentingModel): Promise<void> 
@@ -250,12 +250,12 @@ export default class Waline extends ServiceProvider
 
         let raw = await response.text()
 
-        try {
-            return JSON.parse(raw)
-        } catch (e) {
-            if(e instanceof SyntaxError)
-                return raw
-            return null;
-        }
+            let temp = JSON.parse(raw)
+
+            if(temp.errno && temp.errno!=0)
+                throw new UnknownException(temp.errmsg)
+
+            return temp
+
     }
 }
