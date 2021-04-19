@@ -7,7 +7,7 @@
             取消回复
         </div>
 
-        <div class="ac-commenter-info">
+        <div class="ac-commenter-info" v-show="!$root.$refs.profile || !$root.$refs.profile.isLoggedIn()">
             <input name="nick" type="text" class="ac-input"
                 v-bind:placeholder="placeholders.nick" 
                 v-model="formData.nick"
@@ -43,7 +43,7 @@
                     <svg style="margin-right: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16172" width="22" height="22"><path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512zM512 56.888889a455.111111 455.111111 0 1 0 455.111111 455.111111 455.111111 455.111111 0 0 0-455.111111-455.111111zM312.888889 512A85.333333 85.333333 0 1 1 398.222222 426.666667 85.333333 85.333333 0 0 1 312.888889 512z" p-id="16173"></path><path d="M512 768A142.222222 142.222222 0 0 1 369.777778 625.777778a28.444444 28.444444 0 0 1 56.888889 0 85.333333 85.333333 0 0 0 170.666666 0 28.444444 28.444444 0 0 1 56.888889 0A142.222222 142.222222 0 0 1 512 768z" p-id="16174"></path><path d="M782.222222 391.964444l-113.777778 59.733334a29.013333 29.013333 0 0 1-38.684444-10.808889 28.444444 28.444444 0 0 1 10.24-38.684445l113.777778-56.888888a28.444444 28.444444 0 0 1 38.684444 10.24 28.444444 28.444444 0 0 1-10.24 36.408888z" p-id="16175"></path><path d="M640.568889 451.697778l113.777778 56.888889a27.875556 27.875556 0 0 0 38.684444-10.24 27.875556 27.875556 0 0 0-10.24-38.684445l-113.777778-56.888889a28.444444 28.444444 0 0 0-38.684444 10.808889 28.444444 28.444444 0 0 0 10.24 38.115556z" p-id="16176"></path></svg>
                     表情
                 </div>
-                <div type="button" class="ac-button" v-on:click="onComment">
+                <div type="button" class="ac-button" v-on:click.left="onComment" v-on:click.right.prevent="onLogin">
                     <!-- 加载动画 -->
                     <div class="ac-submiting-indicator" v-show="showSubmitingAnimation"></div>
                     评论
@@ -152,6 +152,9 @@ export default Vue.extend({
             this.showSubmitingAnimation = true
 
             this.owner.refresh()
+        },
+        onLogin: function() {
+            this.$root.$refs.profile.onClick()
         },
         checkForm: function() {
             if (!this.formData.content)  {

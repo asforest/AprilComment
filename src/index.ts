@@ -1,5 +1,6 @@
 import AprilCommentWidget from './widget/AprilComment.vue'
 import CommentEditor from './widget/AprilComment.vue'
+import Profile from './widget/Profile.vue'
 import CommentingModel from './interface/CommentingModel'
 import MissingNecessaryFieldError from './exception/MissingNecessaryFieldError'
 import AprilCommentOptions, { PlaceholderOptions } from './interface/AprilCommentOptions'
@@ -48,6 +49,7 @@ export default class AprilComment
 
     mainWidget: AprilCommentWidget|any = null
     editorWidget: CommentEditor|any = null
+    profileWidget: Profile|any = null
 
     constructor(options: AprilCommentOptions)
     {
@@ -85,6 +87,7 @@ export default class AprilComment
         }).$mount('#'+this.opt.el)
 
         this.editorWidget = this.mainWidget.$refs.editor as Vue
+        this.profileWidget = this.mainWidget.$refs.profile as Vue
         
         await this.refresh()
 

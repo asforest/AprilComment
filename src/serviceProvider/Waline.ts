@@ -124,7 +124,7 @@ export default class Waline extends ServiceProvider
             content = smilieManager?.renderAsMarkdown(content) as string
 
         try {
-            await this.fetch2(url, {
+            let params = {
                 method: 'POST',
                 body: JSON.stringify({
                     comment: content,
@@ -137,7 +137,13 @@ export default class Waline extends ServiceProvider
                     url: comment.pathname,
                     at: comment.at
                 }),
-            })
+            }
+
+            let token = this.aprilComment.profileWidget.userinfo.token
+            if(token)
+                (params as any).headers = {Authorization: `Bearer ${token}`}
+
+            await this.fetch2(url, params)
 
             editorWidget.formData.content = ''
             editorWidget.$emit('cancel-reply')
