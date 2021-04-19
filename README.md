@@ -20,7 +20,6 @@
 2. 不支持代码高亮
 3. 不支持Gravatar 头像 CDN
 4. 不支持上传图片
-5. 不支持登录
 
 ## 安装
 
@@ -81,6 +80,8 @@ Waline 的服务端地址（地址末尾没有`/`）
 + 默认值：`undefined`
 
 作者的邮箱(md5格式)列表，对应的评论下面会显示一个"作者"的小标签，支持多个邮箱
+
+>  注意：为安全起见，建议使用Waline自带的登录功能（参考下方），而不建议使用本功能，如果你的邮箱被别人知道了，别人同样是可以假扮你进行回复的，此功能仅做测试作用
 
 ### authorLabel
 
@@ -239,21 +240,29 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 ## 高级用法
 
-目前时间有限，仅提供了API，很多数据需要在拿到后自己渲染
+###  Waline登录
 
-### 获取最新评论
+右键点击`评论`按钮可以打开登录窗口，如果登录后不能正常跳转，请勾选`记住登录状态`再试，登录成功后昵称、邮箱、网站输入框会隐藏，登录成功后发布的评论后面会带有`作者`的小标签字样（字样可配置）
 
-```javascript
-var comment = new AprilComment({
-    el: 'comment-widget',
-    api: 'https://your-waline-backend-url.app',
-    pathname: location.pathname
-})
+点击你的头像可以进入管理界面，点击头像上方的x可以退出登录
 
-var recentComments: object[] = comment.recent()
-```
+如果进入管理页面提示`The requested URL '/ui/login' was not found on this server.`，代表token失效了，需要点击x退出后重新登录
 
 ### 获取文章评论数
+
+DOM方式：
+
+写一个`class`为`april-comment-count`的元素，元素内的文字会被替换成实际的评论数量
+
+`pathname`属性决定了这个地方是要显示哪一个页面的评论数，同一个页面里可以有多个这样的元素，`span`、`div`均可
+
+```html
+<span class="april-comment-count" pathname="/">xx</span>条评论
+```
+
+---
+
+编程方式：
 
 ```javascript
 var comment = new AprilComment({
@@ -265,6 +274,20 @@ var comment = new AprilComment({
 var count: number = comment.count(location.pathname)
 ```
 ### 获取文章浏览次数
+
+DOM方式：
+
+写一个`class`为`april-comment-views`的元素，元素内的文字会被替换成实际的浏览次数
+
+`pathname`属性决定了这个地方是要显示哪一个页面的浏览次数，同一个页面里可以有多个这样的元素，`span`、`div`均可
+
+```html
+<span class="april-comment-views" pathname="/">xx</span>次浏览
+```
+
+---
+
+编程方式：
 
 ```js
 var comment = new AprilComment({
@@ -278,6 +301,20 @@ var count: number = comment.views(location.pathname)
 
 ### 给文章浏览次数+1
 
+DOM方式：
+
+写一个`class`为`april-comment-visit`的元素，AprilComment检测到以后会自动为此页面浏览次数+1，同时元素内的文字会也被替换成+1之后的浏览次数（相当于包括了获取文章评论数的功能）
+
+`pathname`属性决定了是要给哪一个页面的浏览次数+1，同一个页面里不建议存在多个这样的元素，一般存在一个就好
+
+```html
+<span class="april-comment-visit" pathname="/">xx</span>次浏览
+```
+
+---
+
+编程方式：
+
 ```js
 var comment = new AprilComment({
     el: 'comment-widget',
@@ -288,7 +325,21 @@ var comment = new AprilComment({
 var count: number = comment.visit(location.pathname)
 ```
 
-## API
+### 获取最新评论
+
+目前时间有限，仅提供了编程API，最新评论的数据需要在拿到后自己渲染
+
+```javascript
+var comment = new AprilComment({
+    el: 'comment-widget',
+    api: 'https://your-waline-backend-url.app',
+    pathname: location.pathname
+})
+
+var recentComments: object[] = comment.recent()
+```
+
+## 编程API
 
 ### 获取AprilComment版本
 
