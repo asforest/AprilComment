@@ -30,8 +30,8 @@
 
 ```html
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/april-comment@0.1.2/dist/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/april-comment@0.1.2/dist/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/april-comment@0.2.1/dist/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/april-comment@0.2.1/dist/index.css" />
 </head>
 <body>
     <div id="comment-widget"></div>
@@ -352,3 +352,6 @@ var recentComments: object[] = comment.recent()
 ```js
 AprilComment.version()
 ```
+
+## 更新记录
+
