@@ -1,6 +1,8 @@
 # AprilComment
 
-<img alt="npm" src="https://img.shields.io/npm/v/april-comment?logo=npm&style=flat-square"><img alt="GitHub top language" src="https://img.shields.io/github/languages/top/innc11/AprilComment?color=success&style=flat-square"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/innc11/AprilComment?style=flat-square">
+![npm](https://img.shields.io/npm/v/april-comment?logo=npm&style=flat-square)
+![GithubTopLanguage](https://img.shields.io/github/languages/top/innc11/AprilComment?color=success&style=flat-square)
+![GithubLastCommit](https://img.shields.io/github/last-commit/innc11/AprilComment?style=flat-square)
 
 一个[Waline](https://github.com/lizheming/waline)评论系统的客户端实现，特点是简洁易用，兼容Waline客户端的大部分特性
 
