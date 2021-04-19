@@ -8,6 +8,7 @@ import SmilieManager from './smilie/SmilieManager'
 import RecentComment from './interface/RecentComment'
 import ServiceProvider from './serviceProvider/ServiceProvider'
 import Waline from './serviceProvider/Waline'
+import DomActions from './domRenderer/DomActions'
 const $ = require('jquery')
 const moment = require('moment');
 require('moment/locale/zh-cn');
@@ -43,6 +44,7 @@ export default class AprilComment
     opt: AprilCommentOptions
     smilieManager: SmilieManager
     serviceProvider: ServiceProvider
+    domActions: DomActions
 
     mainWidget: AprilCommentWidget|any = null
     editorWidget: CommentEditor|any = null
@@ -58,10 +60,13 @@ export default class AprilComment
 	    this.opt = useDefault(options, defaultOptions)
 
         this.smilieManager = new SmilieManager()
+        this.domActions = new DomActions(this)
         this.serviceProvider = new Waline(this)
 
         if(!this.opt.manualMode && document.querySelector('#'+this.opt.el) != null)
             this.create()
+
+        this.domActions.renderCommentCount().renderPageViews().recordVisit()
     }
 
     setOptions(optionsOverrode?: AprilCommentOptions)
