@@ -254,7 +254,9 @@ DOM方式：
 
 写一个`class`为`april-comment-count`的元素，元素内的文字会被替换成实际的评论数量
 
-`pathname`属性决定了这个地方是要显示哪一个页面的评论数，同一个页面里可以有多个这样的元素，`span`、`div`均可
+`pathname`属性决定了这个地方是要显示哪一个页面的评论数，如果没有写`pathname`属性的话，则默认使用`location.pathname`
+
+同一个页面里可以有多个这样的元素，`span`、`div`均可
 
 ```html
 <span class="april-comment-count" pathname="/">xx</span>条评论
@@ -279,7 +281,9 @@ DOM方式：
 
 写一个`class`为`april-comment-views`的元素，元素内的文字会被替换成实际的浏览次数
 
-`pathname`属性决定了这个地方是要显示哪一个页面的浏览次数，同一个页面里可以有多个这样的元素，`span`、`div`均可
+`pathname`属性决定了这个地方是要显示哪一个页面的浏览次数，如果没有写`pathname`属性的话，则默认使用`location.pathname`
+
+同一个页面里可以有多个这样的元素，`span`、`div`均可
 
 ```html
 <span class="april-comment-views" pathname="/">xx</span>次浏览
@@ -305,7 +309,9 @@ DOM方式：
 
 写一个`class`为`april-comment-visit`的元素，AprilComment检测到以后会自动为此页面浏览次数+1，同时元素内的文字会也被替换成+1之后的浏览次数（相当于包括了获取文章评论数的功能）
 
-`pathname`属性决定了是要给哪一个页面的浏览次数+1，同一个页面里不建议存在多个这样的元素，一般存在一个就好
+`pathname`属性决定了是要给哪一个页面的浏览次数+1，如果没有写`pathname`属性的话，则默认使用`location.pathname`
+
+同一个页面里不建议存在多个这样的元素，一般存在一个就好
 
 ```html
 <span class="april-comment-visit" pathname="/">xx</span>次浏览
