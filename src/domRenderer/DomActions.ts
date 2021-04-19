@@ -13,13 +13,9 @@ export default class DomActions
 
 	findDom(selector: string, pathnameAttr: string, handleCallback: (pathname: string, jqdom: any) => void)
 	{
-		var _this = this
-
 		$(selector).each(function() {
-			var pathname = $(this).attr(pathnameAttr)
-
-			if(pathname != null) 
-				handleCallback(pathname, $(this))
+			var pathname = $(this).attr(pathnameAttr) ?? location.pathname
+			handleCallback(pathname, $(this))
 		})
 	}
 
