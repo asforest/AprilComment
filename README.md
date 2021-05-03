@@ -142,7 +142,7 @@ Waline 的服务端地址（地址末尾没有`/`）
             api: 'https://your-waline-backend-url.app',
             pathname: location.pathname
             simlies: simlies
-        }).create()
+        })
     })
 </script>
 
@@ -267,7 +267,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
             mail: '邮箱',
             website: '网站',
         }
-    }).create()
+    })
 })
 </script>
 ```
@@ -280,7 +280,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
         placeholders: {
             comment_tips: '说点儿什么吧，留下邮箱可以收到回复提醒'
         }
-    }).create()
+    })
 </script>
 ```
 
