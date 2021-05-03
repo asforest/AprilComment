@@ -63,3 +63,33 @@ export function sanitizeThroughly(text: string)
 {
 	return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
 }
+
+export function objectToQueryParamter(obj: any)
+{
+	let buffer = ''
+
+	for (let prop in obj) 
+	{
+		let val = obj[prop]
+
+		if(typeof val!='undefined' && val!=null && val!='')
+		{
+			buffer += (buffer==''? '':'&')
+			buffer += prop+'='+val
+		}
+	}
+
+	return buffer
+}
+
+export function getAvatarByMail(opt: AprilCommentOptions, mail: string)
+{
+	let avatarUrl = opt.avatarSource + mail
+	let param = objectToQueryParamter({
+		d: opt.avatarDefault,
+		f: opt.avatarForce? 'y':null,
+		_: opt.avatarNocache? new Date().getTime().toString():null
+	})
+	
+	return avatarUrl + (param==''? '':'?') + param
+}

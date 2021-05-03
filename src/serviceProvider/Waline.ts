@@ -4,7 +4,7 @@ import UnknownException from "../exception/UnknownException";
 import CommentingModel from "../interface/CommentingModel";
 import CommentModel from "../interface/CommentModel";
 import RecentComment from "../interface/RecentComment";
-import { sanitizeThroughly, useDefault } from "../utils/Utils";
+import { getAvatarByMail, objectToQueryParamter, sanitizeThroughly, useDefault } from "../utils/Utils";
 import ServiceProvider from "./ServiceProvider";
 
 export default class Waline extends ServiceProvider
@@ -52,7 +52,7 @@ export default class Waline extends ServiceProvider
                     isAuthorMail = isAuthorMail || 'type' in comment && comment['type']=='administrator'
 
                     // 头像URL
-                    let avatarUrl = 'https://www.gravatar.com/avatar/'+comment.mail+'&f=y'
+                    let avatarUrl = getAvatarByMail(opt, comment.mail)
 
                     // 回复
                     let replies = 'children' in comment? parseData(comment.children.slice(0).sort(sortByTime)):[]

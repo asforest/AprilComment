@@ -47,6 +47,28 @@ export default interface AprilCommentOptions
      */
     smilieAsUrl?: boolean
 
+    /**
+     * 默认头像，默认是''，具体参考 https://waline.js.org/client/avatar.html
+     * 
+     * 可用值：'', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'hide'
+     */
+    avatarDefault?: string
+
+    /**
+     * 头像源，默认是Gravatar官方
+     */
+    avatarSource?: string
+
+    /**
+     * 不缓存头像，默认false
+     */
+    avatarNocache?: boolean
+
+    /**
+     * 强制使用默认头像，默认false
+     */
+    avatarForce?: boolean
+
     /** 每页最多显示多少条评论 */
     capacity?: number
 
