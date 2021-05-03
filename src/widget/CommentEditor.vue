@@ -163,25 +163,28 @@ export default Vue.extend({
                 return false
             }
 
-            if (!this.formData.nick) {
-                this.showAlert('如何称呼您呢?')
-                return false
-            }
-
-            if (this.formData.mail && this.mailRequired) {
-                let reg = new RegExp('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$', 'g')
-                if (!this.formData.mail.match(reg)) {
-                    this.showAlert('邮箱请使用xx@xx.xx格式')
+            if(!this.$root.$refs.profile.isLoggedIn())
+            {
+                if (!this.formData.nick) {
+                    this.showAlert('如何称呼您呢?')
                     return false
                 }
-            }
 
-            if (this.formData.website && this.websiteRequired) {
-                let reg = new RegExp('^https?://', 'g')
-                if (!this.formData.website.match(reg))
-                {
-                    this.showAlert('网站格式请使用http(s)://开头')
-                    return false
+                if (this.formData.mail && this.mailRequired) {
+                    let reg = new RegExp('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$', 'g')
+                    if (!this.formData.mail.match(reg)) {
+                        this.showAlert('邮箱请使用xx@xx.xx格式')
+                        return false
+                    }
+                }
+
+                if (this.formData.website && this.websiteRequired) {
+                    let reg = new RegExp('^https?://', 'g')
+                    if (!this.formData.website.match(reg))
+                    {
+                        this.showAlert('网站格式请使用http(s)://开头')
+                        return false
+                    }
                 }
             }
 
