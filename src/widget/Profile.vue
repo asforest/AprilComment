@@ -21,6 +21,7 @@
 import Vue from 'vue'
 import AprilComment from '..';
 import LoginInfo from '../interface/LoginInfo'
+import { getAvatarByMail } from '../utils/Utils';
 
 export default Vue.extend({
     name: 'profile',
@@ -34,7 +35,7 @@ export default Vue.extend({
     }),
     computed: {
         avatar: function() {
-            return 'https://www.gravatar.com/avatar/'+this.userinfo.mailMd5+'&f=y'
+            return this.isLoggedIn()? getAvatarByMail(this.owner.opt, this.userinfo.mailMd5):''
         },
         nick: function() {
             if(this.isLoggedIn())
