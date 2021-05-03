@@ -32,8 +32,8 @@
 
 ```html
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/april-comment@0.2.1/dist/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/april-comment@0.2.1/dist/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/april-comment@0.2.2/dist/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/april-comment@0.2.2/dist/index.css" />
 </head>
 <body>
     <div id="comment-widget"></div>
