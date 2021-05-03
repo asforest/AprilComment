@@ -43,7 +43,7 @@
                 el: 'comment-widget',
                 api: 'https://your-waline-backend-url.app',
                 pathname: location.pathname
-            }).create()
+            })
         })
     </script>
     
