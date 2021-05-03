@@ -154,6 +154,50 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 （`url`本身不能作为一个表情包的名字存在）
 
+### avatarDefault
+
++ 类型：`string`
++ 默认值：`''`
++ 对应Waline选项：`avatar`
+
+Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.org/client/avatar.html)
+
+可用值：
+
+- `''`
+- `'mp'`
+- `'identicon'`
+- `'monsterid'`
+- `'wavatar'`
+- `'retro'`
+- `'robohash'`
+- `'hide'`
+
+### avatarSource
+
++ 类型：`string`
++ 默认值：`'https://www.gravatar.com/avatar/'`（官方API）
++ 对应Waline选项：`avatarCDN`
+
+设置Gravatar头像的镜像服务地址，默认是官方地址，但在国内访问较慢，可以设置为Ve2x提供的CDN提升头像加载速度`https://cdn.v2ex.com/gravatar/`（注意末尾需要加上`/`）
+
+### avatarNocache
+
++ 类型：`boolean`
++ 默认值：`false`
++ 对应Waline选项：`avatarForce`
+
+是否不缓存头像，每次都重新加载头像图片
+
+### avatarForce
+
++ 类型：`boolean`
++ 默认值：`false`
+
+是否强制使用默认头像，无论评论者填写了邮箱
+
+（默认头像可以由`avatarDefault`参数指定）
+
 ### capacity
 
 + 类型：`number`
