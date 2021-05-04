@@ -285,7 +285,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 
 点击你的头像可以进入管理界面，点击头像上方的x可以退出登录
 
-如果进入管理页面提示`The requested URL '/ui/login' was not found on this server.`，代表token失效了，需要点击x退出后重新登录
+如果进入管理页面提示`The requested URL '/ui/login' was not found on this server.`，或者`invalid signature`代表token失效了，需要点击x退出后重新登录
 
 ### 获取文章评论数
 
