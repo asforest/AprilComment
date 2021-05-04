@@ -237,7 +237,7 @@ export default class Waline extends ServiceProvider
         init = useDefault(init, {
             mode: 'cors',
             cache: 'no-cache',
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
