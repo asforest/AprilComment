@@ -42,7 +42,7 @@ export default class Waline extends ServiceProvider
                 {
                     // 获取原始评论数据
                     let che = cheerio.load(comment.comment, null, false) as any
-                    che('p a').remove()
+                    che('p a.at').remove()
                     let content = che('p').html()
                     if(content.startsWith(' , '))
                         content = content.substr(2)
