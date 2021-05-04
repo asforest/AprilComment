@@ -6,7 +6,7 @@
 
 一个[Waline](https://github.com/lizheming/waline)评论系统的客户端实现，特点是简洁易用，兼容Waline客户端的大部分特性
 
-[文档Documentation](https://innc11.github.io/AprilComment/)
+[文档/演示](https://innc11.github.io/AprilComment/)
 
 ## 与Waline官方客户端的对比
 
