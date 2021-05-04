@@ -97,7 +97,13 @@
             api: 'https://aprilcomment-demo-bp92yy3n5-innc11.vercel.app',
             smilies: smilies,
             manualMode: true,
-            focusOnComment: false
+            websiteRequired: false,
+            focusOnComment: false,
+            placeholders: {
+                comment_tips: '说点儿什么吧\n(暂未开启评论邮件提醒，提问题请移步issue)',
+                nick: '昵称',
+                mail: '邮箱(可选)'
+            }
         });
         
         (function() {
