@@ -79,7 +79,7 @@ export default Vue.extend({
         .ac-smilie-sets-tab {
             width: 100%;
             display: inline-flex;
-            /* 	overflow-x: auto; */
+            /*     overflow-x: auto; */
             flex-direction: row;
             // border-bottom: 2px solid #61616154;
             user-select: none;

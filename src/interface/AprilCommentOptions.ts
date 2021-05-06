@@ -1,9 +1,9 @@
 export interface PlaceholderOptions
 {
-	comment_tips: string
-	nick: string
-	mail: string
-	website: string
+    comment_tips: string
+    nick: string
+    mail: string
+    website: string
 }
 
 export default interface AprilCommentOptions

@@ -98,8 +98,8 @@ export default class AprilComment
         if(typeof this.opt.smilies == 'object')
             this.smilieManager?.loadFromObject(this.opt.smilies as object)
         this.editorWidget.smiliesComponet.$forceUpdate()
-		this.editorWidget.smiliesComponet.defaultSmilieSet()
-		this.mainWidget.update()
+	    this.editorWidget.smiliesComponet.defaultSmilieSet()
+	    this.mainWidget.update()
 
         if(this.opt.focusOnComment)
             this.focusOnComment()

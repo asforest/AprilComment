@@ -10,39 +10,39 @@ import AprilCommentOptions from "../interface/AprilCommentOptions"
  */
 export function useDefault(object: any, defaultObject: any): any
 {
-	let temp = Object.assign({}, object)
+    let temp = Object.assign({}, object)
 
-	if(typeof object == 'undefined' || object == null)
-		return defaultObject
+    if(typeof object == 'undefined' || object == null)
+	    return defaultObject
 
-	if(defaultObject == null)
-		return temp
+    if(defaultObject == null)
+	    return temp
 
-	for (const obj in defaultObject)
+    for (const obj in defaultObject)
 	{
-		let var1 = temp[obj]
-		let var2 = defaultObject[obj]
-		let type1 = typeof var1
-		let type2 = typeof var2
-		let arr1 = Array.isArray(var1)
-		let arr2 = Array.isArray(var2)
+	    let var1 = temp[obj]
+	    let var2 = defaultObject[obj]
+	    let type1 = typeof var1
+	    let type2 = typeof var2
+	    let arr1 = Array.isArray(var1)
+	    let arr2 = Array.isArray(var2)
 
-		if(type1 == 'undefined')
-			temp[obj] = defaultObject[obj]
+	    if(type1 == 'undefined')
+		    temp[obj] = defaultObject[obj]
 
-		else if(type1 != type2 && type2 != 'undefined') 
-			temp[obj] = defaultObject[obj]
+	    else if(type1 != type2 && type2 != 'undefined') 
+		    temp[obj] = defaultObject[obj]
 
-		else if(arr1 != arr2) {
-			if(type2 != 'undefined')
-				temp[obj] = defaultObject[obj]
+	    else if(arr1 != arr2) {
+		    if(type2 != 'undefined')
+			    temp[obj] = defaultObject[obj]
 		}
 
-		else if(type1 == 'object')
-			temp[obj] = useDefault(temp[obj], defaultObject[obj])
+	    else if(type1 == 'object')
+		    temp[obj] = useDefault(temp[obj], defaultObject[obj])
 	}
 
-	return temp
+    return temp
 }
 
 /**
@@ -52,44 +52,44 @@ export function useDefault(object: any, defaultObject: any): any
  */
 export function checkOptions(necessaries: string[], checkFor: AprilCommentOptions) 
 {
-	for (const necessary of necessaries) 
+    for (const necessary of necessaries) 
 	{
-		if(!(necessary in checkFor) || typeof (checkFor as any)[necessary]=='undefined')
-			throw new MissingNecessaryFieldError(necessary)
+	    if(!(necessary in checkFor) || typeof (checkFor as any)[necessary]=='undefined')
+		    throw new MissingNecessaryFieldError(necessary)
 	}
 }
 
 export function sanitizeThroughly(text: string) 
 {
-	return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
+    return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
 }
 
 export function objectToQueryParamter(obj: any)
 {
-	let buffer = ''
+    let buffer = ''
 
-	for (let prop in obj) 
+    for (let prop in obj) 
 	{
-		let val = obj[prop]
+	    let val = obj[prop]
 
-		if(typeof val!='undefined' && val!=null && val!='')
+	    if(typeof val!='undefined' && val!=null && val!='')
 		{
-			buffer += (buffer==''? '':'&')
-			buffer += prop+'='+val
+		    buffer += (buffer==''? '':'&')
+		    buffer += prop+'='+val
 		}
 	}
 
-	return buffer
+    return buffer
 }
 
 export function getAvatarByMail(opt: AprilCommentOptions, mail: string)
 {
-	let avatarUrl = opt.avatarSource + mail
-	let param = objectToQueryParamter({
-		d: opt.avatarDefault,
-		f: opt.avatarForce? 'y':null,
-		_: opt.avatarNocache? new Date().getTime().toString():null
+    let avatarUrl = opt.avatarSource + mail
+    let param = objectToQueryParamter({
+	    d: opt.avatarDefault,
+	    f: opt.avatarForce? 'y':null,
+	    _: opt.avatarNocache? new Date().getTime().toString():null
 	})
 	
-	return avatarUrl + (param==''? '':'?') + param
+    return avatarUrl + (param==''? '':'?') + param
 }

@@ -9,11 +9,11 @@ import ServiceProvider from "./ServiceProvider";
 
 export default class Waline extends ServiceProvider
 {
-	async refresh(): Promise<void> 
-	{
-		let opt = this.aprilComment.opt
-		let mainWidget = this.aprilComment.mainWidget
-		let editorWidget = mainWidget.$refs.editor
+    async refresh(): Promise<void> 
+    {
+        let opt = this.aprilComment.opt
+        let mainWidget = this.aprilComment.mainWidget
+        let editorWidget = mainWidget.$refs.editor
 
         // 打开加载动画s
         mainWidget.isLoading = true
@@ -105,16 +105,16 @@ export default class Waline extends ServiceProvider
             // 隐藏加载动画
             mainWidget.isLoading = false
         }
-	}
+    }
 
-	async submit(comment: CommentingModel): Promise<void> 
-	{
-		let opt = this.aprilComment.opt
-		let mainWidget = this.aprilComment.mainWidget
-		let editorWidget = mainWidget.$refs.editor
-		let smilieManager = this.aprilComment.smilieManager
+    async submit(comment: CommentingModel): Promise<void> 
+    {
+        let opt = this.aprilComment.opt
+        let mainWidget = this.aprilComment.mainWidget
+        let editorWidget = mainWidget.$refs.editor
+        let smilieManager = this.aprilComment.smilieManager
 
-		comment.parent = mainWidget.replyId == -1? undefined:mainWidget.replyId
+        comment.parent = mainWidget.replyId == -1? undefined:mainWidget.replyId
         comment.root = mainWidget.replyRootId == -1? undefined:(mainWidget.replyRootId==''? comment.parent:this.mainWidget.replyRootId)
         comment.at = mainWidget.replyNick == -1? undefined:mainWidget.replyNick
         comment.pathname = opt.pathname
@@ -163,11 +163,11 @@ export default class Waline extends ServiceProvider
 
             throw e
         }
-	}
+    }
 
-	async recent(count: number): Promise<RecentComment[]> 
-	{
-		let url = this.aprilComment.opt.api + '/comment?type=recent&count=' + count
+    async recent(count: number): Promise<RecentComment[]> 
+    {
+        let url = this.aprilComment.opt.api + '/comment?type=recent&count=' + count
         
         try {
             return await this.fetch2(url, { method: 'GET' })
@@ -180,11 +180,11 @@ export default class Waline extends ServiceProvider
 
             throw e
         }
-	}
+    }
 
-	async count(pathname: string): Promise<number> 
-	{
-		let url = this.aprilComment.opt.api + '/comment?type=count&url=' + encodeURIComponent(pathname)
+    async count(pathname: string): Promise<number> 
+    {
+        let url = this.aprilComment.opt.api + '/comment?type=count&url=' + encodeURIComponent(pathname)
 
         try {
             return await this.fetch2(url, { method: 'GET' })
@@ -197,11 +197,11 @@ export default class Waline extends ServiceProvider
 
             throw e
         }
-	}
+    }
 
-	async views(pathname: string): Promise<number> 
-	{
-		let url = this.aprilComment.opt.api + '/article?path=' + encodeURIComponent(pathname)
+    async views(pathname: string): Promise<number> 
+    {
+        let url = this.aprilComment.opt.api + '/article?path=' + encodeURIComponent(pathname)
 
         try {
             return await this.fetch2(url, { method: 'GET' })
@@ -214,11 +214,11 @@ export default class Waline extends ServiceProvider
 
             throw e
         }
-	}
-	
-	async visit(pathname: string): Promise<number> 
-	{
-		let url = this.aprilComment.opt.api + '/article'
+    }
+    
+    async visit(pathname: string): Promise<number> 
+    {
+        let url = this.aprilComment.opt.api + '/article'
 
         try {
             return await this.fetch2(url, { method: 'POST', body: JSON.stringify({path: pathname}) })
@@ -231,9 +231,9 @@ export default class Waline extends ServiceProvider
 
             throw e
         }
-	}
+    }
 
-	async fetch2(input: RequestInfo, init?: RequestInit): Promise<any>
+    async fetch2(input: RequestInfo, init?: RequestInit): Promise<any>
     {
         init = init || {}
 
