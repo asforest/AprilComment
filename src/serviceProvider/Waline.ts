@@ -44,8 +44,11 @@ export default class Waline extends ServiceProvider
                     let che = cheerio.load(comment.comment, null, false) as any
                     che('p a.at').remove()
                     let content = che('p').html()
+
                     if(content!=null && content.startsWith(' , '))
                         content = content.substr(2)
+                    else
+                        content = comment.comment
                     
                     // 是否是作者邮箱
                     let isAuthorMail = typeof opt.authorMails == 'object' && opt.authorMails.indexOf(comment.mail) != -1

@@ -21,7 +21,8 @@ let dompOptions = {
         'a', 'img', 'p', 
         'blockquote',
         'em','strong',
-        'table', 'thead', 'tr', 'th', 'td', 'tbody'
+        'table', 'thead', 'tr', 'th', 'td', 'tbody',
+        'div', 'span', 'math', 'semantics', 'mrow', 'mi', 'annotation' // for math formula
     ]
 }
 
