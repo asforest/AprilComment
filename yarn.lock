@@ -2846,6 +2846,11 @@ html-tags@^1.0.0:
   resolved "https://registry.npm.taobao.org/html-tags/download/html-tags-1.2.0.tgz#c78de65b5663aa597989dd2b7ab49200d7e4db98"
   integrity sha1-x43mW1Zjqll5id0rerSSANfk25g=
 
+html-to-md@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.nlark.com/html-to-md/download/html-to-md-0.3.9.tgz#8886c1801e86651630349c2e73e26b4efc053bbf"
+  integrity sha1-iIbBgB6GZRYwNJwuc+JrTvwFO78=
+
 htmlnano@^0.2.2:
   version "0.2.7"
   resolved "https://registry.npm.taobao.org/htmlnano/download/htmlnano-0.2.7.tgz#8d116750c15571687edf56069a7819d41925bdcb"

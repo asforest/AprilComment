@@ -1,10 +1,10 @@
-import cheerio from "cheerio";
 import moment from "moment";
 import UnknownException from "../exception/UnknownException";
 import CommentingModel from "../interface/CommentingModel";
 import CommentModel from "../interface/CommentModel";
 import RecentComment from "../interface/RecentComment";
 import { getAvatarByMail, objectToQueryParamter, sanitizeThroughly, useDefault } from "../utils/Utils";
+import WalineHtml2Markdown from "../utils/WalineHtml2Markdown";
 import ServiceProvider from "./ServiceProvider";
 
 export default class Waline extends ServiceProvider
@@ -24,47 +24,27 @@ export default class Waline extends ServiceProvider
         url += 'page=' + (mainWidget.pagination_current + 1)
 
         try {
-            let json = await this.fetch2(url, {
-                method: 'GET'
-            })
-
             let sortByTime = function(obj1: any, obj2: any) {
                 if(obj1.time > obj2.time) return 1
                 if(obj1.time < obj2.time) return -1
                 return 0
             }
     
-            let parseData = (comments: any[]) =>
-            {
+            let parseData = (comments: any[]) => {
                 let allcomments = [] as Array<CommentModel>
     
                 for (let comment of comments)
                 {
-                    // 获取原始评论数据
-                    let che = cheerio.load(comment.comment, null, false) as any
-                    che('p a.at').remove()
-                    let content = che('p').html()
-
-                    if(content!=null && content.startsWith(' , '))
-                        content = content.substr(2)
-                    else
-                        content = comment.comment
-                    
-                    // 是否是作者邮箱
                     let isAuthorMail = typeof opt.authorMails == 'object' && opt.authorMails.indexOf(comment.mail) != -1
                     isAuthorMail = isAuthorMail || 'type' in comment && comment['type']=='administrator'
 
-                    // 头像URL
-                    let avatarUrl = getAvatarByMail(opt, comment.mail)
-
-                    // 回复
                     let replies = 'children' in comment? parseData(comment.children.slice(0).sort(sortByTime)):[]
 
                     allcomments.push({
                         id:           sanitizeThroughly(comment.objectId),
                         parentId:     sanitizeThroughly(comment.pid || ''),
                         rootId:       sanitizeThroughly(comment.rid || ''),
-                        avatar:       sanitizeThroughly(avatarUrl),
+                        avatar:       sanitizeThroughly(getAvatarByMail(opt, comment.mail)),
                         nick:         sanitizeThroughly(comment.nick),
                         website:      sanitizeThroughly(comment.link),
                         isauthor:     isAuthorMail,
@@ -72,13 +52,15 @@ export default class Waline extends ServiceProvider
                         browser:      comment.browser,
                         os:           comment.os,
                         time:         moment(comment.insertedAt).unix(),
-                        content:      content,
+                        content:      WalineHtml2Markdown(comment.comment),
                         replies:      replies
                     } as CommentModel)
                 }
     
                 return allcomments as CommentModel[]
             }
+
+            let json = await this.fetch2(url, { method: 'GET' })
     
             // 加载(并显示)评论数据
             mainWidget.allComments = parseData(json.data)
@@ -98,8 +80,6 @@ export default class Waline extends ServiceProvider
             editorWidget.alertMessage.button2 = '尝试重试加载评论列表'
             editorWidget.alertMessage.cb_button2 = () => setTimeout(() => this.refresh(), 300)
             
-            
-
             throw e
         } finally {
             // 隐藏加载动画

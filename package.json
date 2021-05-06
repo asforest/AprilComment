@@ -16,6 +16,7 @@
     "cheerio": "^1.0.0-rc.6",
     "dompurify": "^2.2.2",
     "hanabi": "^0.4.0",
+    "html-to-md": "^0.3.9",
     "jquery": "^3.5.1",
     "marked": "^1.2.3",
     "moment": "^2.29.1",
