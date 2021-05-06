@@ -44,7 +44,7 @@ export default class Waline extends ServiceProvider
                     let che = cheerio.load(comment.comment, null, false) as any
                     che('p a.at').remove()
                     let content = che('p').html()
-                    if(content.startsWith(' , '))
+                    if(content!=null && content.startsWith(' , '))
                         content = content.substr(2)
                     
                     // 是否是作者邮箱
