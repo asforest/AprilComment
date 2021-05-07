@@ -30,7 +30,7 @@ export default function(walineHtml: string)
     let htmlText = $.html().replace(new RegExp("(<br>|<br/>|<br />)", 'g'), '\n')
     let htmlmd = html2md(htmlText)
 
-    console.log('------', htmlmd)
+    // console.log('------', htmlmd)
 
     return htmlmd
 }
