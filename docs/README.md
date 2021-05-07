@@ -67,7 +67,7 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 如果为`false`AprilComment会自动初始化并挂载DOM
 
-如果为`true`则不会自动初始化，需要在合适的时机显式调用`create()`和`destroy()`方法以手动控制AprilComment的初始化和销毁（通常适用于pjax或者spa场景）
+如果为`true`则不会自动初始化，需要在合适的时机显式调用`mount()`和`destroy()`方法以手动控制AprilComment的初始化和销毁（通常适用于pjax或者spa场景）
 
 ### authorMails
 
@@ -396,7 +396,7 @@ function cb_after_rendering() // 每次切换页面时会被调用一次
 	if(!ac.isDestroyed())
     	ac.destroy()
 	ac.setOptions({ pathname: location.pathname })
-	ac.create()
+	ac.mou()
 }
 ```
 
