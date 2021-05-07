@@ -48,7 +48,6 @@ export default class Waline extends ServiceProvider
                         nick:         sanitizeThroughly(comment.nick),
                         website:      sanitizeThroughly(comment.link),
                         isauthor:     isAuthorMail,
-                        authorlabel:  opt.authorLabel,
                         browser:      comment.browser,
                         os:           comment.os,
                         time:         moment(comment.insertedAt).unix(),

@@ -3,13 +3,14 @@ import CommentEditor from './widget/AprilComment.vue'
 import Profile from './widget/Profile.vue'
 import CommentingModel from './interface/CommentingModel'
 import MissingNecessaryFieldError from './exception/MissingNecessaryFieldError'
-import AprilCommentOptions, { PlaceholderOptions } from './interface/AprilCommentOptions'
-import { checkOptions, useDefault } from './utils/Utils'
+import AprilCommentOptions, { LanguageOptions } from './interface/AprilCommentOptions'
+import { checkNecessaryOptions, useDefault } from './utils/Utils'
 import SmilieManager from './smilie/SmilieManager'
 import RecentComment from './interface/RecentComment'
 import ServiceProvider from './serviceProvider/ServiceProvider'
 import Waline from './serviceProvider/Waline'
 import DomActions from './domRenderer/DomActions'
+import Compatibility from './utils/Compatibility'
 const $ = require('jquery')
 const moment = require('moment');
 require('moment/locale/zh-cn');
@@ -22,7 +23,6 @@ var defaultOptions: AprilCommentOptions = {
     pathname: location.pathname,
     manualMode: false,
     authorMails: undefined,
-    authorLabel: '作者',
     smilieEnabled: true,
     smilies: undefined,
     smilieAsUrl: false,
@@ -36,34 +36,38 @@ var defaultOptions: AprilCommentOptions = {
     dualPaginator: true,
     mailRequired: true,
     websiteRequired: true,
-    placeholders: {
+    language: {
+        author: '作者',
         comment_tips: '说点儿什么吧',
         nick: '昵称',
         mail: '邮箱',
         website: '网站',
-    } as PlaceholderOptions,
+    } as LanguageOptions,
 }
 
 export default class AprilComment
 {
     opt: AprilCommentOptions
+    lang: LanguageOptions // shortcut for this.opt.language
     smilieManager: SmilieManager
     serviceProvider: ServiceProvider
     domActions: DomActions
 
-    mainWidget: AprilCommentWidget|any = null
-    editorWidget: CommentEditor|any = null
-    profileWidget: Profile|any = null
+    mainWidget: any = null // AprilCommentWidget
+    editorWidget: any = null // CommentEditor
+    profileWidget: any = null // Profile
 
     constructor(options: AprilCommentOptions)
     {
         if (!options)
             throw new MissingNecessaryFieldError('Options-Object')
         
-        // 检查必要的字段
-        checkOptions(['el', 'api'], options)
+        options = Compatibility(options)
+        
+        checkNecessaryOptions(['el', 'api'], options)
 
 	    this.opt = useDefault(options, defaultOptions)
+        this.lang = this.opt.language as LanguageOptions
 
         this.smilieManager = new SmilieManager()
         this.domActions = new DomActions(this)

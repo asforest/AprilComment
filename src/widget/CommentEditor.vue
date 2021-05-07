@@ -9,16 +9,16 @@
 
         <div class="ac-commenter-info" v-show="!$root.$refs.profile || !$root.$refs.profile.isLoggedIn()">
             <input name="nick" type="text" class="ac-input"
-                v-bind:placeholder="placeholders.nick" 
+                v-bind:placeholder="owner.lang.nick" 
                 v-model="formData.nick"
             >
             <input name="mail" type="email" class="ac-input" 
-                v-bind:placeholder="placeholders.mail" 
+                v-bind:placeholder="owner.lang.mail" 
                 v-if="mailRequired" 
                 v-model="formData.mail"
             >
             <input name="website" type="text" class="ac-input" 
-                v-bind:placeholder="placeholders.website" 
+                v-bind:placeholder="owner.lang.website" 
                 v-if="websiteRequired" 
                 v-model="formData.website"
             >
@@ -27,8 +27,8 @@
         <div style="position: relative">
             <textarea id="april-comment-input" 
                 class="ac-input" 
-                v-bind:placeholder="placeholders.comment_tips" 
-                v-bind:default-placeholder="placeholders.comment_tips" 
+                v-bind:placeholder="owner.lang.comment_tips" 
+                v-bind:default-placeholder="owner.lang.comment_tips" 
                 v-bind:disabled="showSubmitingAnimation"
                 v-bind:style="showSubmitingAnimation?'background-color: #f5f5f5;':''"
                 v-model="formData.content"
@@ -232,10 +232,6 @@ export default Vue.extend({
         websiteRequired: {
             type: Boolean,
             required: true
-        },
-        placeholders: {
-            type: Object, // PlaceholderOptions
-            required: true,
         }
     },
     components: {

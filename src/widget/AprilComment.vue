@@ -11,7 +11,6 @@
                     v-bind:is-replying="isReplying"
                     v-bind:mail-required="owner.opt.mailRequired"
                     v-bind:website-required="owner.opt.websiteRequired"
-                    v-bind:placeholders="owner.opt.placeholders"
                     v-on:cancel-reply="onCancelReply"
                     v-bind="$attrs"
                 ></comment-editor>

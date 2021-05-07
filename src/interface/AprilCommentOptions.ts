@@ -1,5 +1,7 @@
-export interface PlaceholderOptions
+export interface LanguageOptions
 {
+    /** "作者小标签"内显示的内容，默认是"作者"两个字 */
+    author: string
     comment_tips: string
     nick: string
     mail: string
@@ -22,9 +24,6 @@ export default interface AprilCommentOptions
 
     /** 作者的邮箱的MD5，支持多个邮箱，如果是作者本人的评论，会有一个作者小标签，默认为空 */
     authorMails?: string[]
-
-    /** "作者小标签"内显示的内容，默认是"作者"两个字 */
-    authorLabel?: string
 
     /** 启用表情按钮，默认true */
     smilieEnabled?: boolean
@@ -91,5 +90,5 @@ export default interface AprilCommentOptions
     websiteRequired?: boolean
 
     /** 输入表单的占位符 */
-    placeholders?: PlaceholderOptions
+    language?: LanguageOptions
 }

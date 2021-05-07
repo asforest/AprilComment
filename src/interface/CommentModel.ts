@@ -8,7 +8,6 @@ export default interface CommentModel
     nick: string
     website: string
     isauthor: boolean
-    authorlabel: string
     browser: string
     os: string
     time: number

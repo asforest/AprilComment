@@ -19,7 +19,7 @@
                         v-bind:class="comment.website? 'ac-nick-with-link':''"
                     >{{comment.nick}}</a>
 
-                    <span class="ac-badge-author" style="margin: 0;" v-if="comment.isauthor">{{comment.authorlabel}}</span>
+                    <span class="ac-badge-author" style="margin: 0;" v-if="comment.isauthor">{{owner.lang.author}}</span>
 
                     <span class="ac-browser" v-bind:title="comment.os">{{comment.browser}}</span>
                     <span class="ac-os" v-if="false">{{comment.os}}</span>

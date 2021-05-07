@@ -50,7 +50,7 @@ export function useDefault(object: any, defaultObject: any): any
  * @param necessaries 必要的字段
  * @param checkFor 被检查的对象
  */
-export function checkOptions(necessaries: string[], checkFor: AprilCommentOptions) 
+export function checkNecessaryOptions(necessaries: string[], checkFor: AprilCommentOptions) 
 {
     for (const necessary of necessaries) 
 	{
