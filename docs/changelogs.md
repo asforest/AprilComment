@@ -1,5 +1,20 @@
 ## 更新记录
 
+### 0.2.7
+
+1. 重写了评论内容转换处理机制，先转换成md再渲染成html，并添加了对数学公式的处理
+2. 重命名placeholders参数为language
+3. 移动authorLabel参数到language选项内
+4. 重命名create()方法为mount()
+
+### 0.2.6
+
+1. 修复了数学公式无法显示的问题
+
+### 0.2.5
+
+1. 修复找不到p元素时会报Cannot read property 'startsWith' of null的错误
+
 ### 0.2.4
 
 1. 修复评论中无法显示超链接的问题

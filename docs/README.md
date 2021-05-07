@@ -78,13 +78,6 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 >  注意：为安全起见，建议使用Waline自带的登录功能（参考下方），而不建议使用本功能，如果你的邮箱被别人知道了，别人同样是可以假扮你进行回复的，此功能仅做测试作用
 
-### authorLabel
-
-+ 类型：`string`
-+ 默认值：`'作者'`
-
-"作者"小标签里面显示的文字，可以改成"博主"或者"开发者"的样式
-
 ### smilieEnabled
 
 + 类型：`boolean`
@@ -234,13 +227,13 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 
 评论时是否一定要填写网站链接
 
-### placeholders
+### language
 
-+ 类型：`boolean`
-+ 默认值：`true`
-+ 对应Waline选项：`placeholder`
++ 类型：`object`
 
-各种占位符
+各种语言文本
+
++ `author`：作者小标签里面显示的文字
 
 + `comment_tips`：评论框的占位符
 + `nick`：昵称输入框的占位符
@@ -254,7 +247,8 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
         el: 'comment-widget',
         api: 'https://your-waline-backend-url.app',
         pathname: location.pathname,
-        placeholders: {
+        language: {
+            author: '开发者',
             comment_tips: '说点儿什么吧，留下邮箱可以收到回复提醒',
             nick: '昵称',
             mail: '邮箱',
@@ -270,7 +264,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 ```html
 <script>
     new AprilComment({
-        placeholders: {
+        language: {
             comment_tips: '说点儿什么吧，留下邮箱可以收到回复提醒'
         }
     })
@@ -461,7 +455,7 @@ ac.setOptions({
 
 原理是根据hash进行滚动到对应的DOM位置上，如果hash为空或者找不到对应的评论dom，此方法不会有任何效果
 
-### create()
+### mount()
 
 + 参数：`无`
 + 返回值：`Promise<void>`
