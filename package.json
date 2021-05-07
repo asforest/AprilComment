@@ -8,8 +8,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "parcel src/index.ts --public-url './'",
-    "build": "parcel build src/index.ts --public-url './'"
+    "dev": "parcel src/index.ts --public-url \"./\"",
+    "build": "parcel build src/index.ts --public-url \"./\""
   },
   "dependencies": {
     "brownies": "^3.0.0",
