@@ -1,6 +1,4 @@
 import AprilCommentWidget from './widget/AprilComment.vue'
-import CommentEditor from './widget/AprilComment.vue'
-import Profile from './widget/Profile.vue'
 import CommentingModel from './interface/CommentingModel'
 import MissingNecessaryFieldError from './exception/MissingNecessaryFieldError'
 import AprilCommentOptions, { LanguageOptions } from './interface/AprilCommentOptions'

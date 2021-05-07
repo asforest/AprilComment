@@ -1,5 +1,8 @@
 import cheerio from "cheerio";
+import { sanitize } from "./Utils";
+const katex = require('katex')
 const html2md = require('html-to-md')
+require('katex/dist/katex.css')
 
 export default function(walineHtml: string)
 {
@@ -27,13 +30,35 @@ export default function(walineHtml: string)
         $(e).replaceWith('\n$$'+rawFormula+'$$\n')
     })
 
-    // 还原换行
+    // 还原换行/净化标签
     let htmlText = $.html().replace(new RegExp("(<br>|<br/>|<br />)", 'g'), '\n')
-    let htmlmd = html2md(htmlText)
+    let htmlmd = html2md(sanitize(htmlText))
 
-    if(process.env.NODE_ENV != 'production')
+    // 重新渲染数学公式
+    let reg = /\$?\$([^$]+)\$\$?/
+    let matches = reg.exec(htmlmd)
+    let maxTimes = 1000
+    while(matches != null)
     {
-        // console.log('------', htmlmd)
+        let matchedText = matches[0]
+		let position = matches['index']
+
+        let countof$ = matchedText.startsWith('$$')? 2:1
+        let formulaText = matchedText.substring(countof$, matchedText.length-countof$)
+        let formulaHtml = katex.renderToString(formulaText, {
+            throwOnError: false,
+            displayMode: true,
+            // output: 'mathml',
+        })
+
+        let before = htmlmd.substr(0, position)
+        let after = htmlmd.substring(position + matchedText.length)
+        htmlmd = before + formulaHtml + after
+
+        if(maxTimes--<=0)
+            throw 'max times reached'
+        
+        matches = reg.exec(htmlmd)
     }
 
     return htmlmd

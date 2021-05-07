@@ -83,7 +83,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import smiliesComponet from './SmilieBox.vue'
-import marked2 from '../utils/MarkedLib'
+import md2html from '../utils/Markdown2Html'
 import inserfunc from '../utils/jq-insert.js'
 import AprilComment from '..'
 import CommentingModel from '../interface/CommentingModel'
@@ -123,7 +123,7 @@ export default Vue.extend({
     }),
     methods: {
         parseMarkdown: function (text: string) {
-            return marked2(this.owner.smilieManager.renderAsHtml(text))
+            return md2html(this.owner.smilieManager.renderAsHtml(text))
         },
         onComment: function () {
             if(!this.checkForm())

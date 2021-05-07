@@ -57,7 +57,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import AprilComment from '..';
-import marked2 from '../utils/MarkedLib'
+import md2html from '../utils/Markdown2Html'
 const moment = require('moment');
 require('moment/locale/zh-cn');
 
@@ -99,7 +99,7 @@ export default Vue.extend({
             return true
         },
         parseMarkdown: function (text: string) {
-            return marked2(this.owner.smilieManager.renderAsHtml(text))
+            return md2html(this.owner.smilieManager.renderAsHtml(text))
         },
         parseDatetime: function(timestamp: number, formal: boolean) {
             let mom = moment(timestamp * 1000)
