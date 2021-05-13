@@ -10,7 +10,7 @@
 
 在使用AprilComment之前请确保已经安装好了Waline服务端并且可以正常访问和评论
 
-1. 需要在`head`标签中引入js和css资源
+1. 需要在`head`标签中引入js和css资源（如果需要使用特定版本，可以参考更新记录中的版本号）
 2. 初始化`AprilComment`对象
 
 ```html
