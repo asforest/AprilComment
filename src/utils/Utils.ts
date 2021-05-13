@@ -102,6 +102,9 @@ export function objectToQueryParamter(obj: any)
 
 export function getAvatarByMail(opt: AprilCommentOptions, mail: string)
 {
+	if(mail == '')
+		return ''
+	
     let avatarUrl = opt.avatarSource + mail
     let param = objectToQueryParamter({
 	    d: opt.avatarDefault,

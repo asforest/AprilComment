@@ -12,10 +12,12 @@
                 v-bind:placeholder="owner.lang.nick" 
                 v-model="formData.nick"
             >
+            <div class="ac-commenter-avatar-preview"><img v-show="avatarPreviewing!=''" v-bind:src="getMail()"></div>
             <input name="mail" type="email" class="ac-input" 
                 v-bind:placeholder="owner.lang.mail" 
                 v-if="mailRequired" 
                 v-model="formData.mail"
+                v-on:input="onMailInput"
             >
             <input name="website" type="text" class="ac-input" 
                 v-bind:placeholder="owner.lang.website" 
@@ -87,6 +89,9 @@ import inserfunc from '../utils/jq-insert.js'
 import AprilComment from '..'
 import CommentingModel from '../interface/CommentingModel'
 const brownies = require('brownies')
+const $ = require('jquery')
+import crypto from 'crypto'
+import { getAvatarByMail } from '../utils/Utils'
 
 export default Vue.extend({
     name: 'comment-editor',
@@ -98,10 +103,16 @@ export default Vue.extend({
         // load cookies
         if (brownies.cookies.ac_nick)
             this.formData.nick = brownies.cookies.ac_nick
-        if (brownies.cookies.ac_mail)
-            this.formData.mail = brownies.cookies.ac_mail
         if (brownies.cookies.ac_website)
             this.formData.website = brownies.cookies.ac_website
+        if (brownies.cookies.ac_mail)
+        {
+            this.formData.mail = brownies.cookies.ac_mail
+
+            // 加载头像预览
+            let mailInMd5 = crypto.createHash('md5').update(this.formData.mail).digest('hex')
+            this.avatarPreviewing = mailInMd5
+        }
     },
     data: () => ({
         smiliesComponet: null,
@@ -119,6 +130,7 @@ export default Vue.extend({
         showSubmitingAnimation: false, // 正在提交评论的动画
         previewVisible: false, // 显示预览面板
         smiliesVisible: false, // 显示标签面板
+        avatarPreviewing: '' // 头像预览
     }),
     methods: {
         parseMarkdown: function (text: string) {
@@ -199,6 +211,20 @@ export default Vue.extend({
         onCloseSmiliePanel: function() {
             this.onSmilieButtonClick()
         },
+        onMailInput: function(e: InputEvent) {
+            let mailReg = new RegExp('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$', 'g')
+            let text = $(e.target as any).val() as string
+            if(text.match(mailReg))
+            {
+                let mailInMd5 = crypto.createHash('md5').update(text).digest('hex')
+                this.avatarPreviewing = mailInMd5
+            } else {
+                this.avatarPreviewing = ''
+            }
+        },
+        getMail: function() {
+            return getAvatarByMail(this.owner.opt, this.avatarPreviewing)
+        },
         hideAlert: function () {
             this.alertMessage.text = ''
         },
@@ -220,10 +246,10 @@ export default Vue.extend({
         }
     },
     watch: {
-        smiliesVisible: function(newV, oldV)
-        {
+        smiliesVisible: function(newV, oldV) {
             if(newV) this.previewVisible = newV
-        }
+        },
+
     },
     props: {
         owner: {
@@ -292,14 +318,28 @@ export default Vue.extend({
             flex-wrap: wrap;
             line-height: 1.75;
 
+            .ac-commenter-avatar-preview {
+                width: 45px;
+                height: 45px;
+
+                img {
+                    width: calc(100% - 2px - 2px);
+                    height: calc(100% - 2px - 2px);
+                    
+                    border-radius: 50%;
+                    border: 1px solid #f5f5f5;
+                    padding: 2px;
+                }
+            }
+
             input {
                 min-width: 160px;
                 flex-grow: 1;
                 border-radius: 0px;
-            }
-            input:focus {
-                // border-bottom-color: #e97276;
-                border-bottom: 1px dashed #e97276;
+
+                &:focus {
+                    border-bottom: 1px solid #cacaca;
+                }
             }
         }
 
