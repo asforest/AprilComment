@@ -176,6 +176,7 @@ export default Vue.extend({
                         cursor: unset;
                         color: #1abc9c;
                         font-size: 1em !important;
+                        font-weight: bold;
 
                         &.ac-nick-with-link {
                             cursor: pointer;
