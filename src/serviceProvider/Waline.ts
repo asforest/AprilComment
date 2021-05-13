@@ -54,7 +54,7 @@ export default class Waline extends ServiceProvider
                         browser:      comment.browser,
                         os:           comment.os,
                         time:         moment(comment.insertedAt).unix(),
-                        content:      WalineHtml2Markdown(comment.comment),
+                        content:      this.html2md(comment.comment),
                         replies:      replies
                     } as CommentModel)
                 }
