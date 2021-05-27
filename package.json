@@ -1,6 +1,6 @@
 {
   "name": "april-comment",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "A implementation of Waline Client",
   "license": "MIT",
   "main": "dist/index.js",
