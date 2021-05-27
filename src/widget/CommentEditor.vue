@@ -61,13 +61,12 @@
             </div>
         </div>
 
-        <div class="ac-smilies-panel" v-show="smiliesVisible">
-            <smilies-comment
-                ref="smiliesComponet"
-                v-bind:owner="owner"
-                v-on:close="onCloseSmiliePanel"
-            ></smilies-comment>
-        </div>
+        <smilies-comment
+            ref="smiliesComponet"
+            v-show="smiliesVisible"
+            v-bind:owner="owner"
+            v-on:close="onCloseSmiliePanel"
+        ></smilies-comment>
 
         <div class="ac-alert-info" v-show="alertMessage.text!=''">
             <div class="ac-h">
@@ -370,25 +369,7 @@ export default Vue.extend({
                 margin-bottom: 10px;
             }
         }
-
-        .ac-smilies-panel {
-            @extend .ac-tool-panel;
-            padding: 10px;
-            margin-bottom: 0;
-
-            background: #fff;
-            box-shadow: 2px 1px 40px #00000052;
-
-            position: absolute;
-            // width: 100%;
-            // height: 100%;
-            top: 105%;
-            left: 50px;
-            /* bottom: 0; */
-            right: 50px;
-            z-index: 1;
-        }
-
+        
         .ac-preview-panel {
             @extend .ac-tool-panel;
 
