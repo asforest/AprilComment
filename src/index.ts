@@ -72,7 +72,7 @@ export default class AprilComment
         this.serviceProvider = new Waline(this)
 
         if(!this.opt.manualMode && document.querySelector('#'+this.opt.el) != null)
-            this.create()
+            this.mount()
 
         this.domActions.renderCommentCount().renderPageViews().recordVisit()
     }
@@ -123,13 +123,18 @@ export default class AprilComment
     focusOnComment()
     {
         let hash = location.hash
-        let commentDom = $(hash)
-        if(commentDom.length > 0)
-        {
-            $('html, body').animate({
-                scrollTop: commentDom.offset().top
-            }, 1000)
+        try {
+            let commentDom = $(hash)
+            if(commentDom.length > 0)
+            {
+                $('html, body').animate({
+                    scrollTop: commentDom.offset().top
+                }, 1000)
+            }
+        } catch(e) {
+            console.warn('Comment could not be focused on: '+hash)
         }
+        
     }
 
     /**
