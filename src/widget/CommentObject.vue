@@ -88,11 +88,11 @@ export default Vue.extend({
                     return false
             }
 
-            if (hasParent && selfNick == childNick) // 自己回复自己(父评论和子评论是否为同一人)，但顶层评论无论如何都需要缩进
+            if (hasParent && selfNick == childNick) // 自己回复自己(父评论和子评论是否为同一人)，但顶层评论无论如何都不需要缩进
                 return false
             
             if (hasParent) {
-                if (parentNick == selfNick && selfNick != childNick) // 判断父评论和子评论是同一个人，但是孙评论又是另外一个人（这是考虑到了连续评论的情况）
+                if (parentNick == selfNick && selfNick != childNick) // 判断父评论和本评论是同一个人，但是子评论又是另外一个人（这是考虑到了连续评论的情况）
                     return false
             }
 
