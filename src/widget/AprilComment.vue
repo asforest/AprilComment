@@ -17,7 +17,7 @@
             </div>
 
             <!-- 评论数量显示 -->
-            <div class="ac-comment-count" v-show="commentExist()"><span v-html="getCommentCount()"></span></div>
+            <div class="ac-comment-count" v-show="commentExist()"><span>{{getCommentCount()}}</span></div>
 
             <!-- 头部页码条(只在非第一页时显示) -->
             <paginator 
@@ -72,6 +72,12 @@
                 v-on:pagination-changed="onPaginationChanged"
                 v-on:pagination-repeatedly-click="onFootPaginationRepeatedlyClick"
             ></paginator>
+
+            <div class="ac-no-comment"
+                v-show="allComments.length == 0 && !showLoadingAnimation"
+            >
+                {{owner.lang.no_comment}}
+            </div>
 
             <div class="ac-copyright">
                 <a href="https://github.com/innc11/AprilComment" target="_blank">AprilComment</a>
@@ -238,12 +244,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+    @import "../index.scss";
     .april-comment-widget {
         transition: all 0.3s, opacity 0.1s;
 
         .ac-comment-count {
+            @extend %april-comment-text;
             padding: 5px;
-            font-weight: 600;
+            font-weight: bold;
             font-size: 1.25em;
             text-align: center;
             margin-bottom: 1rem;
@@ -274,6 +282,13 @@ export default Vue.extend({
                 from { transform: rotate(0deg); }
                 to { transform: rotate(1turn); }
             }
+        }
+
+        .ac-no-comment {
+            @extend %april-comment-text;
+            text-align: center;
+            font-size: 20px;
+            margin: 30px 0;
         }
 
         .ac-copyright {

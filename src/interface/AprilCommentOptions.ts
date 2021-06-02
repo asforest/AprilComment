@@ -6,6 +6,7 @@ export interface LanguageOptions
     nick: string
     mail: string
     website: string
+    no_comment: string
 }
 
 export default interface AprilCommentOptions

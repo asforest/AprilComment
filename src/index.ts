@@ -40,6 +40,7 @@ var defaultOptions: AprilCommentOptions = {
         nick: '昵称',
         mail: '邮箱',
         website: '网站',
+        no_comment: '还没有任何评论哦',
     } as LanguageOptions,
 }
 
