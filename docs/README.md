@@ -165,7 +165,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 + 默认值：`'https://www.gravatar.com/avatar/'`（官方API）
 + 对应Waline选项：`avatarCDN`
 
-设置Gravatar头像的镜像服务地址，默认是官方地址，但在国内访问较慢，可以设置为Ve2x提供的CDN提升头像加载速度`https://cdn.v2ex.com/gravatar/`（注意末尾需要加上`/`）
+设置Gravatar头像的镜像服务地址，默认是官方地址，但在国内访问较慢，可以设置为Loli提供的CDN提升头像加载国内加载速度`https://gravatar.loli.net/avatar/`（注意末尾需要加上`/`）
 
 ### avatarNocache
 
@@ -198,6 +198,8 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 + 默认值：`true`
 
 是否自动聚焦到对应的评论上（当从通知邮件跳转过来时）
+
+注意：此功能与hash路由冲突，history路由不受影响
 
 ### paginatorLength
 
@@ -392,7 +394,7 @@ var recentComments: object[] = comment.recent()
 
 ### 手动控制生命周期
 
-在一些PJAX或者SPA场景中，切换页面时页面可能并不会重新加载，可能就会出现页面已经加载成新页面了，但是评论系统还没有跟过来的问题，这时就需要自己手动控制初始化和销毁了。
+在一些PJAX或者SPA(单页应用)场景中，切换页面时页面可能并不会重新加载，可能就会出现页面已经加载成新页面了，但是评论系统还没有跟过来的问题，这时就需要自己手动控制初始化和销毁了。
 
 只需要在初始化时设置`manualMode: true`，然后在pjax回调函数或者对应的渲染回调函数中销毁AprilComment，然后更新`pathname`参数后再次重新初始化即可
 
@@ -408,7 +410,7 @@ function cb_after_rendering() // 每次切换页面时会被调用一次
 	if(!ac.isDestroyed())
     	ac.destroy()
 	ac.setOptions({ pathname: location.pathname })
-	ac.mou()
+	ac.mount()
 }
 ```
 
@@ -443,7 +445,7 @@ AprilComment.isProduction()
 + 参数1：`optionsOverrode?: AprilCommentOptions`，新的参数对象
 + 返回值：`无`
 
-用于更新一些参数的值，此方法的参数和初始化AprilComment时传入的参数类型一致，也可以只更新部分参数
+用于更新一些参数的值，此方法的参数和初始化AprilComment时传入的参数类型一致，也可以只更新部分参数，传入的参数会以`深拷贝`的方式合并到当前options中
 
 ```js
 var ac = new AprilComment({
