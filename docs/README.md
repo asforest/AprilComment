@@ -227,6 +227,17 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 
 评论时是否一定要填写网站链接
 
+### standaloneLoginButton
+
++ 类型：`boolean`
++ 默认值：`true`
+
+是否显示独立的登录按钮
+
+如果为`true`，则会在按钮区显示一个按钮用于Waline登录
+
+如果为`false`，则使用右键点击`评论`按钮登录
+
 ### language
 
 + 类型：`object`
@@ -234,11 +245,11 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 各种语言文本
 
 + `author`：作者小标签里面显示的文字
-
 + `comment_tips`：评论框的占位符
 + `nick`：昵称输入框的占位符
 + `mail`：邮箱输入框的占位符
 + `website`：网站链接输入框的占位符
++ `no_comment`：没有评论时显示的文字
 
 ```js
 <script>
@@ -253,6 +264,7 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
             nick: '昵称',
             mail: '邮箱',
             website: '网站',
+            no_comment: '还没有任何评论哦'
         }
     })
 })

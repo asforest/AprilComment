@@ -34,6 +34,7 @@ var defaultOptions: AprilCommentOptions = {
     dualPaginator: true,
     mailRequired: true,
     websiteRequired: true,
+    standaloneLoginButton: true,
     language: {
         author: '作者',
         comment_tips: '说点儿什么吧',

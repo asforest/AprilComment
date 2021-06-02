@@ -90,6 +90,9 @@ export default interface AprilCommentOptions
     /** 是否一定要输入网站链接才能评论，默认true */
     websiteRequired?: boolean
 
+    /** 是否显示独立的登录按钮，如果为false，则使用右键点击"评论"按钮来登录，默认为true */
+    standaloneLoginButton?: boolean
+
     /** 输入表单的占位符 */
     language?: LanguageOptions
 }
