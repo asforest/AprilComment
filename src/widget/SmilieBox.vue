@@ -140,9 +140,9 @@ export default Vue.extend({
         position: absolute;
         top: 103%;
         right: 50px;
-        width: 300px;
+        width: 400px;
+        height: 300px;
         z-index: 1;
-        height: 200px;
 
         border: 1px solid #efefef;
         border-radius: 4px;
