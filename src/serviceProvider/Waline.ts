@@ -6,6 +6,7 @@ import RecentComment from "../interface/RecentComment";
 import { getAvatarByMail, sanitize, sanitizeThroughly, useDefault } from "../utils/Utils";
 import ServiceProvider from "./ServiceProvider";
 import cheerio from "cheerio";
+import LoginInfo from "../interface/LoginInfo";
 const katex = require('katex')
 const html2md = require('html-to-md')
 require('katex/dist/katex.css')
@@ -109,13 +110,16 @@ export default class Waline extends ServiceProvider
             content = smilieManager?.renderAsMarkdown(content) as string
 
         try {
+            let logininfo = this.aprilComment.profileWidget.userinfo as LoginInfo
+            let token = logininfo.token
+            
             let params = {
                 method: 'POST',
                 body: JSON.stringify({
                     comment: content,
                     link: comment.website,
-                    mail: comment.mail,
-                    nick: comment.nick,
+                    mail: token? logininfo.email :comment.mail,
+                    nick: token? logininfo.display_name :comment.nick,
                     pid: comment.parent,
                     rid: comment.root,
                     ua: navigator.userAgent ?? '',
@@ -124,7 +128,6 @@ export default class Waline extends ServiceProvider
                 }),
             }
 
-            let token = this.aprilComment.profileWidget.userinfo.token
             if(token)
                 (params as any).headers = {Authorization: `Bearer ${token}`}
 
