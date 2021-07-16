@@ -41,9 +41,9 @@ export default class DomActions
     recordVisit(selector='.april-comment-visit')
 	{
 	    this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
-			if(typeof Cookies.get('ac-flag-visited') == 'undefined')
+			if(typeof Cookies.get('ac-flag-visited-'+pathname) == 'undefined')
 			{
-				Cookies.set('ac-flag-visited', 'true', { expires: new Date(Date.now() + expires * 1000) })
+				Cookies.set('ac-flag-visited-'+pathname, 'true', { expires: new Date(Date.now() + expires * 1000) })
 				this.aprilComment.visit(pathname).then(views => jq.text(views))
 			} else {
 				this.aprilComment.views(pathname).then(count => jq.text(count))
