@@ -23,6 +23,9 @@ export default interface AprilCommentOptions
     /** 是否手动控制生命周期（通过调用create(), destroy()） */
     manualMode?: boolean
 
+    /** 视作新访客的周期，超过这个时间后会被视为新的访客，单位秒，默认30min，默认值1800 */
+    visit_interval?: number
+
     /** 作者的邮箱的MD5，支持多个邮箱，如果是作者本人的评论，会有一个作者小标签，默认为空 */
     authorMails?: string[]
 

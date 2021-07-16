@@ -20,6 +20,7 @@ var defaultOptions: AprilCommentOptions = {
     api: undefined as any,
     pathname: location.pathname,
     manualMode: false,
+    visit_interval: 30*60,
     authorMails: undefined,
     smilieEnabled: true,
     smilies: undefined,

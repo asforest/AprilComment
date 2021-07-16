@@ -1,5 +1,5 @@
 import AprilComment from ".."
-
+import * as Cookies from 'js-cookie'
 const $ = require('jquery')
 
 export default class DomActions 
@@ -10,37 +10,44 @@ export default class DomActions
 	{
 	    this.aprilComment = aprilComment
 	}
-
-    findDom(selector: string, pathnameAttr: string, handleCallback: (pathname: string, jqdom: any) => void)
+	
+    foreachDom(selector: string, callback: (pathname: string, expires: number, jq: any) => void)
 	{
+		let that = this
 		$(selector).each(function() {
-		    var pathname = $(this).attr(pathnameAttr) ?? location.pathname
-		    handleCallback(pathname, $(this))
+		    var pathname = $(this).attr('pathname') ?? location.pathname
+			var expires = !isNaN(parseInt($(this).attr('expires')))? parseInt($(this).attr('expires')) : that.aprilComment.opt.visit_interval as number
+			
+		    callback(pathname, expires, $(this))
 		})
 	}
 
-    renderCommentCount(selector='.april-comment-count', pathnameAttr='pathname')
+    renderCommentCount(selector='.april-comment-count')
 	{
-	    this.findDom(selector, pathnameAttr, (pathname: string, jqdom: any) => {
-		    this.aprilComment.count(pathname.trim()).then(count => jqdom.text(count))
+		this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
+			this.aprilComment.count(pathname).then(count => jq.text(count))
 		})
-
 	    return this
 	}
 
-    renderPageViews(selector='.april-comment-views', pathnameAttr='pathname')
+    renderPageViews(selector='.april-comment-views')
 	{
-	    this.findDom(selector, pathnameAttr, (pathname: string, jqdom: any) => {
-		    this.aprilComment.views(pathname.trim()).then(views => jqdom.text(views))
+		this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
+			this.aprilComment.views(pathname).then(count => jq.text(count))
 		})
-
 	    return this
 	}
 
-    recordVisit(selector='.april-comment-visit', pathnameAttr='pathname')
+    recordVisit(selector='.april-comment-visit')
 	{
-	    this.findDom(selector, pathnameAttr, (pathname: string, jqdom: any) => {
-		    this.aprilComment.visit(pathname.trim()).then(views => jqdom.text(views))
+	    this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
+			if(typeof Cookies.get('ac-flag-visited') == 'undefined')
+			{
+				Cookies.set('ac-flag-visited', 'true', { expires: new Date(Date.now() + expires * 1000) })
+				this.aprilComment.visit(pathname).then(views => jq.text(views))
+			} else {
+				this.aprilComment.views(pathname).then(count => jq.text(count))
+			}
 		})
 
 	    return this
