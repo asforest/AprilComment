@@ -69,6 +69,15 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 如果为`true`则不会自动初始化，需要在合适的时机显式调用`mount()`和`destroy()`方法以手动控制AprilComment的初始化和销毁（通常适用于pjax或者spa场景）
 
+### visit_interval
+
++ 类型：`number`
++ 默认值：`1800`
+
+此选项可以控制用户在浏览一次页面后，经过多长时间后，会被视为新的访客（此功能仅支持以dom方式增加浏览量）
+
+单位秒，默认30min，默认值1800
+
 ### authorMails
 
 + 类型：`string[]`
@@ -358,15 +367,19 @@ DOM方式：
 
 `pathname`属性决定了是要给哪一个页面的浏览次数+1，如果没有写`pathname`属性的话，则默认使用`location.pathname`
 
+`expires`属性决定了这次浏览后，经过多长时间再次浏览，用户会被视为新访客，如果没有写`expires`属性的话，默认是1800s
+
 同一个页面里不建议存在多个这样的元素，一般存在一个就好
 
 ```html
-<span class="april-comment-visit" pathname="/">xx</span>次浏览
+<span class="april-comment-visit" pathname="/" expires="1800">xx</span>次浏览
 ```
 
 ---
 
 编程方式：
+
+编程方式不支持自动设置新访客判断，需要自行处理相关情况
 
 ```js
 var comment = new AprilComment({
@@ -398,19 +411,16 @@ var recentComments: object[] = comment.recent()
 
 只需要在初始化时设置`manualMode: true`，然后在pjax回调函数或者对应的渲染回调函数中销毁AprilComment，然后更新`pathname`参数后再次重新初始化即可
 
-```
+```javascript
 var ac = new AprilComment({
     el: 'comment-widget',
     api: 'https://aprilcomment-demo-bp92yy3n5-innc11.vercel.app',
-    manualMode: true // 设置为手动控制生命周期模式
 });
 
 function cb_after_rendering() // 每次切换页面时会被调用一次
 {
-	if(!ac.isDestroyed())
-    	ac.destroy()
-	ac.setOptions({ pathname: location.pathname })
-	ac.mount()
+    // 通常需要更新pathname以加载新页面对应的评论
+    ac.update({ pathname: location.pathname })
 }
 ```
 
@@ -482,6 +492,30 @@ ac.setOptions({
 + 返回值：`void`
 
 控制AprilComment的销毁操作并卸载DOM，需要在合适的时机调用
+
+### update()
+
++ 参数：`optionsOverrode?: AprilCommentOptions`：重载的选项，相当于间接调用了`setOptions()`
++ 返回值：`void`
+
+当由于页面切换导致评论系统的DOM被销毁时，请手动调用`update()`销毁DOM并重新创建以刷新评论（一般用在SPA场景中）
+
+此方法和`manualMode`选项能够相互兼容（无论`manualMode`是什么值都能正常工作）
+
+示例：
+
+```javascript
+var ac = new AprilComment({
+    el: 'comment-widget',
+    api: 'https://aprilcomment-demo-bp92yy3n5-innc11.vercel.app',
+});
+
+function cb_after_rendering() // 每次切换页面时会被调用一次
+{
+    // 通常需要更新pathname以加载新页面对应的评论
+    ac.update({ pathname: location.pathname })
+}
+```
 
 ### isDestroyed()
 
