@@ -152,6 +152,15 @@ export default class AprilComment
         }
     }
 
+    /** 重新加载评论列表(仅SPA适用) */
+    update(optionsOverrode?: AprilCommentOptions)
+    {
+        if(!this.isDestroyed())
+            this.destroy()
+        this.setOptions(optionsOverrode)
+        this.mount()
+    }
+
     /**
      * 是否AprilComment的DOM已经被销毁了
      * @returns 是否销毁
