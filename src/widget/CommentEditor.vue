@@ -163,9 +163,11 @@ export default Vue.extend({
                 content: this.formData.content,
             } as CommentingModel).then(() => {
                 this.showSubmitingAnimation = false
+                this.smiliesVisible = false
                 this.owner.refresh()
             }).catch(() => {
                 this.showSubmitingAnimation = false
+                this.smiliesVisible = false
             })
 
             this.showSubmitingAnimation = true
