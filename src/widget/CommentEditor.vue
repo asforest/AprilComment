@@ -256,6 +256,10 @@ export default Vue.extend({
         },
 
     },
+    updated: function() {
+        for (const child of this.$children)
+            child.$forceUpdate()
+    },
     props: {
         owner: {
             type: AprilComment,

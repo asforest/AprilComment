@@ -190,15 +190,20 @@ export default Vue.extend({
         getCommentCount: function() {
             return (this.commentCount > 0)? this.commentCount+' 评论':''
         },
-        update: function() { // 重新绘制组件
-            this.$forceUpdate()
-            for (const child of this.$children)
-                if(child.name == 'anim-comment-list')
-                    for (const gchild of child.$children)
-                        gchild.update()
-        },
         commentExist: function() {
             return this.commentCount > 0
+        }
+    },
+    updated: function() { // 重新绘制组件
+        for (const child of this.$children)
+        {
+            if(child.name == 'anim-comment-list')
+            {
+                for (const gchild of child.$children)
+                    gchild.$forceUpdate()
+            } else {
+                child.$forceUpdate()
+            }
         }
     },
     watch: {

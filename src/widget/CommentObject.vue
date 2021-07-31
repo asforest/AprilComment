@@ -113,12 +113,12 @@ export default Vue.extend({
                 lastWeek: 'YYYY-MM-DD HH:mm',
                 sameElse: 'YYYY-MM-DD HH:mm'
             })
-        },
-        update: function() {
-            this.$forceUpdate()
-            for (const child of this.$children) 
-                child.update()
         }
+        
+    },
+    updated: function() {
+        for (const child of this.$children)
+            child.$forceUpdate()
     },
     props: {
         owner: {
