@@ -1,0 +1,86 @@
+@media(prefers-color-scheme:dark) {
+    details[open] {
+        border-color: #676767;
+    }
+
+    .sidebar, body {
+        background-color: rgb(39, 39, 39);
+    }
+
+    body {
+        color: #c1c1c1;
+    }
+
+    /* header 123456 */
+    .anchor span {
+        color: #e2e2e2;
+    }
+
+    .sidebar {
+        border-right-color: #a9a9a912;
+    }
+
+    .sidebar,
+    .sidebar ul li a {
+        color: #c1c1c1;
+    }
+    
+    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4, .markdown-section strong {
+        color: #7bc9e6;
+    }
+
+    .markdown-section code, .markdown-section pre {
+        background-color: #353535;
+    }
+
+    .markdown-section p.tip, .markdown-section tr:nth-child(2n) {
+        background-color: #3c3c3c;
+    }
+
+    .markdown-section td, .markdown-section th {
+        border: 1px solid #4c4c4c;
+    }
+
+    .markdown-section p.tip, .markdown-section tr:nth-child(2n) {
+        background-color: #2d2d2d !important;
+    }
+
+    .markdown-section pre[v-pre], 
+    .markdown-section pre[v-pre] code {
+        background-color: #151515 !important;
+        /* background-color: #f14b4b !important; */
+    }
+    .markdown-section pre[v-pre] {
+        border-radius: 4px;
+    }
+
+    .markdown-section pre>code {
+        color: #b9b8b8;
+    }
+
+    .markdown-section blockquote {
+        background-color: #2d2d2d;
+    }
+
+    .markdown-section hr {
+        border-bottom-color: #6b6b6b;
+    }
+
+    .app-nav li ul {
+        background-color: #333;
+        border-color: #636363;
+    }
+
+    .sidebar-toggle {
+        background-color: #404040cc;
+    }
+
+    .search .input-wrap input {
+        background-color: #313131;
+        color: #c1c1c1;;
+    }
+
+    .search {
+        border-bottom-color: #3c3c3c;
+    }
+}
