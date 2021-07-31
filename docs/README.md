@@ -109,47 +109,15 @@ Waline 的服务端地址（地址末尾没有`/`）
 
 ### smilies
 
-+ 类型：`object`
++ 类型：`array`
 + 默认值：`undefined`
-+ 对应Waline选项：`emojiCDN/emojiMaps`
++ 对应Waline选项：`emoji`
 
-自定义表情对象
+加载自定义表情的选项。
 
-```js
+除了可以使用AprilComment自己的加载方式以外，同时还兼容Waline标准的表情包格式。
 
-<script>
-    var simlies = {
-        "url": "https://cdn.jsdelivr.net/gh/innc11/BlogSmilies@latest",
-        "maomao": [
-            "mao_haha.gif",
-            "mao_laugh.jpg",
-            "mao_001.png"
-        ],
-        "aru": [
-            "aru_huaji.png",
-            "aru_1.png",
-            "aru_2.png",
-            "aru_3.png"
-        ]
-    }
-
-    $(function() {
-        new AprilComment({
-            el: 'comment-widget',
-            api: 'https://your-waline-backend-url.app',
-            pathname: location.pathname,
-            smilies: simlies
-        })
-    })
-</script>
-
-```
-
-`url`代表表情图片的目录地址，`maomao`和`aru`是表情包的名字（名字可以自定义，不影响表情解析），每个表情会按表情包进行归类显示
-
-需要注意的是，与Waline不同，每个表情的`title`或者说是表情代码，取决于文件名本身，请确保每个表情图片的文件名中没有空格，不同表情包之间也不要出现图片的文件名冲突的情况
-
-（`url`本身不能作为一个表情包的名字存在）
+具体用法请参考[#使用表情包](#使用表情包)
 
 ### avatarDefault
 
@@ -298,6 +266,103 @@ Gravatar的默认头像，更多信息请查看[头像配置](https://waline.js.
 
 ## 高级用法
 
+### 使用表情包
+
+AprilComment支持使用自定义表情包。
+
+> 需要注意的是，每个表情的表情代码取决于文件名本身，请确保每个表情图片的文件名中没有空格（有的话请用_下划线替换），同时确保不同表情包之间也不要出现图片的文件名相同冲突的情况
+
+#### 创建自定义表情包
+
+1. 将所有表情文件放到同一个文件夹内
+2. 在这个文件夹里创建名为`meta.yml`的文件，并把下面的代码复制粘贴进去
+
+```yaml
+# 表情包的名字，这个会显示在表情框的顶部选项卡里
+name: maomao
+
+# 表情包的封面图片，会显示在表情包的名字的左侧（这里同Waline的icon选项）
+# 这个文件只能从下面的smilies中选择一个
+cover: mao_001.gif
+
+# 所有的表情包文件
+smilies:
+  - mao_001.gif
+  - mao_002.jpg
+  - mao_003.png
+  - mao_004.gif
+```
+
+3. 将所有表情文件的文件名 一 一 列举在`smilies`选项下面，并设置好表情包的名字和封面
+4. 保存关闭这个`yml`文件，然后将这个目录上传到自己的Github仓库上或者其它服务器上
+5. 最后将这个目录的URL（也就是`meta.yml`的父目录的URL）填写到`smilies`配置项里，表情包就会被加载啦
+
+#### 使用表情包
+
+比如我将这些文件上传到我的Github仓库`biaoqingbao`里：
+
+```
+https://github.com/innc11/biaoqingbao/maomao/
+├─ mao_001.gif
+├─ mao_002.jpg
+├─ mao_003.png
+├─ mao_004.gif
+└─ meta.yml
+```
+
+`meta.yml`的内容：
+
+```yaml
+name: maomao
+cover: mao_001.gif
+smilies:
+  - mao_001.gif
+  - mao_002.jpg
+  - mao_003.png
+  - mao_004.gif
+```
+
+之后，在AprilComment初始化时这样写，就可以读取并使用这些表情啦：
+
+```javascript
+new AprilComment({
+    el: 'comment-widget',
+    api: 'https://your-waline-backend-url.app',
+    smilies: [
+        // 这里可以加载多个表情包，这里使用了maomao表情包和qq表情包
+        'https://cdn.jsdelivr.net/gh/innc11/biaoqingbao@latest/maomao',
+        'https://cdn.jsdelivr.net/gh/innc11/biaoqingbao@latest/qq'
+        // 这里加载的先后顺序也决定了表情包的排列顺序
+    ]
+})
+
+```
+
+#### 兼容Waline表情包
+
+除了可以使用AprilComment的表情包格式外，同时还支持直接使用Waline标准的表情包格式，无需做任何改动，就可以直接使用啦。
+
+使用方式也特别简单，在初始化时，将Waline表情包的预设链接填写到`smilies`里就可以啦（和AprilComment格式的表情包写法完全一致，并且两种表情包可以混合使用！）
+
+比如
+
+```javascript
+new AprilComment({
+    el: 'comment-widget',
+    api: 'https://your-waline-backend-url.app',
+    smilies: [
+        // 这里先加载了waline官方提供的 bilibili表情包（Waline格式表情包）
+        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        // 随后又加载了自定义的表情包（AprilComment格式表情包）
+        'https://cdn.jsdelivr.net/gh/innc11/biaoqingbao@latest/maomao'
+        // 这里加载的先后顺序也决定了表情包的排列顺序
+    ]
+})
+
+```
+
+有关Waline表情包的更多信息和教程，可以参考[(自定义表情 | Waline)](https://waline.js.org/guide/client/emoji.html)
+
 ###  Waline登录
 
 右键点击`评论`按钮可以打开登录窗口，如果登录后不能正常跳转，请勾选`记住登录状态`再试，登录成功后昵称、邮箱、网站输入框会隐藏，登录成功后发布的评论后面会带有`作者`的小标签字样（字样可配置）
@@ -409,7 +474,7 @@ var comment = new AprilComment({
 var recentComments: object[] = comment.recent()
 ```
 
-### 手动控制生命周期
+### 手动初始化和销毁
 
 在一些PJAX或者SPA(单页应用)场景中，切换页面时页面可能并不会重新加载，可能就会出现页面已经加载成新页面了，但是评论系统还没有跟过来的问题，这时就需要自己手动控制初始化和销毁了。
 
