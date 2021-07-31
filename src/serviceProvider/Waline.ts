@@ -97,7 +97,7 @@ export default class Waline extends ServiceProvider
         let smilieManager = this.aprilComment.smilieManager
 
         comment.parent = mainWidget.replyId == -1? undefined:mainWidget.replyId
-        comment.root = mainWidget.replyRootId == -1? undefined:(mainWidget.replyRootId==''? comment.parent:this.mainWidget.replyRootId)
+        comment.root = mainWidget.replyRootId == -1? undefined:(mainWidget.replyRootId==''? comment.parent:mainWidget.replyRootId)
         comment.at = mainWidget.replyNick == -1? undefined:mainWidget.replyNick
         comment.pathname = opt.pathname
 
