@@ -10,15 +10,15 @@
         >
             <div class="ac-smilie-sets-tab ac-smilies-scrollbar">
                 <div class="ac-smilie-set-icon" 
-                    v-for="(setcontent, setname) in smilies" 
-                    v-bind:key="setname"
-                    v-bind:smilie-set="setname" 
-                    v-bind:class="setname==selectedSmilieSet?'ac-selected':''" 
-                    v-bind:title="setname"
-                    v-on:click="selectedSmilieSet=setname"
+                    v-for="(smilieset, name) in getSmilies()" 
+                    v-bind:key="name"
+                    v-bind:smilie-set="name" 
+                    v-bind:class="name==selectedSmilieSet?'ac-selected':''" 
+                    v-bind:title="name"
+                    v-on:click="selectedSmilieSet=name"
                 >
-                    <div class="ac-preview" v-bind:style="'background-image: url('+getFirst(setcontent)+')'"></div>
-                    {{setname}}
+                    <div class="ac-preview" v-bind:style="'background-image: url('+getCover(smilieset)+')'"></div>
+                    {{name}}
                 </div>
             </div>
 
@@ -29,13 +29,14 @@
 
         <div class="ac-smilie-box ac-smilies-scrollbar">
             <div class="ac-smilie-set"
-                v-for="(setcontent, setname) in smilies" 
-                v-bind:key="setname"
-                v-bind:smilie-set="setname" 
-                v-bind:style="setname==selectedSmilieSet?'':'display: none'"
+                v-for="(smilieset, name) in getSmilies()" 
+                v-bind:key="name"
+                v-bind:smilie-set="name" 
+                v-bind:style="name==selectedSmilieSet?'':'display: none'"
             >
                 <img class="ac-smilie" 
-                    v-for="(smurl, smcode) in smilies[setname]" 
+                    v-for="(smurl, smcode) in getSmilies()[name].smilies" 
+                    v-bind:title="smcode"
                     v-bind:key="smurl"
                     v-bind:src="smurl" 
                     v-bind:alt="smcode" 
@@ -55,21 +56,19 @@ const $ = require('jquery')
 export default Vue.extend({
     name: 'SmilieBox',
     methods: {
-        getFirst: function(obj: any) {
-            for (let o in obj)
-                return obj[o]
+        getCover: function(smilieset: any) {
+            if(smilieset.cover!='') {
+                return smilieset.smilies[smilieset.cover]
+            } else {
+                for (let o in smilieset.smilies)
+                    return smilieset.smilies[o]
+            }
         },
         onSmlieClick: function(e: any) {
             $('#april-comment-input').insert($(e.target).attr('data-tag'))
         },
         onClose: function() {
             this.$emit('close')
-        },
-        defaultSmilieSet: function() {
-            for (let o in this.smilies) {
-                this.selectedSmilieSet = o
-                break
-            }
         },
         onMouseDown: function(e: MouseEvent) {
             // console.log('onMouseDown', e.x, e.y)
@@ -111,6 +110,17 @@ export default Vue.extend({
             let style = 'top: calc(var(--aprilcomment-smilie-box-top) + '+this.winPosition.y+'px);'
             return style + 'right: calc(var(--aprilcomment-smilie-box-right) - '+this.winPosition.x+'px);'
         },
+        getSmilies: function() {
+            return this.owner.smilieManager.smiliesData
+        }
+    },
+    updated: function() {
+        if(this.selectedSmilieSet == '')
+        {
+            for (let o in this.getSmilies()) {
+                this.selectedSmilieSet = o
+                break
+            }
         }
     },
     data: () => ({
@@ -119,11 +129,6 @@ export default Vue.extend({
         draggingInfo: { x:0, y:0, pressing: false, winX: 0, winY:0 },
         draggingStopTimer: null as unknown as NodeJS.Timeout
     }),
-    computed: {
-        smilies: function() {
-            return this.owner.smilieManager.smilies
-        }
-    },
     props: {
         owner: {
             type: AprilComment,

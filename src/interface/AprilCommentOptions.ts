@@ -33,7 +33,7 @@ export default interface AprilCommentOptions
     smilieEnabled?: boolean
 
     /** 表情包数据对象，默认不加载任何表情包 */
-    smilies?: object
+    smilies?: object|any[]
 
     /** 
      * true: 将表情以ima标签方式存储在评论数据里

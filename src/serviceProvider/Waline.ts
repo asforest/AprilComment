@@ -1,5 +1,4 @@
 import moment from "moment";
-import UnknownException from "../exception/UnknownException";
 import CommentingModel from "../interface/CommentingModel";
 import CommentModel from "../interface/CommentModel";
 import RecentComment from "../interface/RecentComment";
@@ -234,14 +233,14 @@ export default class Waline extends ServiceProvider
         let response = await fetch(input, init)
 
         if(!response.ok)
-            throw new UnknownException(await response.text())
+            throw new Error(await response.text())
 
         let raw = await response.text()
 
             let temp = JSON.parse(raw)
 
             if(temp.errno && temp.errno!=0)
-                throw new UnknownException(temp.errmsg)
+                throw new Error(temp.errmsg)
 
             return temp
 

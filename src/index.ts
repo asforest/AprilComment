@@ -99,26 +99,26 @@ export default class AprilComment
     /**
      * 创建评论系统的DOM
      */
-     async mount()
-     {
-         this.mainWidget = new AprilCommentWidget({
-             propsData: { owner: this }
-         }).$mount('#'+this.opt.el)
- 
-         this.editorWidget = this.mainWidget.$refs.editor as Vue
-         this.profileWidget = this.mainWidget.$refs.profile as Vue
-         
-         await this.refresh()
- 
-         if(typeof this.opt.smilies == 'object')
-             this.smilieManager?.loadFromObject(this.opt.smilies as object)
-         this.editorWidget.smiliesComponet.$forceUpdate()
-         this.editorWidget.smiliesComponet.defaultSmilieSet()
-         this.mainWidget.update()
- 
-         if(this.opt.focusOnComment)
-             this.focusOnComment()
-     }
+    async mount()
+    {
+        this.mainWidget = new AprilCommentWidget({
+            propsData: { owner: this }
+        }).$mount('#'+this.opt.el)
+
+        this.editorWidget = this.mainWidget.$refs.editor as Vue
+        this.profileWidget = this.mainWidget.$refs.profile as Vue
+        
+        await this.refresh()
+
+        this.smilieManager?.load(this.opt.smilies).then(() => {
+            this.mainWidget.$forceUpdate()
+        })
+        
+        // this.mainWidget.$forceUpdate()
+
+        if(this.opt.focusOnComment)
+            this.focusOnComment()
+    }
 
     /**
      * 聚焦到目标评论上（仅当从通知邮件内的链接跳转过来时）
