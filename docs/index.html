@@ -93,14 +93,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/april-comment@latest/dist/index.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/april-comment@latest/dist/index.css" />
-    <!-- 评论系统的表情 -->
-	<script src="smilies.js"></script>
     <script>
         var ac = new AprilComment({
             el: 'comment-widget',
             api: 'https://aprilcomment-demo-bp92yy3n5-innc11.vercel.app',
             avatarSource: 'https://gravatar.loli.net/avatar/',
-            smilies: smilies,
+            smilies: [
+                'https://cdn.jsdelivr.net/gh/innc11/Smilies@latest/aru',
+                'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/tieba',
+            ],
             manualMode: true,
             websiteRequired: false,
             focusOnComment: false,
@@ -108,6 +109,10 @@
                 comment_tips: '说点儿什么吧\n(暂未开启评论邮件提醒，提问题请移步issue)',
                 nick: '昵称',
                 mail: '邮箱(可选)'
+            },
+            standaloneLoginButton: false,
+            language: {
+                author: '开发者'
             }
         });
         
