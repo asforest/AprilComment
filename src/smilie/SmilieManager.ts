@@ -150,18 +150,29 @@ export default class SmilieManager
 	async load(obj: any)
 	{
 		if(Array.isArray(obj)) {
-			for (let baseurl of obj)
+			for (let baseurl of obj as string[])
 			{
+				let isWalineFormat = false
+				if(baseurl.startsWith('@'))
+				{
+					isWalineFormat = true
+					baseurl = baseurl.substring(1)
+				}
+
 				if(!baseurl.endsWith('/'))
 					baseurl += '/'
 
-				try {
-					await this.loadAsAprilCommentStandard(baseurl)
-				} catch(e) {
-					if(e.name == 'FetchException')
+				if(isWalineFormat)
+				{
+					await this.loadAsWalineStandard(baseurl)
+				} else {
+					try {
+						await this.loadAsAprilCommentStandard(baseurl)
+					} catch(e) {
+						if(e.name != 'FetchException')
+							throw e
 						await this.loadAsWalineStandard(baseurl)
-					else
-						throw e
+					}
 				}
 			}
         } else if(typeof obj == 'object') {
