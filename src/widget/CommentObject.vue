@@ -1,10 +1,12 @@
 <template>
-    <div class="ac-comment-object"  v-bind:id="comment.id"
+    <div class="ac-comment-object" 
+        v-bind:id="comment.id"
+        v-bind:layer="layer"
     >
         <div class="ac-comment-frame">
             <img class="ac-comment-avatar" 
                 v-bind:src="comment.avatar"
-                v-bind:class="smallerAvatar? 'ac-comment-avatar-smaller':''"
+                v-bind:class="layer>0? 'ac-comment-avatar-smaller':''"
                 v-bind:style="comment.website? 'cursor: pointer;':''"
                 v-bind:onclick="comment.website? 'window.open(\''+comment.website+'\', \'_blank\')':''"
                 v-bind:title="comment.nick"
@@ -45,8 +47,8 @@
                 v-for="cmt in comment.replies"
                 v-bind:key="cmt.id"
                 v-bind:owner="owner"
-                v-bind:comment="cmt" 
-                v-bind:smaller-avatar="true"
+                v-bind:comment="cmt"
+                v-bind:layer="layer + 1"
                 v-bind:class="indent(cmt.nick)? 'ac-replies-indent':''"
                 v-on:reply="$emit('reply', $event)"
             ></comment-object>
@@ -129,9 +131,10 @@ export default Vue.extend({
             type: Object, // instance of CommentModel
             required: true
         },
-        smallerAvatar: {
-            type: Boolean,
-            required: true
+        layer: {
+            type: Number,
+            required: false,
+            default: 0
         }
     }
 })
@@ -227,6 +230,7 @@ export default Vue.extend({
                     @extend %april-comment-text;
                     @extend %april-comment-markdown;
                     font-size: 16px;
+                    max-height: 400px;
                     word-break: break-word;
                     overflow-x: auto;
                 }
@@ -239,6 +243,10 @@ export default Vue.extend({
             }
         }
 
+        // &[layer="0"] .ac-replies {
+        //     max-height: 400px;
+        //     overflow: auto;
+        // }
         
     }
 

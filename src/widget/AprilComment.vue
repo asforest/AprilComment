@@ -50,7 +50,6 @@
                     v-bind:key="comment.id"
                     v-bind:owner="owner"
                     v-bind:comment="comment"
-                    v-bind:smaller-avatar="false"
                     v-on:reply="onClickReply"
                 ></comment>
             </transition-group>
