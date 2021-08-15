@@ -52,7 +52,9 @@ export default class SmilieManager
 		{
 		    let url = trans[code]
 		    let el = '<img class="ac-smilie" src="'+url+'" alt="'+code+'" />';
-		    text = text.replace(':'+code+':', el)
+			let fullcode = ':'+code+':'
+			while(text.indexOf(fullcode) != -1)
+		    	text = text.replace(fullcode, el)
 		}
 
         return text
@@ -65,7 +67,9 @@ export default class SmilieManager
 		{
 		    let url = trans[code]
 		    let el = '!['+code+']('+url+')'
-		    content = content.replace(':'+code+':', el)
+			let fullcode = ':'+code+':'
+			while(content.indexOf(fullcode) != -1)
+		    	content = content.replace(fullcode, el)
         }
 
         return content
