@@ -18,7 +18,6 @@
                     v-on:click="selectedSmilieSet=name"
                 >
                     <div class="ac-preview" v-bind:style="'background-image: url('+getCover(smilieset)+')'"></div>
-                    {{name}}
                 </div>
             </div>
 
@@ -202,7 +201,7 @@ export default Vue.extend({
                         height: 24px;
                         background-repeat: no-repeat;
                         background-size: contain;
-                        margin-right: 4px;
+                        // margin-right: 4px;
                     }
                 }
             }
