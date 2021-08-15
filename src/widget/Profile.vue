@@ -139,7 +139,7 @@ export default Vue.extend({
         }
 
         .ac-profile-info {
-            font-family: var(--april-comment-font-normal);
+            font-family: var(--font-common);
             font-weight: 500;
             text-decoration: none;
             cursor: unset;

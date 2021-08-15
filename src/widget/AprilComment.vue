@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="ac-comment">
         <profile ref="profile" v-bind:owner="owner"></profile>
 
         <div class="april-comment-widget">

@@ -107,8 +107,8 @@ export default Vue.extend({
             }
         },
         headbarStyle: function() {
-            let style = 'top: calc(var(--aprilcomment-smilie-box-top) + '+this.winPosition.y+'px);'
-            return style + 'right: calc(var(--aprilcomment-smilie-box-right) - '+this.winPosition.x+'px);'
+            let style = 'top: calc(var(--smiliebox-top) + '+this.winPosition.y+'px);'
+            return style + 'right: calc(var(--smiliebox-right) - '+this.winPosition.x+'px);'
         },
         getSmilies: function() {
             return this.owner.smilieManager.smiliesData
@@ -140,11 +140,6 @@ export default Vue.extend({
 
 
 <style lang="scss">
-    :root {
-        --aprilcomment-smilie-box-right: 10px;
-        --aprilcomment-smilie-box-top: 103%;
-    }
-
     .ac-smilie-set-widget {
         display: flex;
         flex-direction: column;
@@ -162,7 +157,7 @@ export default Vue.extend({
         box-shadow: 2px 1px 16px #00000052;
         box-sizing: border-box;
 
-        max-width: calc(100% - var(--aprilcomment-smilie-box-right) * 2);
+        max-width: calc(100% - var(--smiliebox-right) * 2);
 
         .ac-smilie-set-headbar {
             display: flex;

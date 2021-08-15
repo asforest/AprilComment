@@ -1,11 +1,16 @@
-:root {
-    --april-comment-font-normal: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    --april-comment-font-monospace: Consolas, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.ac-comment {
+    // 普通字体和等宽字体
+    --font-common: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-monospace: Consolas, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+    // 表情框的默认位置偏移
+    --smiliebox-right: 10px;
+    --smiliebox-top: 103%;
 }
 
 %april-comment-text {
     color: #555;
-    font-family: var(--april-comment-font-normal);
+    font-family: var(--font-common);
     font-size: 12px;
     font-weight: 500;
     text-decoration: none;
