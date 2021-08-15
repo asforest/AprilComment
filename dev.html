@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="Valine,极简风,评论系统,极简风评论系统,comment system">
+    <meta name="description" content="Valine - 一款基于Leancloud的极简风评论系统">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,Chrome=1">
+    <title>AprilComment</title>
+    <script src="./dist/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="./dist/index.css" />
+    
+</head>
+
+<body>
+    <div class="market"></div>
+    <header>
+        <div class="container">
+            <a href="./" class="logo">Valine</a>
+            <span class="sub">A simple comment system based on Leancloud.</span>
+        </div>
+    </header>
+    <div class="container">
+        <div class="placeholder"></div>
+        <div class="content">
+            <div id="va-comment-widget2"></div>
+        </div>
+    </div>
+    <div class="copy">
+        &copy; 2017 <a href="https://github.com/xCss" target="_blank">云淡风轻</a>
+        <span class="april-comment-visit" pathname="/" expires="500">xx</span>次浏览
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script> -->
+
+    <script src="sm.js"></script>
+    <script>
+        console.log('AprilComment v'+AprilComment.version()+' ('+(AprilComment.isProduction()?'prod':'dev')+')')
+        var ac = null
+        // fetch('index.json', { method: 'GET' }).then(data => data.json()).then(async (json) => {
+        new Promise(async (a, b) => {
+            ac = new AprilComment({
+                el: 'va-comment-widget2',
+                pathname: '/',
+                // api: 'https://server.innc11.cn:6679',
+                // api: 'https://www.innc11.cn',
+                // api: 'https://hello-cloudbase-9gyv4rta0bd17d6a-1254063044.ap-shanghai.app.tcloudbase.com/waline',
+                api: 'https://innc11-waline-development.vercel.app',
+                authorMail: '8136be1d3863cfde23c3ddcbec892d27',
+                // smilies: simlies,
+                // smilies: [
+                //     'http://localhost/Smilies/maomao'
+                // ],
+                smilies: [
+                    'https://cdn.jsdelivr.net/gh/innc11/Smilies@latest/aru',
+                    'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+                    'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq',
+                    'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/alus',
+                    'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq'
+                ],
+                smilieAsUrl: false,
+                // websiteRequired: false,
+                capacity: 5,
+                placeholders: {
+                    comment_tips: '还有什么要补充的吗?\n(支持MD格式)',
+                    nick: '昵称*',
+                    mail: '邮箱(会被保密)',
+                    website: '网站',
+                }
+            })
+
+            // console.log('recent: ', await va.recent())
+            // console.log('count: ', await va.count('/'))
+            // console.log('views: ', await va.views('/'))
+            // console.log('visit: ', await va.visit('/'))
+            
+            console.log('api: '+ac.opt.api)
+
+            a()
+        })
+    </script>
+
+    <style>
+        * {
+            /* margin: 0 auto; */
+            /* padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", Arial, sans-serif; */
+        }
+
+        body {
+            background-color: rgb(238, 238, 238);
+            margin: 0 auto;
+        }
+
+        header {
+            background: #fff;
+        }
+
+        /* a {
+            color: #999;
+            text-decoration: none;
+            border-bottom: 1px dotted #dedede;
+        } */
+
+        .logo {
+            display: inline-block;
+            height: 60px;
+            font-size: 24px;
+            line-height: 60px;
+            color: #4286f494;
+            vertical-align: base-line;
+        }
+
+        .sub {
+            font-size: 12px;
+            color: #9c9c9c;
+            padding: 0 5px;
+        }
+
+        .market {
+            background-color: #4ec780;
+            height: 398px;
+            position: absolute;
+            top: 60px;
+            width: 100%;
+            outline: none;
+            display: block;
+            z-index: -1;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .placeholder {
+            height: 56px;
+        }
+
+        @media screen and (max-width:720px) {
+            header {
+                text-align: center;
+            }
+            .sub {
+                display: block;
+                padding-bottom: 10px;
+            }
+            .container {
+                width: 100%;
+            }
+            .placeholder,
+            .market {
+                display: none;
+            }
+        }
+
+        .content {
+            background: #fff;
+            padding: 10px;
+        }
+
+        /* ul,
+        li {
+            list-style: none;
+        } */
+
+        /* .prolist {
+            padding: 10px 20px 20px 20px;
+            font-weight: 400;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Mirages Custom', 'Merriweather', 'Open Sans', "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", "WenQuanYi Micro Hei", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+        } */
+
+        /* blockquote {
+            margin: 10px 0;
+            padding: 0 1em;
+            color: #6a737d;
+            border-left: 0.25em solid #dfe2e5;
+        } */
+
+        #github {
+            padding: 20px 0;
+        }
+
+        .copy {
+            line-height: 60px;
+            text-align: center;
+            font-size: 14px;
+            color: #9c9c9c;
+        }
+    </style>
+</body>
+
+</html>
