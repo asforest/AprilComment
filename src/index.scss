@@ -7,6 +7,8 @@
     --smiliebox-right: 10px;
     --smiliebox-top: 103%;
 
+    --button-hover: yellowgreen;
+
     * {
         box-sizing: border-box;
     }
@@ -26,7 +28,7 @@
     
     font-size: 14px;
 
-    transition-duration: .4s;
+    // transition-duration: .4s;
     text-align: center;
     border: 1px solid #ededed;
     border-radius: .3em;
@@ -42,7 +44,9 @@
     outline: none;
 
     &:hover {
-        background-color: yellowgreen;
+        background-color: var(--button-hover) !important;
+        // outline: #22cc63 solid 1px;
+
     }
 
     &:focus {

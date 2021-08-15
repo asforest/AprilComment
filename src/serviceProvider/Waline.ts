@@ -132,7 +132,7 @@ export default class Waline extends ServiceProvider
 
             await this.fetch2(url, params)
 
-            editorWidget.formData.content = ''
+            editorWidget.formData_content = ''
             editorWidget.$emit('cancel-reply')
             await this.refresh() // 刷新评论
         } catch(e) {
