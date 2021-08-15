@@ -10,7 +10,7 @@
             v-bind:alter="avatar"
             v-on:click="onClick"
         />
-        <div class="ac-profile-info">
+        <div class="ac-profile-info" v-on:click="onClick">
             <span class="ac-profile-info-text">{{nick}}</span>
             <span class="ac-profile-info-text" style="font-size: 12px;">{{type}}</span>
         </div>
@@ -118,7 +118,7 @@ export default Vue.extend({
         .ac-profile-log-out {
             position: absolute;
             cursor: pointer;
-            left: 35px;
+            left: 20px;
             top: 5;
             background: #FFF;
             line-height: 0;
@@ -128,14 +128,14 @@ export default Vue.extend({
         }
 
         .ac-profile-avatar {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             flex-shrink: 0;
             border-radius: 50%;
             cursor: pointer;
             border: 1px solid #f5f5f5;
             padding: 2px;
-            margin-right: 12px;
+            margin-right: 6px;
         }
 
         .ac-profile-info {
@@ -147,6 +147,16 @@ export default Vue.extend({
             font-size: 16px;
             display: inline-flex;
             flex-direction: column;
+            cursor: pointer;
+            max-width: 80px;
+            overflow: hidden;
+
+            .ac-profile-info-text {
+                line-height: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
 
     }

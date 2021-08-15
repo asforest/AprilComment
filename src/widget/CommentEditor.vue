@@ -38,8 +38,10 @@
 
             <div class="ac-toolbar">
 
+                <profile ref="profile" v-bind:owner="owner"></profile>
+
                 <div class="ac-button ac-button-login" title="登录" 
-                    v-show="owner.opt.standaloneLoginButton &&(!$root.$refs.profile || !$root.$refs.profile.isLoggedIn())" 
+                    v-show="owner.opt.standaloneLoginButton &&(!$refs.profile || !$refs.profile.isLoggedIn())" 
                     v-on:click.prevent="onLogin"
                 >
                     <svg t="1622649106122" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5128" width="22" height="22"><path d="M512 960A448 448 0 0 1 195.2 195.2a448 448 0 0 1 633.6 633.6A445.056 445.056 0 0 1 512 960z m-96-288a103.488 103.488 0 0 0-96 108.16v64.32a381.472 381.472 0 0 0 384 0v-64A103.424 103.424 0 0 0 608 672z m0-64h192a166.72 166.72 0 0 1 160 169.92v18.88a384 384 0 1 0-512 0v-18.88A166.4 166.4 0 0 1 416 608z m96-64a160 160 0 1 1 160-160 160.192 160.192 0 0 1-160 160z m0-256a96 96 0 1 0 96 96 96 96 0 0 0-96-96z" p-id="5129"></path></svg>
@@ -103,6 +105,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import smiliesComponet from './SmilieBox.vue'
+import profile from './Profile.vue'
 import md2html from '../utils/Markdown2Html'
 import inserfunc from '../utils/jq-insert.js'
 import AprilComment from '..'
@@ -187,7 +190,7 @@ export default Vue.extend({
             this.showSubmitingAnimation = true
         },
         onLogin: function() {
-            this.$root.$refs.profile.onClick()
+            this.$refs.profile.onClick()
         },
         checkForm: function() {
             if (!this.formData_content)  {
@@ -195,7 +198,7 @@ export default Vue.extend({
                 return false
             }
 
-            if(!this.$root.$refs.profile.isLoggedIn())
+            if(!this.$refs.profile.isLoggedIn())
             {
                 if (!this.formData_nick) {
                     this.showAlert('如何称呼您呢?')
@@ -296,6 +299,7 @@ export default Vue.extend({
     },
     components: {
         'smilies-comment': smiliesComponet,
+        'profile': profile
     }
 })
 </script>

@@ -106,7 +106,7 @@ export default class AprilComment
         }).$mount('#'+this.opt.el)
 
         this.editorWidget = this.mainWidget.$refs.editor as Vue
-        this.profileWidget = this.mainWidget.$refs.profile as Vue
+        this.profileWidget = this.editorWidget.$refs.profile as Vue
         
         await this.refresh()
 

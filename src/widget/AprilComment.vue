@@ -1,6 +1,5 @@
 <template>
     <div class="ac-comment">
-        <profile ref="profile" v-bind:owner="owner"></profile>
 
         <div class="april-comment-widget">
             <!-- 编辑框默认的位置，当回复某个评论时会被临时移动到对应的地方 -->
@@ -91,7 +90,6 @@
 import Vue from 'vue'
 import commentObject from './CommentObject.vue'
 import commentEditor from './CommentEditor.vue'
-import profile from './Profile.vue'
 import paginator from './Paginator.vue'
 import AprilComment from '..'
 import CommentModel from '../interface/CommentModel'
@@ -241,8 +239,7 @@ export default Vue.extend({
     components: {
         'comment': commentObject,
         'comment-editor': commentEditor,
-        'paginator': paginator,
-        'profile': profile
+        'paginator': paginator
     }
 })
 </script>
