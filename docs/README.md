@@ -342,7 +342,7 @@ new AprilComment({
 
 除了可以使用AprilComment的表情包格式外，同时还支持直接使用Waline标准的表情包格式，无需做任何改动，就可以直接使用啦。
 
-使用方式也特别简单，在初始化时，将Waline表情包的预设链接填写到`smilies`里就可以啦（和AprilComment格式的表情包写法完全一致，并且两种表情包可以混合使用！）
+使用方式也特别简单，在初始化时，将Waline表情包的预设链接填写到`smilies`里就可以啦，并在URL的开头加上一个`@`符号，表明这是一个Waline表情包（两种表情包可以混合使用！）
 
 比如
 
@@ -352,7 +352,7 @@ new AprilComment({
     api: 'https://your-waline-backend-url.app',
     smilies: [
         // 这里先加载了waline官方提供的 bilibili表情包（Waline格式表情包）
-        'https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
+        '@https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/bilibili',
         // 随后又加载了自定义的表情包（AprilComment格式表情包）
         'https://cdn.jsdelivr.net/gh/innc11/biaoqingbao@latest/maomao'
         // 这里加载的先后顺序也决定了表情包的排列顺序
