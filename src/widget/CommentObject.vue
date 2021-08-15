@@ -199,7 +199,6 @@ export default Vue.extend({
                         font-weight: 600;
                         line-height: 1;
                         display: inline-block;
-                        box-sizing: border-box;
                     }
 
                     .ac-browser, .ac-os, .ac-time {

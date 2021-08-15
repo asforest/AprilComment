@@ -1,9 +1,9 @@
 <template>
     <div class="ac-smilie-set-widget"
+        v-bind:class="draggingInfo.pressing? 'ac-dragging':''"
         v-bind:style="headbarStyle()"
     >
         <div class="ac-smilie-set-headbar"
-            v-bind:class="draggingInfo.pressing? 'dragging':''"
             v-on:mousedown="onMouseDown"
             v-on:mouseup="onMouseUp"
             v-on:mousemove="onMouseMove"
@@ -22,7 +22,7 @@
             </div>
 
             <div class="ac-smilie-set-close-button" v-on:click="onClose">
-                <svg t="1620917520533" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1997"><path d="M512 421.490332 331.092592 240.582924C306.351217 215.841549 265.464551 215.477441 240.470996 240.470996 215.303191 265.638801 215.527553 306.037221 240.582924 331.092592L421.490332 512 240.582925 692.907407C215.84155 717.648782 215.477441 758.535449 240.470996 783.529004 265.638801 808.696809 306.037222 808.472446 331.092593 783.417075L512 602.509668 692.907407 783.417075C717.648782 808.15845 758.535449 808.522559 783.529004 783.529004 808.696809 758.361199 808.472446 717.962778 783.417075 692.907407L602.509668 512 783.417076 331.092592C808.158451 306.351217 808.522559 265.464551 783.529004 240.470996 758.361199 215.303191 717.962779 215.527553 692.907408 240.582924L512 421.490332Z" p-id="1998"></path></svg>
+                <div>+</div>
             </div>
         </div>
 
@@ -149,23 +149,30 @@ export default Vue.extend({
         height: 300px;
         z-index: 1;
 
-        border: 1px solid #efefef;
+        // border: 1px solid #efefef;
         border-radius: 4px;
-        padding: 4px;
+        // padding: 4px;
         background: #fff;
         box-shadow: 2px 1px 16px #00000052;
-        box-sizing: border-box;
+        transition: box-shadow 0.4s;
 
         max-width: calc(100% - var(--smiliebox-right) * 2);
 
+        &.ac-dragging {
+            box-shadow: 2px 1px 10px #000000ea;
+            cursor: move;
+        }
+
         .ac-smilie-set-headbar {
+            $headbar-radius: 4px;
+            height: 32px;
             display: flex;
             flex-direction: row;
-            border-radius: 4px;
-
-            &.dragging {
-                background-color: #dedede;
-            }
+            
+            border-top-left-radius: $headbar-radius;
+            border-top-right-radius: $headbar-radius;
+            
+            background-color: #cccccc;
 
             .ac-smilie-sets-tab {
                 flex-grow: 1;
@@ -177,30 +184,34 @@ export default Vue.extend({
                 
                 .ac-smilie-set-icon {
                     display: inline-flex;
+                    justify-content: center;
                     align-items: center;
                     padding: 0px 2px;
                     cursor: pointer;
-                    border-radius: 4px;
+                    width: 48px;
+                    // border-radius: 4px;
                     color: #3b3b3b;
                     transition: all 0.1s;
 
-                    &:not(:last-child) {
-                        margin-right: 8px;
-                    }
-
                     &.ac-selected {
+                        position: relative;
                         font-weight: bold;
+                        
+                        background-color: white;
+                        border-top-left-radius: $headbar-radius;
+                        border-top-right-radius: $headbar-radius;
                     }
 
-                    &:hover {
-                        background-color: #00000033;
+                    &:hover:not(.ac-selected) {
+                        background-color: #efefef;
                     }
 
                     .ac-preview {
-                        width: 24px;
-                        height: 24px;
+                        width: 32px;
+                        height: 32px;
                         background-repeat: no-repeat;
                         background-size: contain;
+                        background-position: center;
                         // margin-right: 4px;
                     }
                 }
@@ -213,23 +224,32 @@ export default Vue.extend({
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-family: var(--font-monospace);
 
-                border-radius: 20%;
+                // border-radius: 20%;
+                
+                border-top-right-radius: $headbar-radius;
 
                 &:hover {
                     background-color: #00000059;
                     cursor: pointer;
                 }
 
-                svg {
+                div {
                     opacity: 0.8;
+                    font-size: 32px;
+                    transform: rotateZ(45deg);
+                    line-height: 13px;
+                    width: 17px;
+                    height: 17px;
+                    /* background-color: antiquewhite; */
+                    font-weight: bold;
                 }
             }
         }
 
         .ac-smilie-box {
             overflow-y: auto;
-            box-sizing: border-box;
 
             .ac-smilie-set {
                 img {
@@ -257,8 +277,8 @@ export default Vue.extend({
         overflow-x: auto;
 
         &::-webkit-scrollbar {
-            width: 14px;
-            height: 14px;
+            width: 8px;
+            height: 8px;
         }
 
         &::-webkit-scrollbar-thumb {

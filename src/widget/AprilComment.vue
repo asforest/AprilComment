@@ -271,7 +271,6 @@ export default Vue.extend({
 
             &:before {
                 content: "";
-                box-sizing: border-box;
                 display: inline-block;
                 width: 30px;
                 height: 30px;
@@ -298,7 +297,6 @@ export default Vue.extend({
 
         .ac-copyright {
             text-align: right;
-            box-sizing: border-box;
             line-height: 20px;
             color: #999;
             font-size: 12px;

@@ -307,7 +307,6 @@ export default Vue.extend({
             padding: 5px 5px;
             max-width: 100%;
             font-size: .875em;
-            box-sizing: border-box;
             border-radius: 0px;
         }
 
@@ -370,7 +369,6 @@ export default Vue.extend({
         .ac-tool-panel {
             padding: 0px 8px;
             border: 1px solid #efefef;
-            box-sizing: border-box;
             border-radius: 4px;
 
             &:first-child {
@@ -430,7 +428,6 @@ export default Vue.extend({
 
             &:before {
                 content: "";
-                box-sizing: border-box;
                 display: inline-block;
                 width: 15px;
                 height: 15px;

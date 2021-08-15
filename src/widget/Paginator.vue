@@ -130,7 +130,6 @@ export default Vue.extend({
         margin-left: auto;
         margin-right: auto;
         max-width: 100%;
-        box-sizing: border-box;
         outline: none;
 
         .ac-pagination {

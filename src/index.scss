@@ -6,6 +6,10 @@
     // 表情框的默认位置偏移
     --smiliebox-right: 10px;
     --smiliebox-top: 103%;
+
+    * {
+        box-sizing: border-box;
+    }
 }
 
 %april-comment-text {
@@ -36,7 +40,6 @@
     line-height: 1.42857143;
     user-select: none;
     outline: none;
-    box-sizing: border-box;
 
     &:hover {
         background-color: yellowgreen;
