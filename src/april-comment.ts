@@ -10,7 +10,7 @@ import Waline from './serviceProvider/Waline'
 import DomActions from './domRenderer/DomActions'
 import Compatibility from './utils/Compatibility'
 import SerializableStorage from './storage/SerializableStorage'
-import StateData from './model/StateInfo'
+import StateData from './storage/StateInfo'
 const $ = require('jquery')
 const moment = require('moment');
 require('moment/locale/zh-cn');

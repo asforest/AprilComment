@@ -1,4 +1,4 @@
-import { SerializableObject } from "../storage/SerializableStorage"
+import { SerializableObject } from "./SerializableStorage"
 
 export interface VisitedPage
 {
