@@ -28,10 +28,10 @@
 
 ![overview.png](assets/overview.png)
 
-支持Markdown渲染、表情包分类、实时编辑预览
 
-![md_preview_smilie.png](assets/md_preview_smilie.png)
 
-支持Waline登录系统和顶部翻页按钮（只在第二页开始才会显示）
+![md_preview_smilie.png](assets/1.png)
 
-![login_pagin.png](assets/login_pagin.png)
+支持Waline登录系统和Waline表情包兼容，可以直接使用Waline的表情包预设
+
+![login_pagin.png](assets/2.png)
