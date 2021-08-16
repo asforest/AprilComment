@@ -91,7 +91,7 @@ import Vue from 'vue'
 import commentObject from './CommentObject.vue'
 import commentEditor from './CommentEditor.vue'
 import paginator from './Paginator.vue'
-import AprilComment from '..'
+import AprilComment from '../april-comment'
 import CommentModel from '../interface/CommentModel'
 import { sanitizeThroughly } from '../utils/Utils'
 const $ = require('jquery')

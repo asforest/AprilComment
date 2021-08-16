@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AprilComment from '..'
+import AprilComment from '../april-comment'
 const $ = require('jquery')
 
 export default Vue.extend({

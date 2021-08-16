@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AprilComment from '..';
+import AprilComment from '../april-comment';
 import LoginInfo from '../interface/LoginInfo'
 import { getAvatarByMail } from '../utils/Utils';
 

@@ -1,4 +1,4 @@
-import AprilComment from ".."
+import AprilComment from "../april-comment"
 const $ = require('jquery')
 
 export default class DomActions 

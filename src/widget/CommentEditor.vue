@@ -108,7 +108,7 @@ import smiliesComponet from './SmilieBox.vue'
 import profile from './Profile.vue'
 import md2html from '../utils/Markdown2Html'
 import inserfunc from '../utils/jq-insert.js'
-import AprilComment from '..'
+import AprilComment from '../april-comment'
 import CommentingModel from '../interface/CommentingModel'
 import SerializableStorage from '../storage/SerializableStorage'
 const $ = require('jquery')

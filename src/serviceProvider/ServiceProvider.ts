@@ -1,4 +1,4 @@
-import AprilComment from "..";
+import AprilComment from "../april-comment";
 import CommentingModel from "../interface/CommentingModel";
 import RecentComment from "../interface/RecentComment";
 

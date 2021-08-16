@@ -3,13 +3,13 @@
   "version": "0.3.3",
   "description": "A implementation of Waline Client",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/april-comment.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "parcel src/index.ts --public-url \"./\"",
-    "build": "parcel build src/index.ts --public-url \"./\""
+    "dev": "parcel src/april-comment.ts --public-url \"./\"",
+    "build": "parcel build src/april-comment.ts --public-url \"./\""
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.6",

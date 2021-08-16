@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AprilComment from '..';
+import AprilComment from '../april-comment';
 import md2html from '../utils/Markdown2Html'
 const moment = require('moment');
 require('moment/locale/zh-cn');
