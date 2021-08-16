@@ -1,4 +1,3 @@
-import DOMPurify from "dompurify"
 import MissingNecessaryFieldError from "../exception/MissingNecessaryFieldError"
 import AprilCommentOptions from "../interface/AprilCommentOptions"
 
@@ -59,28 +58,28 @@ export function checkNecessaryOptions(necessaries: string[], checkFor: AprilComm
 	}
 }
 
-export function sanitizeThroughly(text: string) 
-{
-    return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
-}
+// export function sanitizeThroughly(text: string) 
+// {
+//     return DOMPurify.sanitize(text, {ALLOWED_TAGS: [], KEEP_CONTENT: true})
+// }
 
-export function sanitize(text: string)
-{
-	let options = {
-		KEEP_CONTENT: true,
-		ALLOWED_TAGS: [
-			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-			'pre', 'code', 'span', 'hr',
-			'ul', 'li', 'ol', 'br',
-			'a', 'img', 'p', 
-			'blockquote',
-			'em','strong',
-			'table', 'thead', 'tr', 'th', 'td', 'tbody',
-		]
-	}
+// export function sanitize(text: string)
+// {
+// 	let options = {
+// 		KEEP_CONTENT: true,
+// 		ALLOWED_TAGS: [
+// 			'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+// 			'pre', 'code', 'span', 'hr',
+// 			'ul', 'li', 'ol', 'br',
+// 			'a', 'img', 'p', 
+// 			'blockquote',
+// 			'em','strong',
+// 			'table', 'thead', 'tr', 'th', 'td', 'tbody',
+// 		]
+// 	}
 
-	return DOMPurify.sanitize(text, options)
-}
+// 	return DOMPurify.sanitize(text, options)
+// }
 
 export function objectToQueryParamter(obj: any)
 {
