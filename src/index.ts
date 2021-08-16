@@ -9,6 +9,8 @@ import ServiceProvider from './serviceProvider/ServiceProvider'
 import Waline from './serviceProvider/Waline'
 import DomActions from './domRenderer/DomActions'
 import Compatibility from './utils/Compatibility'
+import SerializableStorage from './storage/SerializableStorage'
+import StateInfo from './model/StateInfo'
 const $ = require('jquery')
 const moment = require('moment');
 require('moment/locale/zh-cn');
@@ -58,6 +60,8 @@ export default class AprilComment
     editorWidget: any = null // CommentEditor
     profileWidget: any = null // Profile
 
+    stateInfo = new SerializableStorage(StateInfo, 'aprilcomment-state-info')
+
     constructor(options: AprilCommentOptions)
     {
         if (!options)
@@ -69,6 +73,8 @@ export default class AprilComment
 
 	    this.opt = useDefault(options, defaultOptions)
         this.lang = this.opt.language as LanguageOptions
+
+        this.stateInfo.read()
 
         this.smilieManager = new SmilieManager()
         this.domActions = new DomActions(this)

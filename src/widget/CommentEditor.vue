@@ -110,10 +110,11 @@ import md2html from '../utils/Markdown2Html'
 import inserfunc from '../utils/jq-insert.js'
 import AprilComment from '..'
 import CommentingModel from '../interface/CommentingModel'
-const brownies = require('brownies')
+import SerializableStorage from '../storage/SerializableStorage'
 const $ = require('jquery')
 import crypto from 'crypto'
 import { getAvatarByMail } from '../utils/Utils'
+
 
 export default Vue.extend({
     name: 'comment-editor',
@@ -122,19 +123,13 @@ export default Vue.extend({
 
         this.smiliesComponet = this.$refs.smiliesComponet
 
-        // load cookies
-        if (brownies.cookies.ac_nick)
-            this.formData_nick = brownies.cookies.ac_nick
-        if (brownies.cookies.ac_website)
-            this.formData_website = brownies.cookies.ac_website
-        if (brownies.cookies.ac_mail)
-        {
-            this.formData_mail = brownies.cookies.ac_mail
+        let stateinfo = (this.owner as AprilComment).stateInfo
+        this.formData_nick = stateinfo.object.nick
+        this.formData_website = stateinfo.object.website
+        this.formData_mail = stateinfo.object.mail
 
-            // 加载头像预览
-            let mailInMd5 = crypto.createHash('md5').update(this.formData_mail).digest('hex')
-            this.avatarPreviewing = mailInMd5
-        }
+        if (stateinfo.object.mail)
+            this.avatarPreviewing = crypto.createHash('md5').update(stateinfo.object.mail).digest('hex')
     },
     data: () => ({
         smiliesComponet: null,
@@ -162,10 +157,11 @@ export default Vue.extend({
             if(!this.checkForm())
                 return
 
-            // save cookies
-            brownies.cookies.ac_nick = this.formData_nick
-            brownies.cookies.ac_mail = this.formData_mail
-            brownies.cookies.ac_website = this.formData_website
+            let stateinfo = (this.owner as AprilComment).stateInfo
+            stateinfo.object.nick = this.formData_nick
+            stateinfo.object.mail = this.formData_mail
+            stateinfo.object.website = this.formData_website
+            stateinfo.write()
 
             // 防止重复提交评论
             if(this.showSubmitingAnimation) {

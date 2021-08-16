@@ -6,7 +6,7 @@ import { getAvatarByMail, sanitize, sanitizeThroughly, useDefault } from "../uti
 import ServiceProvider from "./ServiceProvider";
 import cheerio from "cheerio";
 import LoginInfo from "../interface/LoginInfo";
-const katex = require('katex')
+// const katex = require('katex')
 const html2md = require('html-to-md')
 require('katex/dist/katex.css')
 
@@ -268,7 +268,7 @@ export default class Waline extends ServiceProvider
     
         // 还原数学公式
         $('span.katex').each((i, e) => {
-            let rawFormula = $(e).find('math semantics annotation').text()
+            let rawFormula = $(e).find('math semantics  ').text()
             $(e).replaceWith('\n$$'+rawFormula+'$$\n')
         })
     
@@ -277,31 +277,31 @@ export default class Waline extends ServiceProvider
         let htmlmd = html2md(sanitize(htmlText))
     
         // 重新渲染数学公式
-        let reg = /\$?\$([^$]+)\$\$?/
-        let matches = reg.exec(htmlmd)
-        let maxTimes = 1000
-        while(matches != null)
-        {
-            let matchedText = matches[0]
-            let position = matches['index']
+        // let reg = /\$?\$([^$]+)\$\$?/
+        // let matches = reg.exec(htmlmd)
+        // let maxTimes = 1000
+        // while(matches != null)
+        // {
+        //     let matchedText = matches[0]
+        //     let position = matches['index']
     
-            let countof$ = matchedText.startsWith('$$')? 2:1
-            let formulaText = matchedText.substring(countof$, matchedText.length-countof$)
-            let formulaHtml = katex.renderToString(formulaText, {
-                throwOnError: false,
-                displayMode: true,
-                // output: 'mathml',
-            })
+        //     let countof$ = matchedText.startsWith('$$')? 2:1
+        //     let formulaText = matchedText.substring(countof$, matchedText.length-countof$)
+        //     let formulaHtml = katex.renderToString(formulaText, {
+        //         throwOnError: false,
+        //         displayMode: true,
+        //         // output: 'mathml',
+        //     })
     
-            let before = htmlmd.substr(0, position)
-            let after = htmlmd.substring(position + matchedText.length)
-            htmlmd = before + formulaHtml + after
+        //     let before = htmlmd.substr(0, position)
+        //     let after = htmlmd.substring(position + matchedText.length)
+        //     htmlmd = before + formulaHtml + after
     
-            if(maxTimes--<=0)
-                throw 'max times reached'
+        //     if(maxTimes--<=0)
+        //         throw 'max times reached'
             
-            matches = reg.exec(htmlmd)
-        }
+        //     matches = reg.exec(htmlmd)
+        // }
     
         return htmlmd
     }

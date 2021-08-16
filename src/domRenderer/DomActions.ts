@@ -1,5 +1,4 @@
 import AprilComment from ".."
-import * as Cookies from 'js-cookie'
 const $ = require('jquery')
 
 export default class DomActions 
@@ -41,9 +40,9 @@ export default class DomActions
     recordVisit(selector='.april-comment-visit')
 	{
 	    this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
-			if(typeof Cookies.get('ac-flag-visited-'+pathname) == 'undefined')
+			let expiresInSeconds = parseInt((new Date(Date.now() + expires * 1000).getTime() / 1000) as unknown as string)
+			if(this.aprilComment.stateInfo.object.visitPage(pathname, expiresInSeconds))
 			{
-				Cookies.set('ac-flag-visited-'+pathname, 'true', { expires: new Date(Date.now() + expires * 1000) })
 				this.aprilComment.visit(pathname).then(views => jq.text(views))
 			} else {
 				this.aprilComment.views(pathname).then(count => jq.text(count))

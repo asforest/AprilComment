@@ -946,11 +946,6 @@
   dependencies:
     "@types/sizzle" "*"
 
-"@types/js-cookie@^2.2.7":
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.2.7.tgz#226a9e31680835a6188e887f3988e60c04d3f6a3"
-  integrity sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==
-
 "@types/node@^14.14.6":
   version "14.14.6"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.6.tgz?cache=0&sync_timestamp=1603910871074&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.6.tgz#146d3da57b3c636cc0d1769396ce1cfa8991147f"
@@ -1328,11 +1323,6 @@ brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/brorand/download/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
-
-brownies@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/brownies/-/brownies-3.0.0.tgz#ec3952ae51077281743ea70f1cef37c59a023ba5"
-  integrity sha512-kVyGuOrr6LMspa+Mcb9RED6d33oZzJZ6ys020hxnYgoj4MCLz9mTbpL5m1tAjk+jhK3vQ1h+ftd93z6miG+AXw==
 
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
@@ -3263,11 +3253,6 @@ jquery@^3.5.1:
   version "3.5.1"
   resolved "https://registry.npm.taobao.org/jquery/download/jquery-3.5.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjquery%2Fdownload%2Fjquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha1-17TQjhv9uGrS8aPQOeoXMEcXq7U=
-
-js-cookie@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
-  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
 js-tokens@^4.0.0:
   version "4.0.0"

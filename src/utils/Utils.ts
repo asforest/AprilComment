@@ -10,7 +10,7 @@ import AprilCommentOptions from "../interface/AprilCommentOptions"
  */
 export function useDefault(object: any, defaultObject: any): any
 {
-    let temp = Object.assign({}, object)
+    let temp = JSON.parse(JSON.stringify(object))
 
     if(typeof object == 'undefined' || object == null)
 	    return defaultObject
