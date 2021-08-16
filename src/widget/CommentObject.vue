@@ -22,9 +22,10 @@
                     >{{comment.nick}}</a>
 
                     <span class="ac-badge-author" style="margin: 0;" v-if="comment.isauthor">{{owner.lang.author}}</span>
-
-                    <span class="ac-browser" v-bind:title="comment.os">{{comment.browser}}</span>
-                    <span class="ac-os" v-if="false">{{comment.os}}</span>
+                    <div class="ac-commenter-ua">
+                        <span class="ac-browser" v-bind:title="comment.os">{{comment.browser}}</span>
+                        <span class="ac-os" v-if="false">{{comment.os}}</span>
+                    </div>
                     <br/>
                     <span class="ac-time" v-bind:title="parseDatetime(comment.time, true)">{{parseDatetime(comment.time, false)}}</span>
                     <span class="ac-reply-button"
@@ -33,7 +34,6 @@
                         v-bind:comment-root-id="comment.rootId"
                         v-bind:nick="comment.nick"
                     >回复</span>
-
                 </div>
 
                 <div class="ac-comment-content" v-html="parseMarkdown(comment.content)"></div>
@@ -193,15 +193,20 @@ export default Vue.extend({
                     .ac-badge-author {
                         color: #03acca;
                         background-color: #c3f3fb;
-                        border-radius: 8px;
-                        padding: 0.35em;
+                        border-radius: 4px;
+                        padding: 3px;
                         text-align: center;
                         vertical-align: baseline;
                         white-space: nowrap;
-                        font-size: 66%;
+                        font-size: 12px;
                         font-weight: 600;
                         line-height: 1;
                         display: inline-block;
+                    }
+
+                    .ac-commenter-ua {
+                        display: inline;
+                        float: right;
                     }
 
                     .ac-browser, .ac-os, .ac-time {
@@ -213,15 +218,16 @@ export default Vue.extend({
                     .ac-reply-button {
                         @extend %april-comment-text;
                         font-size: 14px;
-                        color: #aa8f70;
-                        margin-left: 1rem;
+                        // color: #aa8f70;
+                        margin-left: 4px;
                         border-radius: 4px;
                         padding: 0px 2px;
                         cursor: pointer;
 
                         &:hover {
-                            color: #38985a;
-                            background-color: #fff684;
+                            // color: #38985a;
+                            // background-color: #fff684;
+                            text-decoration: underline;
                         }
                     }
                 }
