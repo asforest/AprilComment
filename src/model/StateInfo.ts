@@ -6,7 +6,7 @@ export interface VisitedPage
     expires: number
 }
 
-export default class StateInfo extends SerializableObject
+export default class StateData extends SerializableObject
 {
     nick = ''
     website = ''

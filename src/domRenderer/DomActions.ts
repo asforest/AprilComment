@@ -41,7 +41,7 @@ export default class DomActions
 	{
 	    this.foreachDom(selector, (pathname: string, expires: number, jq: any) => {
 			let expiresInSeconds = parseInt((new Date(Date.now() + expires * 1000).getTime() / 1000) as unknown as string)
-			if(this.aprilComment.stateInfo.object.visitPage(pathname, expiresInSeconds))
+			if(this.aprilComment.stateData.object.visitPage(pathname, expiresInSeconds))
 			{
 				this.aprilComment.visit(pathname).then(views => jq.text(views))
 			} else {
