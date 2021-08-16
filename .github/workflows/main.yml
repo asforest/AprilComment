@@ -20,29 +20,12 @@ jobs:
         run: |
           yarn
           yarn run build
-          copy dist\april-comment.js dist\index.js
-          copy dist\april-comment.js dist\index.js.map
-          copy dist\april-comment.css dist\index.css
-          copy dist\april-comment.css dist\index.css.map
-          
-      - name: Check Out TagName
-        id: checkout-tagname
-        shell: "python3 {0}"
-        run: |
-          import os
-          import re
-          ref = os.getenv('GITHUB_REF', '')
-          match = re.search(r'refs\/tags\/(.*)', ref)
-          tag_name = match[1] if match is not None else ''
-          print('::set-output name=tag_name::'+tag_name)
+          cp dist/april-comment.js dist/index.js
+          cp dist/april-comment.js dist/index.js.map
+          cp dist/april-comment.css dist/index.css
+          cp dist/april-comment.css dist/index.css.map
           
       - name: NPM Publish
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-      
-      - if: steps.publish.outputs.type != 'none'
-        run: |
-          echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
-
-
