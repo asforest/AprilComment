@@ -218,7 +218,7 @@ export default Vue.extend({
                     .ac-reply-button {
                         @extend %april-comment-text;
                         font-size: 14px;
-                        // color: #aa8f70;
+                        color: #808080;
                         margin-left: 4px;
                         border-radius: 4px;
                         padding: 0px 2px;

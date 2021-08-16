@@ -93,7 +93,6 @@ import commentEditor from './CommentEditor.vue'
 import paginator from './Paginator.vue'
 import AprilComment from '../april-comment'
 import CommentModel from '../interface/CommentModel'
-import { sanitizeThroughly } from '../utils/Utils'
 const $ = require('jquery')
 
 export default Vue.extend({
@@ -138,7 +137,7 @@ export default Vue.extend({
             $('.ac-cancel-reply').css('display', '')
 
             // 设置Placeholder
-            let object = sanitizeThroughly($('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text())
+            let object = $('#'+cid+' > .ac-comment-frame > .ac-comment-board > .ac-comment-info > .ac-nick').text()
             let input = $('#april-comment-input')
             input.attr('placeholder', '@ '+object+',')
             input.focus()

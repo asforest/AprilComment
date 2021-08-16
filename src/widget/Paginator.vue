@@ -43,7 +43,7 @@ const $ = require('jquery')
 export default Vue.extend({
     name: 'paginator',
     methods: {
-        onClickPagination: function (e) {
+        onClickPagination: function (e: any) {
             let source = $(e.target)
             let pain = null
 
