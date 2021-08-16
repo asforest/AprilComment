@@ -123,7 +123,7 @@ export default Vue.extend({
 
         this.smiliesComponet = this.$refs.smiliesComponet
 
-        let stateinfo = (this.owner as AprilComment).stateInfo
+        let stateinfo = (this.owner as AprilComment).stateData
         this.formData_nick = stateinfo.object.nick
         this.formData_website = stateinfo.object.website
         this.formData_mail = stateinfo.object.mail
@@ -157,7 +157,7 @@ export default Vue.extend({
             if(!this.checkForm())
                 return
 
-            let stateinfo = (this.owner as AprilComment).stateInfo
+            let stateinfo = (this.owner as AprilComment).stateData
             stateinfo.object.nick = this.formData_nick
             stateinfo.object.mail = this.formData_mail
             stateinfo.object.website = this.formData_website
