@@ -21,9 +21,8 @@ jobs:
           yarn
           yarn run build
           cp dist/april-comment.js dist/index.js
-          cp dist/april-comment.js dist/index.js.map
+          cp dist/april-comment.js.map dist/index.js.map
           cp dist/april-comment.css dist/index.css
-          cp dist/april-comment.css dist/index.css.map
           
       - name: NPM Publish
         uses: JS-DevTools/npm-publish@v1
