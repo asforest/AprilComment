@@ -343,16 +343,16 @@ export default Vue.extend({
             line-height: 1.75;
 
             .ac-commenter-avatar-preview {
-                width: 45px;
-                height: 45px;
+                width: 30px;
+                height: 30px;
 
                 img {
-                    width: calc(100% - 2px - 2px);
-                    height: calc(100% - 2px - 2px);
+                    width: 100%;
+                    height: 100%;
                     
                     border-radius: 50%;
-                    border: 1px solid #f5f5f5;
-                    padding: 2px;
+                    // border: 1px solid #f5f5f5;
+                    // padding: 2px;
                 }
             }
 
