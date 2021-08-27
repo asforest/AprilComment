@@ -82,8 +82,6 @@ export default class AprilComment
 
         if(!this.opt.manualMode && document.querySelector('#'+this.opt.el) != null)
             this.mount()
-
-        this.domActions.renderCommentCount().renderPageViews().recordVisit()
     }
 
     setOptions(optionsOverrode?: AprilCommentOptions)
@@ -115,6 +113,8 @@ export default class AprilComment
         this.profileWidget = this.editorWidget.$refs.profile as Vue
         
         await this.refresh()
+        
+        this.domActions.renderCommentCount().renderPageViews().recordVisit()
 
         this.smilieManager?.load(this.opt.smilies).then(() => {
             this.mainWidget.$forceUpdate()
